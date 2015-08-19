@@ -3,24 +3,24 @@ package model;
 import java.util.List;
 
 /**
- * Класс Сотрудник
+ * РљР»Р°СЃСЃ РЎРѕС‚СЂСѓРґРЅРёРє
  */
 public class Employee implements Runnable {
-    private final String name; //имя сотрудника
-    private final float HOURLY_RATE; //почасовая ставка
-    private boolean isBusy; //проверка занят ли сотрудник
-    private double hoursWorked; //отработанные часы - для почасовой оплаты
-    private int fixedRate; //фиксированная ставка
-    protected double workHoursPerDay; //кол-во рабочих часов в день
-    protected long amountHoursOneInstructions; //кол-во часов на выполнение одного задания
-    private List<Position> positionList; //список должностей
+    private final String name; //РёРјСЏ СЃРѕС‚СЂСѓРґРЅРёРєР°
+    private final float HOURLY_RATE; //РїРѕС‡Р°СЃРѕРІР°СЏ СЃС‚Р°РІРєР°
+    private boolean isBusy; //РїСЂРѕРІРµСЂРєР° Р·Р°РЅСЏС‚ Р»Рё СЃРѕС‚СЂСѓРґРЅРёРє
+    private double hoursWorked; //РѕС‚СЂР°Р±РѕС‚Р°РЅРЅС‹Рµ С‡Р°СЃС‹ - РґР»СЏ РїРѕС‡Р°СЃРѕРІРѕР№ РѕРїР»Р°С‚С‹
+    private int fixedRate; //С„РёРєСЃРёСЂРѕРІР°РЅРЅР°СЏ СЃС‚Р°РІРєР°
+    protected double workHoursPerDay; //РєРѕР»-РІРѕ СЂР°Р±РѕС‡РёС… С‡Р°СЃРѕРІ РІ РґРµРЅСЊ
+    protected long amountHoursOneInstructions; //РєРѕР»-РІРѕ С‡Р°СЃРѕРІ РЅР° РІС‹РїРѕР»РЅРµРЅРёРµ РѕРґРЅРѕРіРѕ Р·Р°РґР°РЅРёСЏ
+    private List<Position> positionList; //СЃРїРёСЃРѕРє РґРѕР»Р¶РЅРѕСЃС‚РµР№
     private Thread thread;
     private String nameTask;
 
     /**
-     * Конструктор для создания сотрудника с почасовой оплатой
-     * @param name Имя сотрудника
-     * @param hourlyRate Почасовая ставка
+     * РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ СЃРѕС‚СЂСѓРґРЅРёРєР° СЃ РїРѕС‡Р°СЃРѕРІРѕР№ РѕРїР»Р°С‚РѕР№
+     * @param name РРјСЏ СЃРѕС‚СЂСѓРґРЅРёРєР°
+     * @param hourlyRate РџРѕС‡Р°СЃРѕРІР°СЏ СЃС‚Р°РІРєР°
      */
     public Employee(String name, float hourlyRate, List<Position> positionList) {
         this.name = name;
@@ -34,9 +34,9 @@ public class Employee implements Runnable {
     }
 
     /**
-     * Конструктор для создания сотрудника с фиксированной оплатой труда
-     * @param name Имя сотрудника
-     * @param fixedRate Фиксированная ставка
+     * РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ СЃРѕС‚СЂСѓРґРЅРёРєР° СЃ С„РёРєСЃРёСЂРѕРІР°РЅРЅРѕР№ РѕРїР»Р°С‚РѕР№ С‚СЂСѓРґР°
+     * @param name РРјСЏ СЃРѕС‚СЂСѓРґРЅРёРєР°
+     * @param fixedRate Р¤РёРєСЃРёСЂРѕРІР°РЅРЅР°СЏ СЃС‚Р°РІРєР°
      */
     public Employee(String name, int fixedRate, List<Position> positionList) {
         this.name = name;
@@ -50,10 +50,10 @@ public class Employee implements Runnable {
     }
 
     /**
-     * Метод проверяет входит ли данное распоряжение в должностные обязанности
-     * если да - запускает выполнение распоряжения
-     * @param task распоряжение
-     * @param position должность
+     * РњРµС‚РѕРґ РїСЂРѕРІРµСЂСЏРµС‚ РІС…РѕРґРёС‚ Р»Рё РґР°РЅРЅРѕРµ СЂР°СЃРїРѕСЂСЏР¶РµРЅРёРµ РІ РґРѕР»Р¶РЅРѕСЃС‚РЅС‹Рµ РѕР±СЏР·Р°РЅРЅРѕСЃС‚Рё
+     * РµСЃР»Рё РґР° - Р·Р°РїСѓСЃРєР°РµС‚ РІС‹РїРѕР»РЅРµРЅРёРµ СЂР°СЃРїРѕСЂСЏР¶РµРЅРёСЏ
+     * @param task СЂР°СЃРїРѕСЂСЏР¶РµРЅРёРµ
+     * @param position РґРѕР»Р¶РЅРѕСЃС‚СЊ
      */
     public void performTask(String task, Position position) {
         if (positionList.contains(position)) runTask(name);
@@ -66,59 +66,59 @@ public class Employee implements Runnable {
 
     @Override
     public void run() {
-        System.out.println(String.format("Сотрудник %s приступил к выполнению распоряжения: %s", this.getEmployeeName(), this.nameTask));
+        System.out.println(String.format("РЎРѕС‚СЂСѓРґРЅРёРє %s РїСЂРёСЃС‚СѓРїРёР» Рє РІС‹РїРѕР»РЅРµРЅРёСЋ СЂР°СЃРїРѕСЂСЏР¶РµРЅРёСЏ: %s", this.getEmployeeName(), this.nameTask));
         try {
             Thread.sleep(amountHoursOneInstructions);
         } catch (InterruptedException e) {
-            System.out.println("Во время выполнения задания возникла ошибка: " + e.getMessage());
+            System.out.println("Р’Рѕ РІСЂРµРјСЏ РІС‹РїРѕР»РЅРµРЅРёСЏ Р·Р°РґР°РЅРёСЏ РІРѕР·РЅРёРєР»Р° РѕС€РёР±РєР°: " + e.getMessage());
         }
-        System.out.println(String.format("Сотрудник %s выполнил распоряжение: %s", this.getEmployeeName(), this.nameTask));
+        System.out.println(String.format("РЎРѕС‚СЂСѓРґРЅРёРє %s РІС‹РїРѕР»РЅРёР» СЂР°СЃРїРѕСЂСЏР¶РµРЅРёРµ: %s", this.getEmployeeName(), this.nameTask));
         hoursWorked += amountHoursOneInstructions;
         workHoursPerDay -= amountHoursOneInstructions;
     }
 
     /**
-     * Метод возвращает имя сотрудника
+     * РњРµС‚РѕРґ РІРѕР·РІСЂР°С‰Р°РµС‚ РёРјСЏ СЃРѕС‚СЂСѓРґРЅРёРєР°
      */
     public String getEmployeeName() {
         return name;
     }
 
     /**
-     * Метод, проверяющий занят ли сотрудник выполнением распоряжения
-     * @return возвращает true если сотрудник занят
+     * РњРµС‚РѕРґ, РїСЂРѕРІРµСЂСЏСЋС‰РёР№ Р·Р°РЅСЏС‚ Р»Рё СЃРѕС‚СЂСѓРґРЅРёРє РІС‹РїРѕР»РЅРµРЅРёРµРј СЂР°СЃРїРѕСЂСЏР¶РµРЅРёСЏ
+     * @return РІРѕР·РІСЂР°С‰Р°РµС‚ true РµСЃР»Рё СЃРѕС‚СЂСѓРґРЅРёРє Р·Р°РЅСЏС‚
      */
     public boolean isBusy() {
         return isBusy;
     }
 
     /**
-     * Метод проверяет, что количество времени необходимое на выполнение распоряжения
-     * не превышает количество оставшихся рабочих часов
-     * @return готов ли сотрудник выполнить распоряжение
+     * РњРµС‚РѕРґ РїСЂРѕРІРµСЂСЏРµС‚, С‡С‚Рѕ РєРѕР»РёС‡РµСЃС‚РІРѕ РІСЂРµРјРµРЅРё РЅРµРѕР±С…РѕРґРёРјРѕРµ РЅР° РІС‹РїРѕР»РЅРµРЅРёРµ СЂР°СЃРїРѕСЂСЏР¶РµРЅРёСЏ
+     * РЅРµ РїСЂРµРІС‹С€Р°РµС‚ РєРѕР»РёС‡РµСЃС‚РІРѕ РѕСЃС‚Р°РІС€РёС…СЃСЏ СЂР°Р±РѕС‡РёС… С‡Р°СЃРѕРІ
+     * @return РіРѕС‚РѕРІ Р»Рё СЃРѕС‚СЂСѓРґРЅРёРє РІС‹РїРѕР»РЅРёС‚СЊ СЂР°СЃРїРѕСЂСЏР¶РµРЅРёРµ
      */
     public boolean isWork() {
         return amountHoursOneInstructions <= workHoursPerDay;
     }
 
     /**
-     * Возвращает количество отработанных часов
-     * (запрашивается раз в неделю для расчета зарплаты)
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ РєРѕР»РёС‡РµСЃС‚РІРѕ РѕС‚СЂР°Р±РѕС‚Р°РЅРЅС‹С… С‡Р°СЃРѕРІ
+     * (Р·Р°РїСЂР°С€РёРІР°РµС‚СЃСЏ СЂР°Р· РІ РЅРµРґРµР»СЋ РґР»СЏ СЂР°СЃС‡РµС‚Р° Р·Р°СЂРїР»Р°С‚С‹)
      */
     public double getHoursWorked() {
         return hoursWorked;
     }
 
     /**
-     * Метод обнуляет отработанные часы
+     * РњРµС‚РѕРґ РѕР±РЅСѓР»СЏРµС‚ РѕС‚СЂР°Р±РѕС‚Р°РЅРЅС‹Рµ С‡Р°СЃС‹
      */
     private void resetHoursWorked() {
         hoursWorked = 0;
     }
 
     /**
-     * Метод возвращает фиксированную ставку если она установлена
-     * иначе расчитывает зарплату из почасовой ставки и количества отработанных часов
+     * РњРµС‚РѕРґ РІРѕР·РІСЂР°С‰Р°РµС‚ С„РёРєСЃРёСЂРѕРІР°РЅРЅСѓСЋ СЃС‚Р°РІРєСѓ РµСЃР»Рё РѕРЅР° СѓСЃС‚Р°РЅРѕРІР»РµРЅР°
+     * РёРЅР°С‡Рµ СЂР°СЃС‡РёС‚С‹РІР°РµС‚ Р·Р°СЂРїР»Р°С‚Сѓ РёР· РїРѕС‡Р°СЃРѕРІРѕР№ СЃС‚Р°РІРєРё Рё РєРѕР»РёС‡РµСЃС‚РІР° РѕС‚СЂР°Р±РѕС‚Р°РЅРЅС‹С… С‡Р°СЃРѕРІ
      */
     public double getWeekSalary() {
         return fixedRate != 0 ? fixedRate : hoursWorked * HOURLY_RATE;

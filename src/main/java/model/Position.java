@@ -1,7 +1,7 @@
 package model;
 
 /**
- * Класс должностей
+ * РљР»Р°СЃСЃ РґРѕР»Р¶РЅРѕСЃС‚РµР№
  */
 public enum Position {
     Programmer,
