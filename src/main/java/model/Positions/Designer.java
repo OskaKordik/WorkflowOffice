@@ -11,8 +11,8 @@ public class Designer extends Person implements Сontractor {
     private double hoursWorked; //отработанные часы - для почасовой оплаты
 
 
-    public Designer(String name, double workHoursPerDay) {
-        super(name, workHoursPerDay);
+    public Designer(String name) {
+        super(name);
     }
 
     @Override
@@ -38,9 +38,8 @@ public class Designer extends Person implements Сontractor {
         hoursWorked = 0;
     }
 
-    @Override
-    public void run() {
-
+    public void getToWork() {
+        //выполняет свою работу
         hoursWorked += amountHoursOneInstructions;
         workHoursPerDay -= amountHoursOneInstructions;
     }

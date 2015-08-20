@@ -11,8 +11,8 @@ public class Tester extends Person implements Сontractor {
     private double hoursWorked; //отработанные часы - для почасовой оплаты
 
 
-    public Tester(String name, double workHoursPerDay) {
-        super(name, workHoursPerDay);
+    public Tester(String name) {
+        super(name);
     }
 
     @Override
@@ -37,9 +37,8 @@ public class Tester extends Person implements Сontractor {
         hoursWorked = 0;
     }
 
-    @Override
-    public void run() {
-
+    public void getToWork() {
+        //выполняет свою работу
         hoursWorked += amountHoursOneInstructions;
         workHoursPerDay -= amountHoursOneInstructions;
     }

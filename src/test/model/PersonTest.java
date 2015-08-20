@@ -14,7 +14,7 @@ public class PersonTest {
      */
     @Test
     public void test_getPositionList() {
-        Person person = new Person("Vasya", 5);
+        Person person = new Person("Vasya");
 
         assertTrue((person.getPositionList().size() > 0) && (person.getPositionList().size() <= 7));
     }

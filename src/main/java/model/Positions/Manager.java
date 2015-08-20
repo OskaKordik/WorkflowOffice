@@ -9,8 +9,8 @@ import model.Person;
 public class Manager extends Person implements Employee {
     private float fixedRate; //фиксированная ставка
 
-    public Manager(String name, double workHoursPerDay) {
-        super(name, workHoursPerDay);
+    public Manager(String name) {
+        super(name);
     }
 
     @Override
@@ -33,9 +33,8 @@ public class Manager extends Person implements Employee {
         System.out.println("Я получил зарплату! Аж : " + salary);
     }
 
-    @Override
-    public void run() {
-
+    public void getToWork() {
+        //выполняет свою работу
         workHoursPerDay -= amountHoursOneInstructions;
     }
 }

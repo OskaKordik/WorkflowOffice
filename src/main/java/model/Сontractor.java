@@ -3,7 +3,7 @@ package model;
 /**
  * Интерфейс сотрудников с почасовой оплатой
  */
-public interface Сontractor extends Runnable {
+public interface Сontractor {
 
     /**
      * Метод, устанавливающий почасовую ставку

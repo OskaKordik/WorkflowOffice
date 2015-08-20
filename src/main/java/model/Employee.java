@@ -3,7 +3,7 @@ package model;
 /**
  * Интерфейс сотрудников с фиксированной ставкой
  */
-public interface Employee extends Runnable {
+public interface Employee {
 
     /**
      * Метод, устанавливающий фиксированную ставку

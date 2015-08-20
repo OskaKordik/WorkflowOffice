@@ -7,22 +7,21 @@ import java.util.Set;
 /**
  * Класс Сотрудник
  */
-public class Person {
+public class Person implements Runnable {
     private final String name; //имя сотрудника
     private boolean isBusy; //проверка занят ли сотрудник
-    protected double workHoursPerDay; //кол-во рабочих часов в день
-    protected long amountHoursOneInstructions; //кол-во часов на выполнение одного задания
+    protected float workHoursPerDay; //кол-во рабочих часов в день
+    protected float amountHoursOneInstructions; //кол-во часов на выполнение одного задания
     private Set<Position> positionList; //список должностей
     private String task; //распоряжение к выполнению
 
     private static final SecureRandom random = new SecureRandom(); // for random enums
 
 
-    public Person(String name, double workHoursPerDay) {
+    public Person(String name) {
         this.name = name;
-        //проверить, что кол-во заданных рабочих часов не превышает 8
-        this.workHoursPerDay = workHoursPerDay;
-        amountHoursOneInstructions = (long) (Math.random() * 1 + 1); //проверить работу, отредактировать
+        workHoursPerDay = random.nextInt(8) + 1; //проверить, что кол-во заданных рабочих часов не превышает 8
+        amountHoursOneInstructions = random.nextFloat() + 1; //проверить работу, отредактировать
         isBusy = false;
         positionList = setRandomPositions();
     }
@@ -88,5 +87,26 @@ public class Person {
      */
     public void paySalary() {
         //передает информацию в отчет о выплаченной з/п
+    }
+
+    /**
+     * Метод, назначающий сотрудника на определенную должность
+     * @param position
+     */
+    public void setPositionList(Position position) {
+        positionList.add(position);
+    }
+
+    @Override
+    public void run() {
+        //работает в течении заданных часов
+        while (workHoursPerDay > 0) {
+            try {
+                Thread.sleep((long) amountHoursOneInstructions);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            workHoursPerDay -= amountHoursOneInstructions;
+        }
     }
 }

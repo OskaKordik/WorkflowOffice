@@ -10,9 +10,10 @@ import model.Person;
 public class Accountant extends Person implements Employee {
     private float fixedRate; //фиксированная ставка
 
-    public Accountant(String name, double workHoursPerDay) {
-        super(name, workHoursPerDay);
+    public Accountant(String name) {
+        super(name);
     }
+
 
     @Override
     public void setFixedRate(float fixedRate) {
@@ -35,9 +36,8 @@ public class Accountant extends Person implements Employee {
         System.out.println("Я получил зарплату! Аж : " + salary);
     }
 
-    @Override
-    public void run() {
-
+    public void getToWork() {
+        //выполняет свою работу
         workHoursPerDay -= amountHoursOneInstructions;
     }
 

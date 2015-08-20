@@ -17,8 +17,8 @@ public class Director extends Person implements Employee {
     private Map<Position, String> tasks; //список должностных обязанностей
     private List<Person> personList; //список работников
 
-    public Director(String name, double workHoursPerDay) {
-        super(name, workHoursPerDay);
+    public Director(String name) {
+        super(name);
         tasks = new HashMap<>();
         tasks.put(Position.Programmer, "писать код");
         tasks.put(Position.Designer, "рисовать макет");
@@ -26,7 +26,7 @@ public class Director extends Person implements Employee {
         tasks.put(Position.Manager, "продавать услуги");
         tasks.put(Position.Accountant, "составить отчетность");
 
-        amountHoursOneInstructions = 10; //один час
+        amountHoursOneInstructions = 1; //один час
     }
 
     @Override
@@ -50,6 +50,7 @@ public class Director extends Person implements Employee {
     }
 
     public void getToWork() {
+        //выполняет свою работу
         this.personList = Company.getPersonList();
         for (Person person : personList) {
             if (person.getPositionList().contains(Position.Accountant)) { //например задание бухгалтеру
@@ -57,17 +58,7 @@ public class Director extends Person implements Employee {
                     person.performTask(tasks.get(Position.Accountant));
                 }
             }
-            //если для выполнения задания нет свободных сотрудников
-            //нанимается фрилансер
-        }
-    }
-
-    @Override
-    public void run() {
-        //каждый час раздает всем инструкции
-        while (workHoursPerDay > 0) {
-
-            workHoursPerDay -= amountHoursOneInstructions;
+            //если для выполнения задания нет свободных сотрудников нанимается фрилансер
         }
     }
 }
