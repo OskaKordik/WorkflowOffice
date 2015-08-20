@@ -19,6 +19,11 @@ public class Manager extends Person implements Employee {
     }
 
     @Override
+    public void paySalary() {
+        reportSalary(getFixedRate());
+    }
+
+    @Override
     public float getFixedRate() {
         return fixedRate;
     }

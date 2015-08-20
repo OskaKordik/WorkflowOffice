@@ -1,7 +1,8 @@
 package model;
 
 import java.security.SecureRandom;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Класс Сотрудник
@@ -11,7 +12,7 @@ public class Person {
     private boolean isBusy; //проверка занят ли сотрудник
     protected double workHoursPerDay; //кол-во рабочих часов в день
     protected long amountHoursOneInstructions; //кол-во часов на выполнение одного задания
-    private List<Position> positionList; //список должностей
+    private Set<Position> positionList; //список должностей
     private String task; //распоряжение к выполнению
 
     private static final SecureRandom random = new SecureRandom(); // for random enums
@@ -19,10 +20,11 @@ public class Person {
 
     public Person(String name, double workHoursPerDay) {
         this.name = name;
+        //проверить, что кол-во заданных рабочих часов не превышает 8
         this.workHoursPerDay = workHoursPerDay;
-        amountHoursOneInstructions = (long) (Math.random() * 2 + 1); //проверить работу, отредактировать
+        amountHoursOneInstructions = (long) (Math.random() * 1 + 1); //проверить работу, отредактировать
         isBusy = false;
-        setRandomPositions();
+        positionList = setRandomPositions();
     }
 
     /**
@@ -32,6 +34,7 @@ public class Person {
     public void performTask(String task) {
         this.task = task;
         this.isBusy = true;
+        //передает информацию в отчет о проделланой работе
     }
 
     /**
@@ -62,20 +65,28 @@ public class Person {
      * Метод возвращает список обязанностей
      * @return positionList
      */
-    public List<Position> getPositionList() {
+    public Set<Position> getPositionList() {
         return positionList;
     }
 
     /**
      * Метод задает сотруднику список должностей случайным образом
      */
-    private void setRandomPositions() {
-        int amountPositions = (int) (Math.random() * 6 + 1); //количество должностей
+    private Set<Position> setRandomPositions() {
+        Set<Position> list = new HashSet<>();
+        int amountPositions = (int) (Math.random() * 5 + 1); //количество должностей
 
         for (int i = 0; i < amountPositions; i++) {
             int x = random.nextInt(Position.values().length); //выбор случайной должности
-            positionList.add(Position.values()[x]); //добавление в список должности
+            list.add(Position.values()[x]); //добавление в список должности
         }
+        return list;
+    }
 
+    /**
+     * Метод выплачивающий зарплату
+     */
+    public void paySalary() {
+        //передает информацию в отчет о выплаченной з/п
     }
 }

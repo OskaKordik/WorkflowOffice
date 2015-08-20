@@ -20,6 +20,13 @@ public class Designer extends Person implements Сontractor {
         this.hourlyRate = hourlyRate;
     }
 
+
+    @Override
+    public void paySalary() {
+        reportSalary(calcSalary());
+        hoursWorked = 0;
+    }
+
     @Override
     public double calcSalary() {
         return hourlyRate * hoursWorked;

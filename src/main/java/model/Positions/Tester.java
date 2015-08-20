@@ -21,6 +21,12 @@ public class Tester extends Person implements Сontractor {
     }
 
     @Override
+    public void paySalary() {
+        reportSalary(calcSalary());
+        hoursWorked = 0;
+    }
+
+    @Override
     public double calcSalary() {
         return hourlyRate * hoursWorked;
     }

@@ -1,5 +1,6 @@
 package model.Positions;
 
+import controller.Company;
 import model.Employee;
 import model.Person;
 import model.Position;
@@ -34,6 +35,11 @@ public class Director extends Person implements Employee {
     }
 
     @Override
+    public void paySalary() {
+        reportSalary(getFixedRate());
+    }
+
+    @Override
     public float getFixedRate() {
         return fixedRate;
     }
@@ -43,14 +49,16 @@ public class Director extends Person implements Employee {
         System.out.println("Я получил зарплату! Аж : " + salary);
     }
 
-    public void getToWork(List<Person> personList) {
-        this.personList = personList;
+    public void getToWork() {
+        this.personList = Company.getPersonList();
         for (Person person : personList) {
             if (person.getPositionList().contains(Position.Accountant)) { //например задание бухгалтеру
                 if (!person.isBusy() && person.isWork()) {
                     person.performTask(tasks.get(Position.Accountant));
                 }
             }
+            //если для выполнения задания нет свободных сотрудников
+            //нанимается фрилансер
         }
     }
 

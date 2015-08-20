@@ -1,5 +1,6 @@
 package model.Positions;
 
+import controller.Company;
 import model.Employee;
 import model.Person;
 
@@ -18,6 +19,12 @@ public class Accountant extends Person implements Employee {
         this.fixedRate = fixedRate;
     }
 
+
+    @Override
+    public void paySalary() {
+        reportSalary(getFixedRate());
+    }
+
     @Override
     public float getFixedRate() {
         return fixedRate;
@@ -32,5 +39,14 @@ public class Accountant extends Person implements Employee {
     public void run() {
 
         workHoursPerDay -= amountHoursOneInstructions;
+    }
+
+    /**
+     * Начисление зарплаты всем сотрудникам компании
+     */
+    public void payWeekSalary() {
+        for (Person person : Company.getPersonList()) {
+            person.paySalary();
+        }
     }
 }
