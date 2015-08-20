@@ -11,12 +11,7 @@ public interface Сontractor extends Runnable {
      */
     void setHourlyRate(float hourlyRate);
 
-    /**
-     * Метод выплачивающий зарплату
-     */
-    default void paySalary() {
-        reportSalary(calcSalary());
-    }
+
 
     /**
      * Метод расчитывающий сумму зарплаты исходя из количества отработанных часов

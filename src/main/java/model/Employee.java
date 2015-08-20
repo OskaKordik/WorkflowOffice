@@ -18,13 +18,6 @@ public interface Employee extends Runnable {
     float getFixedRate();
 
     /**
-     * Метод выплачивающий зарплату
-     */
-    default void paySalary() {
-        reportSalary(getFixedRate());
-    }
-
-    /**
      * Метод записывающий в отчет информацию о получении сотрудником зарплаты
      * @param salary
      */
