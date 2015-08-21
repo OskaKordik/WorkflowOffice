@@ -34,13 +34,12 @@ public class Designer extends Person implements Сontractor {
 
     @Override
     public void reportSalary(double salary) {
-        System.out.println("Я получил зарплату! Аж : " + salary);
+        //отчитывается о получении зарплаты
         hoursWorked = 0;
     }
 
     public void getToWork() {
         //выполняет свою работу
         hoursWorked += amountHoursOneInstructions;
-        workHoursPerDay -= amountHoursOneInstructions;
     }
 }

@@ -26,7 +26,7 @@ public class Director extends Person implements Employee {
         tasks.put(Position.Manager, "продавать услуги");
         tasks.put(Position.Accountant, "составить отчетность");
 
-        amountHoursOneInstructions = 1; //один час
+        super.amountHoursOneInstructions = 1; //один час
     }
 
     @Override
@@ -55,10 +55,11 @@ public class Director extends Person implements Employee {
         this.personList = Company.getPersonList(); //получаем список всех сотрудников
 
         for (Person person : personList) {
-            if (!person.getPositionList().contains(Position.Director)) {
-                if (!person.isBusy() && person.isWork()) {
-                    person.performTask(tasks.get(Position.Programmer)); //даем задание
-                }
+            if (!person.getPositionList().contains(Position.Director) && !person.isBusy() && person.isWork()) {
+
+                //проверяем что задание входит в обязанности сотрудника
+                if (person.getPositionList().contains(Position.Programmer))
+                    person.performTask(Position.Programmer, tasks.get(Position.Programmer)); //даем задание
             }
             //если для выполнения задания нет свободных сотрудников нанимается фрилансер
         }

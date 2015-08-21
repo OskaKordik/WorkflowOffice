@@ -33,12 +33,11 @@ public class Accountant extends Person implements Employee {
 
     @Override
     public void reportSalary(float salary) {
-        System.out.println("Я получил зарплату! Аж : " + salary);
+        //отчитывается о получении зарплаты
     }
 
     public void getToWork() {
         //выполняет свою работу
-        workHoursPerDay -= amountHoursOneInstructions;
     }
 
     /**
