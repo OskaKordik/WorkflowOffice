@@ -38,7 +38,7 @@ public class Person implements Runnable {
         positionList = setRandomPositions();
         createPositions(positionList);
 
-        currentThread = new Thread(this);
+
     }
 
     /**
@@ -47,6 +47,8 @@ public class Person implements Runnable {
      * @param task распоряжение
      */
     public void performTask(Position position, String task) {
+        currentThread = new Thread(this);
+
         this.task = task;
         this.isBusy = true;
 
@@ -127,7 +129,7 @@ public class Person implements Runnable {
      */
     private Set<Position> setRandomPositions() {
         Set<Position> list = new HashSet<>();
-        int amountPositions = (int) (Math.random() * 6 + 1); //количество должностей
+        int amountPositions = random.nextInt(6) + 1; //количество должностей
 
         for (int i = 0; i <= amountPositions; i++) {
             int x = random.nextInt(Position.values().length); //выбор случайной должности
@@ -146,27 +148,19 @@ public class Person implements Runnable {
         if (positionList.contains(Position.Director))
             director = new Director(getPersonName() + " - " + Position.Director.toString());
         else {
-            for (Position position : positionList) {
-                switch (position.toString()) {
-                    case "Programmer":
-                        programmer = new Programmer(getPersonName() + " - " + Position.Programmer.toString());
-                        break;
-                    case "Designer":
-                        designer = new Designer(getPersonName() + " - " + Position.Designer.toString());
-                        break;
-                    case "Manager":
-                        manager = new Manager(getPersonName() + " - " + Position.Manager.toString());
-                        break;
-                    case "Tester":
-                        tester = new Tester(getPersonName() + " - " + Position.Tester.toString());
-                        break;
-                    case "Accountant":
-                        accountant = new Accountant(getPersonName() + " - " + Position.Accountant.toString());
-                        break;
-                }
-            }
+            //создаем должности
+            /*
+            if (positionList.contains(Position.Programmer))
+                programmer = new Programmer(getPersonName() + " - " + Position.Programmer.toString());
+            if (positionList.contains(Position.Manager))
+                manager = new Manager(getPersonName() + " - " + Position.Manager.toString());
+
+            ...
+            */
         }
     }
+
+
 
     /**
      * Метод, назначающий сотрудника на определенную должность
