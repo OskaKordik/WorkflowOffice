@@ -51,11 +51,13 @@ public class Director extends Person implements Employee {
 
     public void getToWork() {
         //выполняет свою работу
-        this.personList = Company.getPersonList();
+
+        this.personList = Company.getPersonList(); //получаем список всех сотрудников
+
         for (Person person : personList) {
-            if (person.getPositionList().contains(Position.Accountant)) { //например задание бухгалтеру
+            if (!person.getPositionList().contains(Position.Director)) {
                 if (!person.isBusy() && person.isWork()) {
-                    person.performTask(tasks.get(Position.Accountant));
+                    person.performTask(tasks.get(Position.Programmer)); //даем задание
                 }
             }
             //если для выполнения задания нет свободных сотрудников нанимается фрилансер
