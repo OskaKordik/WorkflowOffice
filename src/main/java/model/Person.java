@@ -1,5 +1,7 @@
 package model;
 
+import model.Positions.Director;
+
 import java.security.SecureRandom;
 import java.util.HashSet;
 import java.util.Set;
@@ -73,10 +75,15 @@ public class Person implements Runnable {
      */
     private Set<Position> setRandomPositions() {
         Set<Position> list = new HashSet<>();
-        int amountPositions = (int) (Math.random() * 5 + 1); //количество должностей
+        int amountPositions = (int) (Math.random() * 6 + 1); //количество должностей
 
-        for (int i = 0; i < amountPositions; i++) {
+        for (int i = 0; i <= amountPositions; i++) {
             int x = random.nextInt(Position.values().length); //выбор случайной должности
+            if (Position.values()[x] == Position.Director) { //если выпала должность директора
+                list.clear(); //удаляем все предыдущие должности
+                list.add(Position.values()[x]);
+                break;
+            }
             list.add(Position.values()[x]); //добавление в список должности
         }
         return list;
@@ -91,16 +98,22 @@ public class Person implements Runnable {
 
     /**
      * Метод, назначающий сотрудника на определенную должность
-     * @param position
+     * @param position должность
      */
     public void setPositionList(Position position) {
+        if (position == Position.Director) { //если выпала должность директора
+            positionList.clear(); //удаляем все предыдущие должности
+        }
         positionList.add(position);
     }
 
     @Override
     public void run() {
         //работает в течении заданных часов
+        Director director;
         while (workHoursPerDay > 0) {
+            director = new Director(name + " - " + Position.Director.toString());
+            director.getToWork(); //директор каждый час раздает распоряжения
             try {
                 Thread.sleep((long) amountHoursOneInstructions);
             } catch (InterruptedException e) {
