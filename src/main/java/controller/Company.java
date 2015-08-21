@@ -16,38 +16,37 @@ public class Company {
         setRandomPerson();
 
         //проверка, что в фирме есть директор
-        if (!isContainsPosition(Position.Director)) {
-            Person person = new Person("Director");
-            person.setPositionList(Position.Director);
-            personList.add(person);
-        }
+        containsPosition(Position.Director);
+
         //проверка, что в фирме есть менеджер
-        if (!isContainsPosition(Position.Manager)) {
-            Person person = new Person("Manager");
-            person.setPositionList(Position.Manager);
-            personList.add(person);
-        }
+        containsPosition(Position.Manager);
+
         //проверка, что в фирме есть бухгалтер
-        if (!isContainsPosition(Position.Accountant)) {
-            Person person = new Person("Accountant");
-            person.setPositionList(Position.Accountant);
-            personList.add(person);
-        }
+        containsPosition(Position.Accountant);
+
         try {
-            workMonth(); //запуск моделирования работы компании в течении месяца
+            //workMonth(); //запуск моделирования работы компании в течении месяца
+            //workWeek(); //запуск моделирования работы компании в течении недели
+            workDay(); //запуск моделирования работы компании в течении дня
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
+
+
     /**
-     * Метод, запускающий работу сотрудников в течении дня
+     * Метод, запускающий работу сотрудников с должностью Директора в течении дня
      * @throws InterruptedException
      */
     private static void workDay() throws InterruptedException {
+        Thread threadDirector;
         for (Person person : personList) {
-            Thread threadPerson = new Thread(person);
-            threadPerson.start();
+            if (person.getPositionList().contains(Position.Director)) {
+                threadDirector = new Thread(person);
+                threadDirector.start();
+                threadDirector.join(); //запускает каждого директора поочередно
+            }
         }
         Thread.sleep(8);
     }
@@ -71,10 +70,17 @@ public class Company {
     }
 
     /**
-     * Метод проверяет есть ли указанная должность в списке сотрудников
-     * @param position
-     * @return true or false
+     * Метод проверяет наличие определенной должности у сотрудников
+     * если нет - создает нового и назначает ему должность
+     * @param position должность
      */
+    private static void containsPosition(Position position) {
+        if (!isContainsPosition(position)) {
+            Person person = new Person("Сотрудник №" + personList.size() + 1);
+            person.setPositionList(position);
+            personList.add(person);
+        }
+    }
     private static boolean isContainsPosition(Position position) {
         for (Person person : personList) {
             if (person.getPositionList().contains(position)) return true;
