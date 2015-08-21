@@ -1,6 +1,6 @@
 package model;
 
-import model.Positions.Director;
+import model.Positions.*;
 
 import java.security.SecureRandom;
 import java.util.HashSet;
@@ -12,10 +12,20 @@ import java.util.Set;
 public class Person implements Runnable {
     private final String name; //имя сотрудника
     private boolean isBusy; //проверка занят ли сотрудник
-    protected float workHoursPerDay; //кол-во рабочих часов в день
+    protected final float workHoursPerDay; //кол-во рабочих часов в день
+    private float workHours; //счетчик рабочих часов
     protected float amountHoursOneInstructions; //кол-во часов на выполнение одного задания
     private Set<Position> positionList; //список должностей
     private String task; //распоряжение к выполнению
+
+    private Programmer programmer;
+    private Designer designer;
+    private Director director;
+    private Manager manager;
+    private Tester tester;
+    private Accountant accountant;
+
+    private Thread currentThread;
 
     private static final SecureRandom random = new SecureRandom(); // for random enums
 
@@ -26,16 +36,55 @@ public class Person implements Runnable {
         amountHoursOneInstructions = random.nextFloat() + 1; //проверить работу, отредактировать
         isBusy = false;
         positionList = setRandomPositions();
+        createPositions(positionList);
+
+        currentThread = new Thread(this);
     }
 
     /**
-     * Метод запускает выполнение распоряжения
+     * Метод запускает выполнение распоряжения (только если сотрудник не директор)
+     *
      * @param task распоряжение
      */
-    public void performTask(String task) {
+    public void performTask(Position position, String task) {
         this.task = task;
         this.isBusy = true;
-        //передает информацию в отчет о проделланой работе
+
+        /*
+        switch (position.toString()) {
+            case "Programmer":
+                programmer.getToWork();
+                break;
+            case "Designer":
+                designer.getToWork();
+                break;
+            case "Manager":
+                manager.getToWork();
+                break;
+            case "Tester":
+                tester.getToWork();
+                break;
+            case "Accountant":
+                accountant.getToWork();
+                break;
+            default: break;
+        }
+        */
+        currentThread.start();
+
+        //передает информацию в отчет о проделанной работе
+    }
+
+    @Override
+    public void run() {
+        //выполянет работу
+        workHours -= amountHoursOneInstructions;
+        try {
+            Thread.sleep((long) amountHoursOneInstructions); //время выполнение задания
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        this.isBusy = false; //сотрудник освободился
     }
 
     /**
@@ -47,6 +96,7 @@ public class Person implements Runnable {
 
     /**
      * Метод, проверяющий занят ли сотрудник выполнением распоряжения
+     *
      * @return возвращает true если сотрудник занят
      */
     public boolean isBusy() {
@@ -56,14 +106,16 @@ public class Person implements Runnable {
     /**
      * Метод проверяет, что количество времени необходимое на выполнение распоряжения
      * не превышает количество оставшихся рабочих часов
+     *
      * @return готов ли сотрудник выполнить распоряжение
      */
     public boolean isWork() {
-        return amountHoursOneInstructions <= workHoursPerDay;
+        return amountHoursOneInstructions <= workHours;
     }
 
     /**
      * Метод возвращает список обязанностей
+     *
      * @return positionList
      */
     public Set<Position> getPositionList() {
@@ -82,6 +134,7 @@ public class Person implements Runnable {
             if (Position.values()[x] == Position.Director) { //если выпала должность директора
                 list.clear(); //удаляем все предыдущие должности
                 list.add(Position.values()[x]);
+                amountHoursOneInstructions = 1;
                 break;
             }
             list.add(Position.values()[x]); //добавление в список должности
@@ -89,15 +142,35 @@ public class Person implements Runnable {
         return list;
     }
 
-    /**
-     * Метод выплачивающий зарплату
-     */
-    public void paySalary() {
-        //передает информацию в отчет о выплаченной з/п
+    private void createPositions(Set<Position> positionList) {
+        if (positionList.contains(Position.Director))
+            director = new Director(getPersonName() + " - " + Position.Director.toString());
+        else {
+            for (Position position : positionList) {
+                switch (position.toString()) {
+                    case "Programmer":
+                        programmer = new Programmer(getPersonName() + " - " + Position.Programmer.toString());
+                        break;
+                    case "Designer":
+                        designer = new Designer(getPersonName() + " - " + Position.Designer.toString());
+                        break;
+                    case "Manager":
+                        manager = new Manager(getPersonName() + " - " + Position.Manager.toString());
+                        break;
+                    case "Tester":
+                        tester = new Tester(getPersonName() + " - " + Position.Tester.toString());
+                        break;
+                    case "Accountant":
+                        accountant = new Accountant(getPersonName() + " - " + Position.Accountant.toString());
+                        break;
+                }
+            }
+        }
     }
 
     /**
      * Метод, назначающий сотрудника на определенную должность
+     *
      * @param position должность
      */
     public void setPositionList(Position position) {
@@ -107,19 +180,11 @@ public class Person implements Runnable {
         positionList.add(position);
     }
 
-    @Override
-    public void run() {
-        //работает в течении заданных часов
-        Director director;
-        while (workHoursPerDay > 0) {
-            director = new Director(name + " - " + Position.Director.toString());
-            director.getToWork(); //директор каждый час раздает распоряжения
-            try {
-                Thread.sleep((long) amountHoursOneInstructions);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            workHoursPerDay -= amountHoursOneInstructions;
-        }
+    /**
+     * Метод выплачивающий зарплату
+     */
+    public void paySalary() {
+        //передает информацию в отчет о выплаченной з/п
     }
+
 }
