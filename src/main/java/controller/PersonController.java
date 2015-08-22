@@ -50,7 +50,7 @@ public final class PersonController {
         //кол-во времени на выполнение одного задания
         person.setAmountHoursOneInstructions(random.nextFloat() + 1);
         //кол-во рабочих часов в день
-        person.setWorkHours(random.nextInt(8) + 1);
+        person.setWorkHoursPerDay(random.nextInt(8) + 1);
         //добавляет сотрудника в список
         return person;
     }
