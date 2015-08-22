@@ -13,10 +13,13 @@ public final class PersonController {
     public static final PersonController INSTANCE = new PersonController();
     private static final SecureRandom random = new SecureRandom(); // for random enums
 
-    private static Map<Person, Set<Position>> personList; //список сотрудников
-    private static Set<Position> necessaryPositions; //список обязательных должностей
+    private Map<Person, Set<Position>> personList; //список сотрудников
+    private Set<Position> necessaryPositions; //список обязательных должностей
 
 
+    /**
+     * Метод запускающий работу контроллера
+     */
     public void runPersonController() {
         personList = createRandomPerson(); //создаем список сотрудников
 
@@ -80,7 +83,7 @@ public final class PersonController {
     /**
      * Метод добавляет сотрудника с необходимой должностью
      * в случае если такого нет в штате
-     *  @param list     список сотрудников
+     * @param list     список сотрудников
      * @param position должность
      */
     protected Map<Person, Set<Position>> editingPersonPositions(Map<Person, Set<Position>> list, Position position) {
@@ -98,7 +101,7 @@ public final class PersonController {
      * @param list     список сотрудников
      * @param position должность
      */
-    private boolean isContainsPosition(Map<Person, Set<Position>> list, Position position) {
+    protected boolean isContainsPosition(Map<Person, Set<Position>> list, Position position) {
         for (Map.Entry<Person, Set<Position>> person : list.entrySet())
             if (person.getValue().contains(position)) return true;
         return false;
@@ -115,7 +118,15 @@ public final class PersonController {
      * Метод задающий список обязательных должностей
      * @param necessaryPositions список должностей
      */
-    public void setNecessaryPositions(Set<Position> necessaryPositions) {
-        PersonController.necessaryPositions = necessaryPositions;
+    protected void setNecessaryPositions(Set<Position> necessaryPositions) {
+        this.necessaryPositions = necessaryPositions;
+    }
+
+    /**
+     * Метод возвращает список обязательных должностей
+     * @return список должностей
+     */
+    protected Set<Position> getNecessaryPositions() {
+        return necessaryPositions;
     }
 }
