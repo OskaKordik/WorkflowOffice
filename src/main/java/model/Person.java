@@ -4,16 +4,18 @@ package model;
  * Класс Сотрудник
  */
 public class Person extends Thread {
-    private final String name; //имя сотрудника
+    private final String personName; //имя сотрудника
     private boolean isBusy; //проверка занят ли сотрудник
+
     private float workHoursPerDay; //кол-во рабочих часов в день
-    private float workHours; //счетчик рабочих часов
-    protected float amountHoursOneInstructions; //кол-во часов на выполнение одного задания
+    private float amountHoursOneInstructions; //кол-во часов на выполнение одного задания
+
     private String task; //распоряжение к выполнению
+    private float workHours; //счетчик рабочих часов
 
 
     public Person(String name) {
-        this.name = name;
+        this.personName = name;
         this.isBusy = false;
     }
 
@@ -22,31 +24,24 @@ public class Person extends Thread {
      * @param task распоряжение
      */
     public void performTask(Position position, String task) {
-
         this.task = task;
         this.isBusy = true;
-
         //передает информацию в отчет о проделанной работе
     }
 
     @Override
     public void run() {
         //выполянет работу
+        workHours = workHoursPerDay;
         workHours -= amountHoursOneInstructions;
         try {
             Thread.sleep((long) amountHoursOneInstructions); //время выполнение задания
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        this.isBusy = false; //сотрудник освободился
+        isBusy = false; //сотрудник освободился
     }
 
-    /**
-     * Метод возвращает имя сотрудника
-     */
-    public String getPersonName() {
-        return name;
-    }
 
     /**
      * Метод, проверяющий занят ли сотрудник выполнением распоряжения
@@ -66,14 +61,6 @@ public class Person extends Thread {
         return amountHoursOneInstructions <= workHours;
     }
 
-    public void setWorkHoursPerDay(float workHoursPerDay) {
-        this.workHoursPerDay = workHoursPerDay;
-    }
-
-    public void setAmountHoursOneInstructions(float amountHoursOneInstructions) {
-        this.amountHoursOneInstructions = amountHoursOneInstructions;
-    }
-
     public void paySalary() {
         //передает информацию в отчет о выплаченной з/п
     }
@@ -82,4 +69,26 @@ public class Person extends Thread {
         //передает информацию в отчет о проделанной работе
     }
 
+
+
+
+    public String getPersonName() {
+        return personName;
+    }
+
+    public void setWorkHoursPerDay(float workHoursPerDay) {
+        this.workHoursPerDay = workHoursPerDay;
+    }
+
+    public float getWorkHoursPerDay() {
+        return workHoursPerDay;
+    }
+
+    public void setAmountHoursOneInstructions(float amountHoursOneInstructions) {
+        this.amountHoursOneInstructions = amountHoursOneInstructions;
+    }
+
+    public float getAmountHoursOneInstructions() {
+        return amountHoursOneInstructions;
+    }
 }
