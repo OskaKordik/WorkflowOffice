@@ -13,6 +13,7 @@ public class Programmer extends Person implements Сontractor {
 
     public Programmer(String name) {
         super(name);
+        hoursWorked = 0;
     }
 
     @Override
