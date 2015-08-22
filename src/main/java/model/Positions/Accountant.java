@@ -1,6 +1,5 @@
 package model.Positions;
 
-import controller.Company;
 import model.Employee;
 import model.Person;
 
@@ -44,8 +43,6 @@ public class Accountant extends Person implements Employee {
      * Начисление зарплаты всем сотрудникам компании
      */
     public void payWeekSalary() {
-        for (Person person : Company.getPersonList()) {
-            person.paySalary();
-        }
+
     }
 }
