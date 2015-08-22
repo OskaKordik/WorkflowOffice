@@ -1,6 +1,5 @@
 package model.Positions;
 
-import controller.Company;
 import model.Employee;
 import model.Person;
 import model.Position;
@@ -51,17 +50,5 @@ public class Director extends Person implements Employee {
 
     public void getToWork() {
         //выполняет свою работу
-
-        this.personList = Company.getPersonList(); //получаем список всех сотрудников
-
-        for (Person person : personList) {
-            if (!person.getPositionList().contains(Position.Director) && !person.isBusy() && person.isWork()) {
-
-                //проверяем что задание входит в обязанности сотрудника
-                if (person.getPositionList().contains(Position.Programmer))
-                    person.performTask(Position.Programmer, tasks.get(Position.Programmer)); //даем задание
-            }
-            //если для выполнения задания нет свободных сотрудников нанимается фрилансер
-        }
     }
 }
