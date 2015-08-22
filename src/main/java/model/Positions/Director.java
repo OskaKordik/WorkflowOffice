@@ -25,7 +25,7 @@ public class Director extends Person implements Employee {
         tasks.put(Position.Manager, "продавать услуги");
         tasks.put(Position.Accountant, "составить отчетность");
 
-        super.amountHoursOneInstructions = 1; //один час
+        super.setAmountHoursOneInstructions(1); //один час
     }
 
     @Override

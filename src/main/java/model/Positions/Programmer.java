@@ -40,6 +40,5 @@ public class Programmer extends Person implements Сontractor {
 
     public void getToWork() {
         //выполняет свою работу
-        hoursWorked += amountHoursOneInstructions;
     }
 }
