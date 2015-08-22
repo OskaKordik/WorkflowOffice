@@ -28,6 +28,9 @@ public class PersonControllerTest {
         assertNotNull(PersonController.INSTANCE.getPersonList());
     }
 
+    /**
+     * Тест проверяет корректно ли задается список обязательных должностей
+     */
     @Test
     public void testSetNecessaryPositions() {
         Set<Position> positions = new HashSet<>();
@@ -38,29 +41,27 @@ public class PersonControllerTest {
         assertNotNull(PersonController.INSTANCE.getNecessaryPositions());
     }
 
+    /**
+     * Тест проверяет корректное установление случайных должностей
+     */
     @Test
     public void testSetRandomPositions() {
         assertNotNull(PersonController.INSTANCE.setRandomPositions());
     }
 
+    /**
+     * Тест проверяет корректное создание сотрудника
+     */
     @Test
     public void testCreatePerson() {
         assertNotNull(PersonController.INSTANCE.createPerson("TestPerson"));
     }
 
-
+    /**
+     * Тест проверяет корректное редактирование списка сотрудников
+     */
     @Test
-    public void testEditingPersonPositions() {
-        PersonController.INSTANCE.runPersonController();
-        Map<Person, Set<Position>> testList = PersonController.INSTANCE.getPersonList();
-
-        PersonController.INSTANCE.editingPersonPositions(testList, Position.Director);
-
-        assertNotNull(PersonController.INSTANCE.getPersonList());
-    }
-
-    @Test
-    public void testSizeListPersonsAfterEditingPersonPositions() {
+    public void testListPersonsAfterEditingPersonPositions() {
         Map<Person, Set<Position>> testList = new HashMap<>();
         Set<Position> positions = new HashSet<>();
         positions.add(Position.Accountant);
@@ -76,11 +77,17 @@ public class PersonControllerTest {
     }
 
 
+    /**
+     * Тест проверяет корректное создание списка сотрудников
+     */
     @Test
     public void testCreateRandomPerson() {
         assertNotNull(PersonController.INSTANCE.createRandomPerson());
     }
 
+    /**
+     * Тест проверяет корректность работы метода isContainsPosition()
+     */
     @Test
     public void testIsContainsPosition() {
         Map<Person, Set<Position>> testList = PersonController.INSTANCE.createRandomPerson();
