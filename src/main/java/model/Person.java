@@ -6,6 +6,7 @@ package model;
 public class Person extends Thread {
     private final String personName; //имя сотрудника
     private boolean isBusy; //проверка занят ли сотрудник
+    private boolean isTask;
 
     private float workHoursPerDay; //кол-во рабочих часов в день
     private float amountHoursOneInstructions; //кол-во часов на выполнение одного задания
@@ -17,6 +18,7 @@ public class Person extends Thread {
     public Person(String name) {
         this.personName = name;
         this.isBusy = false;
+        this.isTask = false;
     }
 
     /**
@@ -33,11 +35,8 @@ public class Person extends Thread {
     public void run() {
         //выполянет работу
         workHours = workHoursPerDay;
-        workHours -= amountHoursOneInstructions;
-        try {
-            Thread.sleep((long) amountHoursOneInstructions); //время выполнение задания
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        while (!isTask) {
+            Thread.yield();
         }
         isBusy = false; //сотрудник освободился
     }
@@ -69,8 +68,9 @@ public class Person extends Thread {
         //передает информацию в отчет о проделанной работе
     }
 
-
-
+    public void setIsTask(boolean isTask) {
+        this.isTask = isTask;
+    }
 
     public String getPersonName() {
         return personName;
