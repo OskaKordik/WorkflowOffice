@@ -23,18 +23,21 @@ public final class PersonController {
         //проверка, что в фирме есть необходимые должности
         if (necessaryPositions != null)
             for (Position position : necessaryPositions)
-                editingPersonPositions(personList, position);
+                personList = editingPersonPositions(personList, position);
     }
 
     /**
      * Метод создает список сотрудников
      */
-    private Map<Person, Set<Position>> createRandomPerson() {
+    protected Map<Person, Set<Position>> createRandomPerson() {
         Map<Person, Set<Position>> list = new HashMap<>();
         int countPersons = random.nextInt(90) + 10; //кол-во сотрудников (от 10 до 100)
 
-        for (int i = 1; i <= countPersons; i++)
-            personList.put(createPerson("Сотрудник №" + i), setRandomPositions());
+        for (int i = 1; i <= countPersons; i++) {
+            Person person = createPerson("Сотрудник №" + i);
+            Set<Position> position = setRandomPositions();
+            list.put(person, position);
+        }
 
         return list;
     }
@@ -45,7 +48,7 @@ public final class PersonController {
      * @param name имя сотрудника
      * @return сотрудника
      */
-    private Person createPerson(String name) {
+    protected Person createPerson(String name) {
         Person person = new Person(name);
         //кол-во времени на выполнение одного задания
         person.setAmountHoursOneInstructions(random.nextFloat() + 1);
@@ -58,7 +61,7 @@ public final class PersonController {
     /**
      * Метод задает сотруднику список должностей случайным образом
      */
-    private Set<Position> setRandomPositions() {
+    protected Set<Position> setRandomPositions() {
         Set<Position> list = new HashSet<>();
         int amountPositions = random.nextInt(6) + 1; //количество должностей
 
@@ -77,16 +80,16 @@ public final class PersonController {
     /**
      * Метод добавляет сотрудника с необходимой должностью
      * в случае если такого нет в штате
-     *
-     * @param list     список сотрудников
+     *  @param list     список сотрудников
      * @param position должность
      */
-    private void editingPersonPositions(Map<Person, Set<Position>> list, Position position) {
-        if (!isContainsPosition(personList, position)) {
+    protected Map<Person, Set<Position>> editingPersonPositions(Map<Person, Set<Position>> list, Position position) {
+        if (!isContainsPosition(list, position)) {
             Set<Position> positionList = new HashSet<>();
             positionList.add(position);
-            personList.put(createPerson("Сотрудник №" + (personList.size() + 1)), positionList);
+            list.put(createPerson("Сотрудник №" + (list.size() + 1)), positionList);
         }
+        return list;
     }
 
     /**
