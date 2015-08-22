@@ -22,7 +22,7 @@ public class PersonTest {
     }
 
     /**
-     * Метод проверяет корректно ли задается имя person при создании
+     * Тест проверяет корректно ли задается имя person при создании
      */
     @Test
     public void testGetPersonName() {
@@ -30,7 +30,7 @@ public class PersonTest {
     }
 
     /**
-     * Метод проверяет, что сотрудник сразу после создания не занят
+     * Тест проверяет, что сотрудник сразу после создания не занят
      */
     @Test
     public void testIsBusy() {
@@ -39,6 +39,9 @@ public class PersonTest {
     }
 
 
+    /**
+     * Тест проверяет корректно ли задается кол-во рабочих часов в день
+     */
     @Test
     public void testSetWorkHoursPerDay() {
         float hours = 6.1f;
@@ -47,6 +50,9 @@ public class PersonTest {
     }
 
 
+    /**
+     * Тест проверяет корректно ли задается кол-во времени на выполнение одного задания
+     */
     @Test
     public void testSetAmountHoursOneInstructions() {
         float hours = 1.1f;
