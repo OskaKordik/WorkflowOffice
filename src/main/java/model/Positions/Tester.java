@@ -39,6 +39,5 @@ public class Tester extends Person implements Сontractor {
 
     public void getToWork() {
         //выполняет свою работу
-        hoursWorked += amountHoursOneInstructions;
     }
 }
