@@ -104,7 +104,7 @@ public class PersonControllerTest {
      * Тест проверяет корректность создания списка с экземплярами должностей
      */
     @Test
-    public void testCreatePositionForPerson() {
+    public void testCreatePositionsForPerson() {
         Set<Position> positionList = new HashSet<>();
         positionList.add(Position.Designer);
         positionList.add(Position.Accountant);
@@ -112,13 +112,25 @@ public class PersonControllerTest {
         positionList.add(Position.Programmer);
         positionList.add(Position.Tester);
 
-        Map<Position, APosition> positionMap = PersonController.INSTANCE.createPositionForPerson(positionList);
+        Map<Position, APosition> positionMap = PersonController.INSTANCE.createPositionsForPerson(positionList);
 
         for (Map.Entry<Position, APosition> positionEntry : positionMap.entrySet()) {
             String positionName = positionEntry.getKey().toString();
             String positionClassName = positionEntry.getValue().getNamePositions();
 
             assertEquals(positionName, positionClassName);
+        }
+    }
+
+    /**
+     * Тест проверяет создание списка с экземплярами должностей после создания сотрудника
+     */
+    @Test
+    public void testCreateRandomPersonWithCreatePositionsForPerson() {
+        Map<Person, Set<Position>> testList = PersonController.INSTANCE.createRandomPerson();
+        for (Map.Entry<Person, Set<Position>> person : testList.entrySet()) {
+
+            assertNotNull(person.getKey().getListPositions());
         }
     }
 }
