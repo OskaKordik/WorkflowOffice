@@ -21,4 +21,7 @@ public abstract class APosition {
      */
     public abstract double paySalary();
 
+    public String getNamePositions() {
+        return namePositions;
+    }
 }
