@@ -28,6 +28,8 @@ public class Person extends Thread {
     public void performTask(Position position, String task) {
         this.task = task;
         this.isBusy = true;
+        this.isTask = true;
+        //передать управление должности
         //передает информацию в отчет о проделанной работе
     }
 
