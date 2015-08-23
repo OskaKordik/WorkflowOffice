@@ -37,19 +37,25 @@ public class Person extends Thread {
 
     @Override
     public void run() {
+        int countTask = 0;
         workHours = workHoursPerDay;
         while(workHours > 0) {
             while (!isTask && !stopWork) Thread.yield(); //ждем получения задания или конца рабочего дня
             if (isTask) { //если есть задание
+                this.isBusy = true;
                 try {
                     Thread.sleep((long) amountHoursOneInstructions); //время выполнения задания
-                    System.out.println("Я выполнил работу!"); //выполняем распоряжение
+                    countTask++;
+                    System.out.println("Я выполнил работу! " + countTask); //выполняем распоряжение
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 workHours -= amountHoursOneInstructions; //высчитываем отработанные часы
                 isBusy = false; //сотрудник освободился
-            } else if (stopWork) break; //если рабочий день закончился - останавливаем поток
+                isTask = false; //задание выполнено
+            } else if (stopWork) {
+                break; //если рабочий день закончился - останавливаем поток
+            }
         }
     }
 
