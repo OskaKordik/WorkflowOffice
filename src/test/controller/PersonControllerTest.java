@@ -2,6 +2,7 @@ package controller;
 
 import model.Person;
 import model.Position;
+import model.Positions.APosition;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -97,5 +98,27 @@ public class PersonControllerTest {
         testList.put(testPerson, positionList); //добавляем в список сотрудника с определенной должностью
 
         assertTrue(PersonController.INSTANCE.isContainsPosition(testList, Position.Director));
+    }
+
+    /**
+     * Тест проверяет корректность создания списка с экземплярами должностей
+     */
+    @Test
+    public void testCreatePositionForPerson() {
+        Set<Position> positionList = new HashSet<>();
+        positionList.add(Position.Designer);
+        positionList.add(Position.Accountant);
+        positionList.add(Position.Manager);
+        positionList.add(Position.Programmer);
+        positionList.add(Position.Tester);
+
+        Map<Position, APosition> positionMap = PersonController.INSTANCE.createPositionForPerson(positionList);
+
+        for (Map.Entry<Position, APosition> positionEntry : positionMap.entrySet()) {
+            String positionName = positionEntry.getKey().toString();
+            String positionClassName = positionEntry.getValue().getNamePositions();
+
+            assertEquals(positionName, positionClassName);
+        }
     }
 }
