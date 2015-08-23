@@ -16,10 +16,4 @@ public interface Employee {
      * @return fixedRate
      */
     float getFixedRate();
-
-    /**
-     * Метод записывающий в отчет информацию о получении сотрудником зарплаты
-     * @param salary
-     */
-    void reportSalary(float salary);
 }

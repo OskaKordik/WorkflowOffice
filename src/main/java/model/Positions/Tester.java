@@ -1,43 +1,55 @@
 package model.Positions;
 
-import model.Person;
 import model.Сontractor;
 
 /**
  * Класс должности Тестировщик
  */
-public class Tester extends Person implements Сontractor {
+public class Tester extends APosition implements Сontractor {
     private float hourlyRate; //почасовая ставка
     private double hoursWorked; //отработанные часы - для почасовой оплаты
 
 
     public Tester(String name) {
         super(name);
+        hoursWorked = 0;
     }
 
+    /**
+     * Метод, устанавливающий почасовую ставку
+     * @param hourlyRate
+     */
     @Override
     public void setHourlyRate(float hourlyRate) {
         this.hourlyRate = hourlyRate;
     }
 
-    @Override
-    public void paySalary() {
-        reportSalary(calcSalary());
-        hoursWorked = 0;
-    }
-
+    /**
+     * Метод расчитывающий сумму зарплаты исходя из количества отработанных часов
+     * и почасовой ставки
+     * @return salary
+     */
     @Override
     public double calcSalary() {
         return hourlyRate * hoursWorked;
     }
 
-    @Override
-    public void reportSalary(double salary) {
-        //отчитывается о получении зарплаты
-        hoursWorked = 0;
-    }
-
+    /**
+     * Метод в котором выполняется работа должности
+     */
     public void getToWork() {
         //выполняет свою работу
+    }
+
+    /**
+     * Метод для получения зарплаты
+     * @return сумму зарплаты
+     */
+    @Override
+    public double paySalary() {
+        double salary = calcSalary();
+        //отчитывается о получении зарплаты
+        hoursWorked = 0;
+        return salary;
     }
 }

@@ -1,54 +1,51 @@
 package model.Positions;
 
 import model.Employee;
-import model.Person;
-import model.Position;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Класс должности Директор
  */
-public class Director extends Person implements Employee {
+public class Director extends APosition implements Employee {
     private float fixedRate; //фиксированная ставка
-    private Map<Position, String> tasks; //список должностных обязанностей
-    private List<Person> personList; //список работников
 
     public Director(String name) {
         super(name);
-        tasks = new HashMap<>();
-        tasks.put(Position.Programmer, "писать код");
-        tasks.put(Position.Designer, "рисовать макет");
-        tasks.put(Position.Tester, "тестировать программу");
-        tasks.put(Position.Manager, "продавать услуги");
-        tasks.put(Position.Accountant, "составить отчетность");
-
-        super.setAmountHoursOneInstructions(1); //один час
     }
 
+    /**
+     * Метод, устанавливающий фиксированную ставку
+     * @param fixedRate
+     */
     @Override
     public void setFixedRate(float fixedRate) {
         this.fixedRate = fixedRate;
     }
 
+    /**
+     * Метод в котором выполняется работа должности
+     */
     @Override
-    public void paySalary() {
-        reportSalary(getFixedRate());
+    public void getToWork() {
+        //выполняет свою работу
+        //раздает всем задания
     }
 
+    /**
+     * Метод для получения зарплаты
+     * @return сумму зарплаты
+     */
+    @Override
+    public double paySalary() {
+        //отчитывается о получении зарплаты
+        return getFixedRate();
+    }
+
+    /**
+     * Метод возвращает фиксированную ставку
+     * @return fixedRate
+     */
     @Override
     public float getFixedRate() {
         return fixedRate;
-    }
-
-    @Override
-    public void reportSalary(float salary) {
-        System.out.println("Я получил зарплату! Аж : " + salary);
-    }
-
-    public void getToWork() {
-        //выполняет свою работу
     }
 }

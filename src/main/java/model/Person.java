@@ -76,8 +76,9 @@ public class Person extends Thread {
         return amountHoursOneInstructions <= workHours;
     }
 
-    public void paySalary() {
+    public double paySalary() {
         //передает информацию в отчет о выплаченной з/п
+        return 0;
     }
 
     public void passReport(String report) {

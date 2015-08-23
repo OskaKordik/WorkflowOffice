@@ -1,42 +1,51 @@
 package model.Positions;
 
 import model.Employee;
-import model.Person;
 
 /**
  * Класс должности Бухгалтер
  */
-public class Accountant extends Person implements Employee {
+public class Accountant extends APosition implements Employee {
     private float fixedRate; //фиксированная ставка
 
     public Accountant(String name) {
         super(name);
     }
 
-
+    /**
+     * Метод, устанавливающий фиксированную ставку
+     * @param fixedRate
+     */
     @Override
     public void setFixedRate(float fixedRate) {
         this.fixedRate = fixedRate;
     }
 
-
+    /**
+     * Метод в котором выполняется работа должности
+     */
     @Override
-    public void paySalary() {
-        reportSalary(getFixedRate());
+    public void getToWork() {
+        //выполняет свою работу
     }
 
+    /**
+     * Метод для получения зарплаты
+     * @return сумму зарплаты
+     */
+    @Override
+    public double paySalary() {
+        //отчитывается о получении зарплаты
+        return getFixedRate();
+    }
+
+    /**
+     * Метод возвращает фиксированную ставку
+     * @return fixedRate
+     */
     @Override
     public float getFixedRate() {
         return fixedRate;
-    }
-
-    @Override
-    public void reportSalary(float salary) {
-        //отчитывается о получении зарплаты
-    }
-
-    public void getToWork() {
-        //выполняет свою работу
     }
 
     /**
