@@ -41,7 +41,7 @@ public final class PersonController {
         for (int i = 1; i <= countPersons; i++) {
             Person person = createPerson("Сотрудник №" + i);
             Set<Position> positionList = setRandomPositions();
-            person.setListPositions(createPositionForPerson(positionList)); //задаем список должностей
+            person.setListPositions(createPositionsForPerson(positionList)); //задаем список должностей
 
             list.put(person, positionList); //добавляем сотрудника в список
         }
@@ -54,7 +54,7 @@ public final class PersonController {
      * @param posList список должностей определенного сотрудника
      * @return список экземпляров с должностями
      */
-    protected Map<Position, APosition> createPositionForPerson(Set<Position> posList) {
+    protected Map<Position, APosition> createPositionsForPerson(Set<Position> posList) {
         Map<Position, APosition> positionMap = new HashMap<>();
         for (Position pos : posList) {
             int countPos = pos.ordinal();
