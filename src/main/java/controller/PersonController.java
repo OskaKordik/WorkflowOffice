@@ -2,6 +2,8 @@ package controller;
 
 import model.Person;
 import model.Position;
+import model.Positions.APosition;
+import model.Positions.Programmer;
 
 import java.security.SecureRandom;
 import java.util.*;
@@ -39,10 +41,42 @@ public final class PersonController {
         for (int i = 1; i <= countPersons; i++) {
             Person person = createPerson("Сотрудник №" + i);
             Set<Position> position = setRandomPositions();
+
+            Map<Position, APosition> positionMap = createPositionForPerson(position); //протестить!
+            person.setListPositions(positionMap); //задаем список должностей
+
             list.put(person, position);
         }
 
         return list;
+    }
+
+    /**
+     * Метод создает эекземпляры классов соответстующих должностей для сотрудника
+     * @param posList список должностей определенного сотрудника
+     * @return список экземпляров с должностями
+     */
+    protected Map<Position, APosition> createPositionForPerson(Set<Position> posList) {
+        Map<Position, APosition> positionMap = new HashMap<>();
+        for (Position pos : posList) {
+            int countPos = pos.ordinal();
+            switch (countPos) {
+                case 0 : positionMap.put(pos, new Programmer("Programmer"));
+                    break;
+                case 1 : positionMap.put(pos, new Programmer("Designer"));
+                    break;
+                case 2 : positionMap.put(pos, new Programmer("Tester"));
+                    break;
+                case 3 : positionMap.put(pos, new Programmer("Manager"));
+                    break;
+                case 4 : positionMap.put(pos, new Programmer("Director"));
+                    break;
+                case 5 : positionMap.put(pos, new Programmer("Accountant"));
+                    break;
+                default: break;
+            }
+        }
+        return positionMap;
     }
 
     /**
