@@ -5,8 +5,9 @@ package model;
  */
 public class Person extends Thread {
     private final String personName; //имя сотрудника
-    private boolean isBusy; //проверка занят ли сотрудник
-    private boolean isTask;
+    private volatile boolean isBusy; //проверка занят ли сотрудник
+    private volatile boolean isTask;
+    private volatile boolean stopWork;
 
     private float workHoursPerDay; //кол-во рабочих часов в день
     private float amountHoursOneInstructions; //кол-во часов на выполнение одного задания
@@ -19,6 +20,7 @@ public class Person extends Thread {
         this.personName = name;
         this.isBusy = false;
         this.isTask = false;
+        this.stopWork = false;
     }
 
     /**
@@ -37,18 +39,17 @@ public class Person extends Thread {
     public void run() {
         workHours = workHoursPerDay;
         while(workHours > 0) {
-            while (!isTask) {
-                Thread.yield();
-            }
-            if (isTask) {
+            while (!isTask && !stopWork) Thread.yield(); //ждем получения задания или конца рабочего дня
+            if (isTask) { //если есть задание
                 try {
                     Thread.sleep((long) amountHoursOneInstructions); //время выполнения задания
+                    System.out.println("Я выполнил работу!"); //выполняем распоряжение
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                workHours -= amountHoursOneInstructions;
+                workHours -= amountHoursOneInstructions; //высчитываем отработанные часы
                 isBusy = false; //сотрудник освободился
-            }
+            } else if (stopWork) break; //если рабочий день закончился - останавливаем поток
         }
     }
 
@@ -81,6 +82,10 @@ public class Person extends Thread {
 
     public void setIsTask(boolean isTask) {
         this.isTask = isTask;
+    }
+
+    public void setStopWork(boolean stopWork) {
+        this.stopWork = stopWork;
     }
 
     public String getPersonName() {
