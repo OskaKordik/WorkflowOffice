@@ -33,12 +33,21 @@ public class Person extends Thread {
 
     @Override
     public void run() {
-        //выполянет работу
         workHours = workHoursPerDay;
-        while (!isTask) {
-            Thread.yield();
+        while(workHours > 0) {
+            while (!isTask) {
+                Thread.yield();
+            }
+            if (isTask) {
+                try {
+                    Thread.sleep((long) amountHoursOneInstructions); //время выполнения задания
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                workHours -= amountHoursOneInstructions;
+                isBusy = false; //сотрудник освободился
+            }
         }
-        isBusy = false; //сотрудник освободился
     }
 
 
