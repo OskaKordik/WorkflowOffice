@@ -39,7 +39,11 @@ public class WorkController {
     private void workDay() throws InterruptedException {
         for (Map.Entry<Person, Set<Position>> person : personList.entrySet()) person.getKey().start();
         Thread.sleep(8);
-        for (Map.Entry<Person, Set<Position>> person : personList.entrySet()) person.getKey().setIsTask(true);
+        personList.entrySet().stream().filter(person -> !person.getKey().isBusy()).forEach(person -> person.getKey().setIsTask(true));
+        Thread.sleep(2);
+        personList.entrySet().stream().filter(person -> !person.getKey().isBusy()).forEach(person -> person.getKey().setIsTask(true));
+        Thread.sleep(8);
+        for (Map.Entry<Person, Set<Position>> person : personList.entrySet()) person.getKey().setStopWork(true);
     }
 
     /**
