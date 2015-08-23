@@ -1,5 +1,9 @@
 package model;
 
+import model.Positions.APosition;
+
+import java.util.Map;
+
 /**
  * Класс Сотрудник
  */
@@ -11,6 +15,7 @@ public class Person extends Thread {
 
     private float workHoursPerDay; //кол-во рабочих часов в день
     private float amountHoursOneInstructions; //кол-во часов на выполнение одного задания
+    private Map<Position, APosition> listPositions; //список должностей
 
     private String task; //распоряжение к выполнению
     private float workHours; //счетчик рабочих часов
@@ -31,7 +36,7 @@ public class Person extends Thread {
         this.task = task;
         this.isBusy = true;
         this.isTask = true;
-        //передать управление должности
+        if (listPositions != null) listPositions.get(position).getToWork(); //передаем таск должности
         //передает информацию в отчет о проделанной работе
     }
 
@@ -111,5 +116,9 @@ public class Person extends Thread {
 
     public float getAmountHoursOneInstructions() {
         return amountHoursOneInstructions;
+    }
+
+    public void setListPositions(Map<Position, APosition> listPositions) {
+        this.listPositions = listPositions;
     }
 }
