@@ -40,12 +40,10 @@ public final class PersonController {
 
         for (int i = 1; i <= countPersons; i++) {
             Person person = createPerson("Сотрудник №" + i);
-            Set<Position> position = setRandomPositions();
+            Set<Position> positionList = setRandomPositions();
+            person.setListPositions(createPositionForPerson(positionList)); //задаем список должностей
 
-            Map<Position, APosition> positionMap = createPositionForPerson(position); //протестить!
-            person.setListPositions(positionMap); //задаем список должностей
-
-            list.put(person, position);
+            list.put(person, positionList); //добавляем сотрудника в список
         }
 
         return list;
