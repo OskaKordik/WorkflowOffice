@@ -124,4 +124,8 @@ public class Person extends Thread {
     public void setListPositions(Map<Position, APosition> listPositions) {
         this.listPositions = listPositions;
     }
+
+    public Map<Position, APosition> getListPositions() {
+        return listPositions;
+    }
 }
