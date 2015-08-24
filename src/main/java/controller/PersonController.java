@@ -2,13 +2,15 @@ package controller;
 
 import model.Person;
 import model.Position;
-import model.Positions.APosition;
-import model.Positions.Programmer;
+import model.Positions.*;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.security.SecureRandom;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Класс контролирующий работу сотрудников компании
@@ -63,15 +65,15 @@ public final class PersonController {
             switch (countPos) {
                 case 0 : positionMap.put(pos, new Programmer("Programmer"));
                     break;
-                case 1 : positionMap.put(pos, new Programmer("Designer"));
+                case 1 : positionMap.put(pos, new Designer("Designer"));
                     break;
-                case 2 : positionMap.put(pos, new Programmer("Tester"));
+                case 2 : positionMap.put(pos, new Tester("Tester"));
                     break;
-                case 3 : positionMap.put(pos, new Programmer("Manager"));
+                case 3 : positionMap.put(pos, new Manager("Manager"));
                     break;
-                case 4 : positionMap.put(pos, new Programmer("Director"));
+                case 4 : positionMap.put(pos, new Director("Director"));
                     break;
-                case 5 : positionMap.put(pos, new Programmer("Accountant"));
+                case 5 : positionMap.put(pos, new Accountant("Accountant"));
                     break;
                 default: break;
             }
@@ -90,7 +92,7 @@ public final class PersonController {
         //кол-во времени на выполнение одного задания
         person.setAmountHoursOneInstructions(new BigDecimal(random.nextFloat() + 1)
                                                 .setScale(2, RoundingMode.UP)
-                                                .floatValue());
+                .floatValue());
         //кол-во рабочих часов в день
         person.setWorkHoursPerDay(random.nextInt(8) + 1);
         //добавляет сотрудника в список
