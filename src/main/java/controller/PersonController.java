@@ -5,6 +5,8 @@ import model.Position;
 import model.Positions.APosition;
 import model.Positions.Programmer;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.security.SecureRandom;
 import java.util.*;
 
@@ -86,7 +88,9 @@ public final class PersonController {
     protected Person createPerson(String name) {
         Person person = new Person(name);
         //кол-во времени на выполнение одного задания
-        person.setAmountHoursOneInstructions(random.nextFloat() + 1);
+        person.setAmountHoursOneInstructions(new BigDecimal(random.nextFloat() + 1)
+                                                .setScale(2, RoundingMode.UP)
+                                                .floatValue());
         //кол-во рабочих часов в день
         person.setWorkHoursPerDay(random.nextInt(8) + 1);
         //добавляет сотрудника в список
