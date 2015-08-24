@@ -19,6 +19,9 @@ public class DirectorsController {
     public void runDirectorsController() {
         personList = PersonController.INSTANCE.getPersonList(); //получаем список работников
         directorsList = selectionOfDirectors(personList);
+
+        for (Person director : directorsList)
+            director.performTask(Position.Director, "раздать распоряжения сотрудникам");
     }
 
     /**
@@ -29,7 +32,10 @@ public class DirectorsController {
     protected List<Person> selectionOfDirectors(Map<Person, Set<Position>> personList) {
         List<Person> list = new ArrayList<>();
         for (Map.Entry<Person, Set<Position>> person : personList.entrySet())
-            if (person.getValue().contains(Position.Director)) list.add(person.getKey());
+            if (person.getValue().contains(Position.Director)) {
+                person.getKey().setAmountHoursOneInstructions(1); //задаем время выполнение задания 1 час
+                list.add(person.getKey());
+            }
         return list;
     }
 }
