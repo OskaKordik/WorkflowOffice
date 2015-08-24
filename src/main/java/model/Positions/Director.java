@@ -1,12 +1,21 @@
 package model.Positions;
 
+import controller.DirectorsController;
+import controller.PersonController;
 import model.Employee;
+import model.Person;
+import model.Position;
+
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Класс должности Директор
  */
 public class Director extends APosition implements Employee {
     private float fixedRate; //фиксированная ставка
+    private Map<Position, String> taskList; //список распоряжений для сотрудников
+    private Map<Person, Set<Position>> personList; //список сотрудников под руководством данного директора
 
     public Director(String name) {
         super(name);
@@ -14,6 +23,7 @@ public class Director extends APosition implements Employee {
 
     /**
      * Метод, устанавливающий фиксированную ставку
+     *
      * @param fixedRate
      */
     @Override
@@ -26,13 +36,25 @@ public class Director extends APosition implements Employee {
      */
     @Override
     public void getToWork() {
-        //выполняет свою работу
-        System.out.println("Я выполняю работу! ");
+        taskList = DirectorsController.getTaskList();
+        personList = PersonController.INSTANCE.getPersonList();
         //раздает всем задания
+        for (Map.Entry<Position, String> positionStringEntry : taskList.entrySet()) {
+            Position currentPosition = positionStringEntry.getKey(); //текущая должность
+
+            for (Map.Entry<Person, Set<Position>> person : personList.entrySet()) {
+                Person currentPerson = person.getKey(); //текущий сотрудник
+
+                if (!currentPerson.isBusy() && currentPerson.isWork() && person.getValue().contains(currentPosition)) {
+                    currentPerson.performTask(currentPosition, positionStringEntry.getValue()); //даем задание
+                }
+            }
+        }
     }
 
     /**
      * Метод для получения зарплаты
+     *
      * @return сумму зарплаты
      */
     @Override
@@ -44,6 +66,7 @@ public class Director extends APosition implements Employee {
 
     /**
      * Метод возвращает фиксированную ставку
+     *
      * @return fixedRate
      */
     @Override
