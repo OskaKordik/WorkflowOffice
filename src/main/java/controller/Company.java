@@ -1,12 +1,14 @@
 package controller;
 
+import model.Position;
+
 /**
  * Класс Компания - контроллирует работу компании
  */
 public class Company {
     public static final int MAX_WORKING_HOURS = 8; //кол-во рабочих часов (от 1 до 8)
     public static final int MIN_WORKING_HOURS = 1;
-    public static final int MAX_AMOUNT_POSITIONS = 6; //кол-во должностей (от 1 до 6)
+    public static final int MAX_AMOUNT_POSITIONS = Position.values().length; //кол-во должностей (от 1 до 6)
     public static final int MIN_AMOUNT_POSITIONS = 1;
 
     public static final int MAX_AMOUNT_PERSONS = 90; //кол-во сотрудников (от 10 до 100)
