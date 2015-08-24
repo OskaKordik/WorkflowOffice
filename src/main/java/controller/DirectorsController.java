@@ -20,12 +20,30 @@ public class DirectorsController {
         personList = PersonController.INSTANCE.getPersonList(); //получаем список работников
         directorsList = selectionOfDirectors(personList);
 
-        for (Person director : directorsList)
-            director.performTask(Position.Director, "раздать распоряжения сотрудникам");
+        for (int i = 0; i < 8; i++) {
+            workDirectors(directorsList);
+            try {
+                Thread.sleep(1); //через час еще выдать задания
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Метод раздает всем директорам задание
+     * @param list список директоров
+     */
+    protected void workDirectors(List<Person> list) {
+        for (Person director : list) {
+            if (!director.isBusy() && director.isWork())
+                director.performTask(Position.Director, "раздать распоряжения сотрудникам");
+        }
     }
 
     /**
      * Метод выбирает из списка сотрудников только с должностью директора
+     *
      * @param personList список всех сотрудников
      * @return list список сотрудников с должностью директора
      */
