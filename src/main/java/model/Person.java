@@ -128,4 +128,25 @@ public class Person extends Thread {
     public Map<Position, APosition> getListPositions() {
         return listPositions;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Person person = (Person) o;
+
+        if (Float.compare(person.workHoursPerDay, workHoursPerDay) != 0) return false;
+        if (Float.compare(person.amountHoursOneInstructions, amountHoursOneInstructions) != 0) return false;
+        return !(personName != null ? !personName.equals(person.personName) : person.personName != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = personName != null ? personName.hashCode() : 0;
+        result = 31 * result + (workHoursPerDay != +0.0f ? Float.floatToIntBits(workHoursPerDay) : 0);
+        result = 31 * result + (amountHoursOneInstructions != +0.0f ? Float.floatToIntBits(amountHoursOneInstructions) : 0);
+        return result;
+    }
 }
