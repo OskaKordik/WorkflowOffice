@@ -10,7 +10,10 @@ import java.util.*;
  */
 public class DirectorsController {
     public static final DirectorsController INSTANCE = new DirectorsController();
+    private static Map<Person, Set<Position>> personList; //список всех сотрудников
+    private static List<Person> directorsList; //список директоров
     private static final Map<Position, String> taskList = new HashMap<>();
+    private static Map<Person, Set<Position>> personListOtherDirectors; //список всех сотрудников кроме директоров
 
     static { //заполнение списка распоряжений для сотрудников
         taskList.put(Position.Director, "раздать распоряжения сотрудникам");
@@ -21,11 +24,9 @@ public class DirectorsController {
         taskList.put(Position.Accountant, "составить отчетность");
     }
 
-    private Map<Person, Set<Position>> personList; //список всех сотрудников
-    private List<Person> directorsList; //список директоров
-
     public void runDirectorsController() {
         personList = PersonController.INSTANCE.getPersonList(); //получаем список работников
+        personListOtherDirectors = selectionOfPersonsOtherDirectors(personList);
         directorsList = selectionOfDirectors(personList);
 
         for (int i = 0; i < Company.MAX_WORKING_HOURS; i++) {
@@ -60,12 +61,32 @@ public class DirectorsController {
         for (Map.Entry<Person, Set<Position>> person : personList.entrySet())
             if (person.getValue().contains(Position.Director)) {
                 person.getKey().setAmountHoursOneInstructions(Company.ONE_HOUR); //задаем время выполнение задания 1 час
+
                 list.add(person.getKey());
+            }
+        return list;
+    }
+
+    /**
+     * Метод выбирает из списка всех сотрудников кроме директоров
+     *
+     * @param personList список всех сотрудников
+     * @return list список сотрудников не с должностью директора
+     */
+    protected Map<Person, Set<Position>> selectionOfPersonsOtherDirectors(Map<Person, Set<Position>> personList) {
+        Map<Person, Set<Position>> list = new HashMap<>();
+        for (Map.Entry<Person, Set<Position>> person : personList.entrySet())
+            if (!person.getValue().contains(Position.Director)) {
+                list.put(person.getKey(), person.getValue());
             }
         return list;
     }
 
     public static Map<Position, String> getTaskList() {
         return taskList;
+    }
+
+    public static Map<Person, Set<Position>> getPersonListOtherDirectors() {
+        return personListOtherDirectors;
     }
 }
