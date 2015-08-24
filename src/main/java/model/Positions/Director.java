@@ -1,7 +1,6 @@
 package model.Positions;
 
 import controller.DirectorsController;
-import controller.PersonController;
 import model.Employee;
 import model.Person;
 import model.Position;
@@ -37,7 +36,7 @@ public class Director extends APosition implements Employee {
     @Override
     public void getToWork() {
         taskList = DirectorsController.getTaskList();
-        personList = PersonController.INSTANCE.getPersonList();
+        personList = DirectorsController.getPersonListOtherDirectors();
         //раздает всем задания
         for (Map.Entry<Position, String> positionStringEntry : taskList.entrySet()) {
             Position currentPosition = positionStringEntry.getKey(); //текущая должность
