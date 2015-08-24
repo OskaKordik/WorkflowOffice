@@ -36,6 +36,7 @@ public class Programmer extends APosition implements Сontractor {
     /**
      * Метод в котором выполняется работа должности
      */
+    @Override
     public void getToWork() {
         //выполняет свою работу
     }

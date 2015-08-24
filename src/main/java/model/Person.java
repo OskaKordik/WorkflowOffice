@@ -34,12 +34,8 @@ public class Person extends Thread {
      */
     public void performTask(Position position, String task) {
         this.task = task;
-        this.isBusy = true;
         this.isTask = true;
-        if (listPositions != null) listPositions.get(position).getToWork(); //передаем таск должности
-        else {
-            //выкинуть исключение что нет заданных должностей
-        }
+        listPositions.get(position).getToWork();
         //передает информацию в отчет о проделанной работе
     }
 

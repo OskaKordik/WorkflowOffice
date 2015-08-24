@@ -27,6 +27,7 @@ public class Director extends APosition implements Employee {
     @Override
     public void getToWork() {
         //выполняет свою работу
+        System.out.println("Я выполняю работу! ");
         //раздает всем задания
     }
 
@@ -37,6 +38,7 @@ public class Director extends APosition implements Employee {
     @Override
     public double paySalary() {
         //отчитывается о получении зарплаты
+        System.out.println("Я получил зарплату! ");
         return getFixedRate();
     }
 
