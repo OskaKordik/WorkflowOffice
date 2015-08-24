@@ -12,6 +12,8 @@ import java.util.Set;
  */
 public class WorkController {
     public static final WorkController INSTANCE = new WorkController();
+
+
     private Map<Person, Set<Position>> personList; //список сотрудников
     private static Set<Position> necessaryPositions; //список обязательных должностей
 
@@ -41,7 +43,7 @@ public class WorkController {
         for (Map.Entry<Person, Set<Position>> person : personList.entrySet()) person.getKey().start();
         DirectorsController.INSTANCE.runDirectorsController();
         //остановка всех сотрудниковв конце рабочего дня
-        Thread.sleep(8);
+        Thread.sleep(Company.MAX_WORKING_HOURS);
         for (Map.Entry<Person, Set<Position>> person : personList.entrySet()) person.getKey().setStopWork(true);
     }
 
@@ -50,7 +52,7 @@ public class WorkController {
      * @throws InterruptedException
      */
     private void workWeek() throws InterruptedException {
-        for (int i = 0; i < 5; i++) workDay();
+        for (int i = 0; i < Company.MAX_WORKING_DAYS; i++) workDay();
         //каждую неделю бухгалтер платит з/п - реализовать
     }
 
@@ -59,7 +61,7 @@ public class WorkController {
      * @throws InterruptedException
      */
     private void workMonth() throws InterruptedException {
-        for (int i = 0; i < 4; i++) workWeek();
+        for (int i = 0; i < Company.MAX_WORKING_WEEKS; i++) workWeek();
         //формирование суммарного отчета + сохранение в файл - реализовать
     }
 
