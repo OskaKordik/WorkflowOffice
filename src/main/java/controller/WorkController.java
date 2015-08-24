@@ -37,11 +37,10 @@ public class WorkController {
      * @throws InterruptedException
      */
     private void workDay() throws InterruptedException {
+        //запуск всех сотрудников
         for (Map.Entry<Person, Set<Position>> person : personList.entrySet()) person.getKey().start();
-        Thread.sleep(8);
-        personList.entrySet().stream().filter(person -> !person.getKey().isBusy()).forEach(person -> person.getKey().setIsTask(true));
-        Thread.sleep(2);
-        personList.entrySet().stream().filter(person -> !person.getKey().isBusy()).forEach(person -> person.getKey().setIsTask(true));
+        DirectorsController.INSTANCE.runDirectorsController();
+        //остановка всех сотрудниковв конце рабочего дня
         Thread.sleep(8);
         for (Map.Entry<Person, Set<Position>> person : personList.entrySet()) person.getKey().setStopWork(true);
     }
