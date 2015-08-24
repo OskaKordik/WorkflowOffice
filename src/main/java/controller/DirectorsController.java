@@ -10,7 +10,7 @@ import java.util.*;
  */
 public class DirectorsController {
     public static final DirectorsController INSTANCE = new DirectorsController();
-    public static final Map<Position, String> taskList = new HashMap<>();
+    private static final Map<Position, String> taskList = new HashMap<>();
 
     static { //заполнение списка распоряжений для сотрудников
         taskList.put(Position.Director, "раздать распоряжения сотрудникам");
@@ -63,5 +63,9 @@ public class DirectorsController {
                 list.add(person.getKey());
             }
         return list;
+    }
+
+    public static Map<Position, String> getTaskList() {
+        return taskList;
     }
 }
