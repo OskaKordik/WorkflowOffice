@@ -80,9 +80,16 @@ public class Person extends Thread {
         return amountHoursOneInstructions <= workHours;
     }
 
+    /**
+     * Метод считает заработанную сумму со всех должностей
+     * @return сумму зарплаты
+     */
     public double paySalary() {
+        double salary = 0;
+        for (Map.Entry<Position, APosition> positionEntry : listPositions.entrySet())
+            salary += positionEntry.getValue().paySalary();
         //передает информацию в отчет о выплаченной з/п
-        return 0;
+        return salary;
     }
 
     public void passReport(String report) {
