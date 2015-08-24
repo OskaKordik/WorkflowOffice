@@ -13,7 +13,7 @@ import java.util.Set;
  */
 public class DirectorsController {
     public static final DirectorsController INSTANCE = new DirectorsController();
-    private static final int WORKING_HOURS = 8; //максимальное кол-во рабочих часов в день
+    private static final int MAX_WORKING_HOURS = 8; //максимальное кол-во рабочих часов в день
     private static final int ONE_HOUR = 1; //один час
 
     private Map<Person, Set<Position>> personList; //список всех сотрудников
@@ -23,7 +23,7 @@ public class DirectorsController {
         personList = PersonController.INSTANCE.getPersonList(); //получаем список работников
         directorsList = selectionOfDirectors(personList);
 
-        for (int i = 0; i < WORKING_HOURS; i++) {
+        for (int i = 0; i < MAX_WORKING_HOURS; i++) {
             workDirectors(directorsList);
             try {
                 Thread.sleep(ONE_HOUR);

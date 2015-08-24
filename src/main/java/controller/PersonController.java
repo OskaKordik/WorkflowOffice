@@ -18,6 +18,12 @@ import java.util.Set;
 public final class PersonController {
     public static final PersonController INSTANCE = new PersonController();
     private static final SecureRandom random = new SecureRandom(); // for random enums
+    private static final int MAX_WORKING_HOURS = 8; //кол-во рабочих часов (от 1 до 8)
+    private static final int MIN_WORKING_HOURS = 1;
+    private static final int MAX_AMOUNT_POSITIONS = 6; //кол-во должностей (от 1 до 6)
+    private static final int MIN_AMOUNT_POSITIONS = 1;
+    private static final int MAX_AMOUNT_PERSONS = 90; //кол-во сотрудников (от 10 до 100)
+    private static final int MIN_AMOUNT_PERSONS = 10;
 
     private Map<Person, Set<Position>> personList; //список сотрудников
     private Set<Position> necessaryPositions; //список обязательных должностей
@@ -40,7 +46,7 @@ public final class PersonController {
      */
     protected Map<Person, Set<Position>> createRandomPerson() {
         Map<Person, Set<Position>> list = new HashMap<>();
-        int countPersons = random.nextInt(90) + 10; //кол-во сотрудников (от 10 до 100)
+        int countPersons = random.nextInt(MAX_AMOUNT_PERSONS) + MIN_AMOUNT_PERSONS;
 
         for (int i = 1; i <= countPersons; i++) {
             Person person = createPerson("Сотрудник №" + i);
@@ -90,11 +96,11 @@ public final class PersonController {
     protected Person createPerson(String name) {
         Person person = new Person(name);
         //кол-во времени на выполнение одного задания
-        person.setAmountHoursOneInstructions(new BigDecimal(random.nextFloat() + 1)
+        person.setAmountHoursOneInstructions(new BigDecimal(random.nextFloat() + MIN_WORKING_HOURS)
                                                 .setScale(2, RoundingMode.UP)
                 .floatValue());
         //кол-во рабочих часов в день
-        person.setWorkHoursPerDay(random.nextInt(8) + 1);
+        person.setWorkHoursPerDay(random.nextInt(MAX_WORKING_HOURS) + MIN_WORKING_HOURS);
         //добавляет сотрудника в список
         return person;
     }
@@ -104,7 +110,7 @@ public final class PersonController {
      */
     protected Set<Position> setRandomPositions() {
         Set<Position> list = new HashSet<>();
-        int amountPositions = random.nextInt(6) + 1; //количество должностей
+        int amountPositions = random.nextInt(MAX_AMOUNT_POSITIONS) + MIN_AMOUNT_POSITIONS; //количество должностей
 
         for (int i = 0; i <= amountPositions; i++) {
             int x = random.nextInt(Position.values().length); //выбор случайной должности
