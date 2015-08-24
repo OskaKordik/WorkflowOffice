@@ -96,10 +96,6 @@ public class Person extends Thread {
         //передает информацию в отчет о проделанной работе
     }
 
-    public void setIsTask(boolean isTask) {
-        this.isTask = isTask;
-    }
-
     public void setStopWork(boolean stopWork) {
         this.stopWork = stopWork;
     }
