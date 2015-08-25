@@ -176,14 +176,16 @@ public final class PersonController {
      * @param personList список всех сотрудников
      * @return accountant бухгалтера
      */
-    protected Accountant selectionRandomAccountant(Map<Person, Set<Position>> personList) {
-        List<Person> listAccountant = new ArrayList<>(); //выбираем всех бухгалтеров
+    protected Person selectionRandomAccountant(Map<Person, Set<Position>> personList) {
+        List<Person> listAccountant = new ArrayList<>();
+        Map<Person, Set<Position>> list = personList;
 
-        for (Map.Entry<Person, Set<Position>> person : personList.entrySet())
+        //выбираем всех бухгалтеров
+        for (Map.Entry<Person, Set<Position>> person : list.entrySet())
             if (person.getValue().contains(Position.Accountant)) listAccountant.add(person.getKey());
+        //выбираем случайного бухгалтера
+        Person personAccountant = listAccountant.get(random.nextInt(listAccountant.size()));
 
-        Person personAccountant = listAccountant.get(random.nextInt(listAccountant.size()) + 1);
-        Accountant accountant = (Accountant) personAccountant.getListPositions().get(Position.Accountant);
-        return accountant;
+        return personAccountant;
     }
 }
