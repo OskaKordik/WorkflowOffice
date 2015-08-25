@@ -1,6 +1,5 @@
 package model.Positions;
 
-import controller.DirectorsController;
 import model.Employee;
 import model.Person;
 import model.Position;
@@ -35,17 +34,17 @@ public class Director extends APosition implements Employee {
      */
     @Override
     public void getToWork() {
-        taskList = DirectorsController.getTaskList();
-        personList = DirectorsController.getPersonListOtherDirectors();
-        //раздает всем задания
-        for (Map.Entry<Position, String> positionStringEntry : taskList.entrySet()) {
-            Position currentPosition = positionStringEntry.getKey(); //текущая должность
+        if ((taskList != null) && (personList != null)) {
+            //раздает всем задания
+            for (Map.Entry<Position, String> positionStringEntry : taskList.entrySet()) {
+                Position currentPosition = positionStringEntry.getKey(); //текущая должность
 
-            for (Map.Entry<Person, Set<Position>> person : personList.entrySet()) {
-                Person currentPerson = person.getKey(); //текущий сотрудник
+                for (Map.Entry<Person, Set<Position>> person : personList.entrySet()) {
+                    Person currentPerson = person.getKey(); //текущий сотрудник
 
-                if (!currentPerson.isBusy() && currentPerson.isWork() && person.getValue().contains(currentPosition)) {
-                    currentPerson.performTask(currentPosition, positionStringEntry.getValue()); //даем задание
+                    if (!currentPerson.isBusy() && currentPerson.isWork() && person.getValue().contains(currentPosition)) {
+                        currentPerson.performTask(currentPosition, positionStringEntry.getValue()); //даем задание
+                    }
                 }
             }
         }
@@ -71,5 +70,13 @@ public class Director extends APosition implements Employee {
     @Override
     public float getFixedRate() {
         return fixedRate;
+    }
+
+    public void setPersonList(Map<Person, Set<Position>> personList) {
+        this.personList = personList;
+    }
+
+    public void setTaskList(Map<Position, String> taskList) {
+        this.taskList = taskList;
     }
 }
