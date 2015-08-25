@@ -21,6 +21,6 @@ public class Company {
     public static final int ONE_HOUR = 1; //один час
 
     public static void main(String[] args) {
-        WorkController.INSTANCE.runPersonController(); //запускаем работу
+        WorkController.INSTANCE.runWorkController(); //запускаем работу
     }
 }
