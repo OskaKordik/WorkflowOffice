@@ -7,10 +7,7 @@ import model.Positions.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.security.SecureRandom;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Класс контролирующий работу сотрудников компании
@@ -171,5 +168,22 @@ public final class PersonController {
      */
     protected Set<Position> getNecessaryPositions() {
         return necessaryPositions;
+    }
+
+    /**
+     * Метод выбирает из списка сотрудников случайного сотрудника с должностью бухгалтера
+     *
+     * @param personList список всех сотрудников
+     * @return accountant бухгалтера
+     */
+    protected Accountant selectionRandomAccountant(Map<Person, Set<Position>> personList) {
+        List<Person> listAccountant = new ArrayList<>(); //выбираем всех бухгалтеров
+
+        for (Map.Entry<Person, Set<Position>> person : personList.entrySet())
+            if (person.getValue().contains(Position.Accountant)) listAccountant.add(person.getKey());
+
+        Person personAccountant = listAccountant.get(random.nextInt(listAccountant.size()) + 1);
+        Accountant accountant = (Accountant) personAccountant.getListPositions().get(Position.Accountant);
+        return accountant;
     }
 }
