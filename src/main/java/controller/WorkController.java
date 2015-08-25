@@ -17,7 +17,7 @@ public class WorkController {
     private Map<Person, Set<Position>> personList; //список сотрудников
     private static Set<Position> necessaryPositions; //список обязательных должностей
 
-    public void runPersonController() {
+    public void runWorkController() {
 
         necessaryPositions = createNecessaryPositions();
         PersonController.INSTANCE.setNecessaryPositions(necessaryPositions);
