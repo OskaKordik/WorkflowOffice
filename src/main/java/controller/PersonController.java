@@ -19,10 +19,8 @@ public final class PersonController {
     public static final PersonController INSTANCE = new PersonController();
     private static final SecureRandom random = new SecureRandom(); // for random enums
 
-
     private Map<Person, Set<Position>> personList; //список сотрудников
     private Set<Position> necessaryPositions; //список обязательных должностей
-
     private int countDirectorsPositions;
 
 
@@ -121,6 +119,7 @@ public final class PersonController {
                 }
             } else list.add(Position.values()[x]); //добавление в список должности
         }
+
         return list;
     }
 
