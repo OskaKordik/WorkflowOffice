@@ -4,6 +4,7 @@ import model.Employee;
 import model.Person;
 import model.Position;
 
+import java.security.SecureRandom;
 import java.util.Map;
 import java.util.Set;
 
@@ -14,6 +15,7 @@ public class Director extends APosition implements Employee {
     private float fixedRate; //фиксированная ставка
     private Map<Position, String> taskList; //список распоряжений для сотрудников
     private Map<Person, Set<Position>> personList; //список сотрудников под руководством данного директора
+    private static final SecureRandom random = new SecureRandom();
 
     public Director(String name) {
         super(name);
@@ -36,15 +38,18 @@ public class Director extends APosition implements Employee {
     public void getToWork() {
         if ((taskList != null) && (personList != null)) {
             //раздает всем задания
-            for (Map.Entry<Position, String> positionStringEntry : taskList.entrySet()) {
-                Position currentPosition = positionStringEntry.getKey(); //текущая должность
+            int amountTasks = random.nextInt(taskList.size()) + 1; //случайное количество распоряжений
+
+            for (int i = 0; i < amountTasks; i++) {
+                int x = random.nextInt(Position.values().length); //выбор случайной должности
+                if (Position.values()[x] == Position.Director) continue; //если должность директора идем дальше
+                Position currentPosition = Position.values()[x];
 
                 for (Map.Entry<Person, Set<Position>> person : personList.entrySet()) {
                     Person currentPerson = person.getKey(); //текущий сотрудник
 
-                    if (!currentPerson.isBusy() && currentPerson.isWork() && person.getValue().contains(currentPosition)) {
-                        currentPerson.performTask(currentPosition, positionStringEntry.getValue()); //даем задание
-                    }
+                    if (!currentPerson.isBusy() && currentPerson.isWork() && person.getValue().contains(currentPosition))
+                        currentPerson.performTask(currentPosition, taskList.get(currentPosition)); //даем задание
                 }
             }
         }
