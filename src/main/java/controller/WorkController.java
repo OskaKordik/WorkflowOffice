@@ -44,6 +44,7 @@ public class WorkController {
      */
     private void workDay() throws InterruptedException {
         //запуск всех сотрудников
+        // РЕШИТЬ ПРОБЛЕМУ!!! IllegalThreadStateException
         for (Map.Entry<Person, Set<Position>> person : personList.entrySet()) person.getKey().start();
         DirectorsController.INSTANCE.runDirectorsController();
         //остановка всех сотрудниковв конце рабочего дня
