@@ -10,9 +10,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Тестирует работу контроллера класса Person
@@ -132,5 +130,29 @@ public class PersonControllerTest {
 
             assertNotNull(person.getKey().getListPositions());
         }
+    }
+
+    /**
+     * Тест проверяет корректность выбора случайного бухгалтера
+     */
+    @Test
+    public void testSelectionRandomAccountant() {
+        Map<Person, Set<Position>> testList = new HashMap<>();
+        Set<Position> positions1 = new HashSet<>();
+        positions1.add(Position.Accountant);
+
+        testList.put(PersonController.INSTANCE.createPerson("Accountant"), positions1);
+
+        Set<Position> positions2 = new HashSet<>();
+        positions2.add(Position.Accountant);
+        testList.put(PersonController.INSTANCE.createPerson("Accountant"), positions2);
+
+        Set<Position> positions3 = new HashSet<>();
+        positions3.add(Position.Designer);
+        testList.put(PersonController.INSTANCE.createPerson("Designer"), positions3);
+
+        Person accountant = PersonController.INSTANCE.selectionRandomAccountant(testList);
+
+        assertEquals(Position.Accountant.toString(), accountant.getPersonName());
     }
 }
