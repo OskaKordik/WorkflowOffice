@@ -2,6 +2,7 @@ package controller;
 
 import model.Person;
 import model.Position;
+import model.Positions.Director;
 
 import java.util.*;
 
@@ -28,6 +29,14 @@ public class DirectorsController {
         personList = PersonController.INSTANCE.getPersonList(); //получаем список работников
         personListOtherDirectors = selectionOfPersonsOtherDirectors(personList);
         directorsList = selectionOfDirectors(personList);
+
+        for (Person director : directorsList) {
+            Director personDirector = (Director) director.getListPositions().get(Position.Director);
+            //передаем всем директорам список их сотрудников
+            personDirector.setPersonList(personListOtherDirectors);
+            //передаем список распоряжений
+            personDirector.setTaskList(taskList);
+        }
 
         for (int i = 0; i < Company.MAX_WORKING_HOURS; i++) {
             workDirectors(directorsList);
@@ -84,9 +93,5 @@ public class DirectorsController {
 
     public static Map<Position, String> getTaskList() {
         return taskList;
-    }
-
-    public static Map<Person, Set<Position>> getPersonListOtherDirectors() {
-        return personListOtherDirectors;
     }
 }
