@@ -2,6 +2,7 @@ package controller;
 
 import model.Person;
 import model.Position;
+import model.Positions.Accountant;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -24,10 +25,13 @@ public class WorkController {
         PersonController.INSTANCE.runPersonController(); //создаем сотрудников
 
         personList = PersonController.INSTANCE.getPersonList(); //получаем список работников
+        //получаем главного бухгалтера
+        Person personGeneralAccountant = PersonController.INSTANCE.selectionRandomAccountant(personList);
+        Accountant generalAccountant = (Accountant) personGeneralAccountant.getListPositions().get(Position.Accountant);
 
         try {
-            //workMonth(); //запуск моделирования работы компании в течении месяца
-            //workWeek(); //запуск моделирования работы компании в течении недели
+            //workMonth(generalAccountant); //запуск моделирования работы компании в течении месяца
+            //workWeek(generalAccountant); //запуск моделирования работы компании в течении недели
             workDay(); //запуск моделирования работы компании в течении дня
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -51,17 +55,17 @@ public class WorkController {
      * Метод, запускающий работу сотрудников в течении недели
      * @throws InterruptedException
      */
-    private void workWeek() throws InterruptedException {
+    private void workWeek(Accountant generalAccountant) throws InterruptedException {
         for (int i = 0; i < Company.MAX_WORKING_DAYS; i++) workDay();
-        //каждую неделю бухгалтер платит з/п - реализовать
+        generalAccountant.payWeekSalary();
     }
 
     /**
      * Метод, запускающий работу сотрудников в течении месяца
      * @throws InterruptedException
      */
-    private void workMonth() throws InterruptedException {
-        for (int i = 0; i < Company.MAX_WORKING_WEEKS; i++) workWeek();
+    private void workMonth(Accountant generalAccountant) throws InterruptedException {
+        for (int i = 0; i < Company.MAX_WORKING_WEEKS; i++) workWeek(generalAccountant);
         //формирование суммарного отчета + сохранение в файл - реализовать
     }
 
