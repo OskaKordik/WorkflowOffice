@@ -30,35 +30,10 @@ public class WorkController {
         Accountant generalAccountant = (Accountant) personGeneralAccountant.getListPositions().get(Position.Accountant);
 
         try {
-            //workMonth(generalAccountant); //запуск моделирования работы компании в течении месяца
-            //workWeek(generalAccountant); //запуск моделирования работы компании в течении недели
-            workDay(); //запуск моделирования работы компании в течении дня
+            workMonth(generalAccountant); //запуск моделирования работы компании в течении месяца
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Метод, запускающий работу сотрудников в течении дня
-     * @throws InterruptedException
-     */
-    private void workDay() throws InterruptedException {
-        //запуск всех сотрудников
-        // РЕШИТЬ ПРОБЛЕМУ!!! IllegalThreadStateException
-        for (Map.Entry<Person, Set<Position>> person : personList.entrySet()) person.getKey().start();
-        DirectorsController.INSTANCE.runDirectorsController();
-        //остановка всех сотрудниковв конце рабочего дня
-        Thread.sleep(Company.MAX_WORKING_HOURS);
-        for (Map.Entry<Person, Set<Position>> person : personList.entrySet()) person.getKey().setStopWork(true);
-    }
-
-    /**
-     * Метод, запускающий работу сотрудников в течении недели
-     * @throws InterruptedException
-     */
-    private void workWeek(Accountant generalAccountant) throws InterruptedException {
-        for (int i = 0; i < Company.MAX_WORKING_DAYS; i++) workDay();
-        generalAccountant.payWeekSalary();
     }
 
     /**
@@ -66,8 +41,20 @@ public class WorkController {
      * @throws InterruptedException
      */
     private void workMonth(Accountant generalAccountant) throws InterruptedException {
-        for (int i = 0; i < Company.MAX_WORKING_WEEKS; i++) workWeek(generalAccountant);
+        //запуск всех сотрудников
+        for (Map.Entry<Person, Set<Position>> person : personList.entrySet()) person.getKey().start();
+
+        for (int i = 0; i < Company.MAX_WORKING_WEEKS; i++) {
+            for (int j = 0; j < Company.MAX_WORKING_DAYS; j++) {
+                DirectorsController.INSTANCE.runDirectorsController();
+                Thread.sleep(Company.MAX_WORKING_HOURS);
+            }
+            generalAccountant.payWeekSalary();
+        }
         //формирование суммарного отчета + сохранение в файл - реализовать
+
+        //остановка всех сотрудников в конце месяца
+        for (Map.Entry<Person, Set<Position>> person : personList.entrySet()) person.getKey().setStopWork(true);
     }
 
     /**
