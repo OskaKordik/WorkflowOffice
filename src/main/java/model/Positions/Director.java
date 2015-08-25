@@ -76,6 +76,10 @@ public class Director extends APosition implements Employee {
         this.personList = personList;
     }
 
+    public Map<Person, Set<Position>> getPersonList() {
+        return personList;
+    }
+
     public void setTaskList(Map<Position, String> taskList) {
         this.taskList = taskList;
     }
