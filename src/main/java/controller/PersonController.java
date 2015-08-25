@@ -23,11 +23,14 @@ public final class PersonController {
     private Map<Person, Set<Position>> personList; //список сотрудников
     private Set<Position> necessaryPositions; //список обязательных должностей
 
+    private int countDirectorsPositions;
+
 
     /**
      * Метод запускающий работу контроллера
      */
     public void runPersonController() {
+        countDirectorsPositions = Company.MAX_AMOUNT_DIRECTORS_POSITIONS; //задаем максимальное кол-во директоров
         personList = createRandomPerson(); //создаем список сотрудников
 
         //проверка, что в фирме есть необходимые должности
@@ -93,7 +96,7 @@ public final class PersonController {
         //кол-во времени на выполнение одного задания
         person.setAmountHoursOneInstructions(new BigDecimal(random.nextFloat() + Company.MIN_WORKING_HOURS)
                                                 .setScale(2, RoundingMode.UP)
-                .floatValue());
+                                                .floatValue());
         //кол-во рабочих часов в день
         person.setWorkHoursPerDay(random.nextInt(Company.MAX_WORKING_HOURS) + Company.MIN_WORKING_HOURS);
         //добавляет сотрудника в список
@@ -110,11 +113,13 @@ public final class PersonController {
         for (int i = 0; i <= amountPositions; i++) {
             int x = random.nextInt(Position.values().length); //выбор случайной должности
             if (Position.values()[x] == Position.Director) { //если выпала должность директора
-                list.clear(); //удаляем все предыдущие должности
-                list.add(Position.values()[x]);
-                break;
-            }
-            list.add(Position.values()[x]); //добавление в список должности
+                //проверяем, что директора еще требуются
+                if (countDirectorsPositions > 0) {
+                    list.clear(); //удаляем все предыдущие должности
+                    list.add(Position.values()[x]);
+                    countDirectorsPositions--;
+                }
+            } else list.add(Position.values()[x]); //добавление в список должности
         }
         return list;
     }
