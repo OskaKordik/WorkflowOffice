@@ -16,7 +16,6 @@ public class DirectorsController {
     private static final Map<Position, String> taskList = new HashMap<>();
 
     static { //заполнение списка распоряжений для сотрудников
-        taskList.put(Position.Director, "раздать распоряжения сотрудникам");
         taskList.put(Position.Programmer, "писать код");
         taskList.put(Position.Designer, "рисовать макет");
         taskList.put(Position.Tester, "тестировать программу");
@@ -117,7 +116,7 @@ public class DirectorsController {
     protected void workDirectors(List<Person> list) {
         for (Person director : list) {
             if (!director.isBusy() && director.isWork())
-                director.performTask(Position.Director, taskList.get(Position.Director));
+                director.performTask(Position.Director, "раздать распоряжения сотрудникам");
         }
     }
 
