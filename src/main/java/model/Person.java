@@ -94,7 +94,6 @@ public class Person extends Thread {
         double salary = 0;
         for (Map.Entry<Position, APosition> positionEntry : listPositions.entrySet())
             salary += positionEntry.getValue().paySalary();
-        //передает информацию в отчет о выплаченной з/п
         return salary;
     }
 
@@ -134,6 +133,22 @@ public class Person extends Thread {
         return taskList;
     }
 
+    public void setWorkHours(float workHours) {
+        this.workHours = workHours;
+    }
+
+    public float getWorkHours() {
+        return workHours;
+    }
+
+    public boolean isStopWork() {
+        return stopWork;
+    }
+
+    public void setIsTask(boolean isTask) {
+        this.isTask = isTask;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -152,4 +167,5 @@ public class Person extends Thread {
         result = 31 * result + (workHoursPerMonth != +0.0f ? Float.floatToIntBits(workHoursPerMonth) : 0);
         return result;
     }
+
 }

@@ -103,7 +103,7 @@ public final class PersonController {
      * @param name имя сотрудника
      * @return сотрудника
      */
-    protected Person createPerson(String name) {
+    public Person createPerson(String name) {
         Person person = new Person(name);
         //кол-во времени на выполнение одного задания
         person.setAmountHoursOneInstructions(new BigDecimal(random.nextFloat()
