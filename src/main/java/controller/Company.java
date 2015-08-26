@@ -18,6 +18,12 @@ public class Company {
     public static final int MAX_WORKING_DAYS = 5; //максимальное кол-во рабочих дней в неделю
     public static final int MAX_WORKING_WEEKS = 4; //максимальное кол-во рабочих недель в месяц
 
+    public static final int MAX_HOURLY_RATE = 100; //почасовая ставка
+    public static final int MIN_HOURLY_RATE = 25;
+
+    public static final int MAX_FIXED_RATE = 4000; //фиксированная ставка
+    public static final int MIN_FIXED_RATE = 1000;
+
     public static final int ONE_HOUR = 1; //один час
 
     public static void main(String[] args) {
