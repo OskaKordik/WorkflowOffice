@@ -58,7 +58,6 @@ public class Director extends APosition implements Employee {
                     }
                 }
                 if (!isTherePerformer) { //если никто не взялся за задание нанимаем фрилансера
-                    System.out.println("Мы наняли фрилансера!");
                     PersonController.INSTANCE.createNewFreelancer().getToWork();
                 }
             }
@@ -73,7 +72,6 @@ public class Director extends APosition implements Employee {
     @Override
     public double paySalary() {
         //отчитывается о получении зарплаты
-        System.out.println("Я получил зарплату! ");
         return getFixedRate();
     }
 

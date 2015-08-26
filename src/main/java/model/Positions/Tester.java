@@ -48,7 +48,7 @@ public class Tester extends APosition implements Сontractor {
      */
     @Override
     public void getToWork() {
-        hourlyRate += amountHoursOneInstructions; //считаем отработанное время
+        hoursWorked += amountHoursOneInstructions; //считаем отработанное время
         //выполняет свою работу
     }
 
