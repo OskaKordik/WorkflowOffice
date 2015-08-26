@@ -12,6 +12,8 @@ import java.util.Set;
  */
 public class Accountant extends APosition implements Employee {
     private int fixedRate; //фиксированная ставка
+    private long allSalary = 0; //всего выплачено сотрудникам
+    long allSalaryFreelancers = 0; //всего выплачено фрилансерам
 
     public Accountant(String name) {
         super(name);
@@ -57,13 +59,21 @@ public class Accountant extends APosition implements Employee {
      * Начисление зарплаты всем сотрудникам компании
      */
     public void payWeekSalary(Map<Person, Set<Position>> personsList, Set<Freelancer> freelancersList) {
-        long allSalary = 0;
+
         for (Map.Entry<Person, Set<Position>> person : personsList.entrySet())
             allSalary += person.getKey().paySalary();
         //записать в отчет
-        long allSalaryFreelancers = 0;
+
         for (Freelancer freelancer : freelancersList)
             allSalaryFreelancers += freelancer.paySalary();
         //записать в отчет
+    }
+
+    public long getAllSalary() {
+        return allSalary;
+    }
+
+    public long getAllSalaryFreelancers() {
+        return allSalaryFreelancers;
     }
 }
