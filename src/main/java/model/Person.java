@@ -35,7 +35,13 @@ public class Person extends Thread {
     public void performTask(Position position, String task) {
         this.task = task;
         this.isTask = true;
-        listPositions.get(position).getToWork();
+        APosition aPosition = listPositions.get(position);
+        //если должность с почасовой оплатой передаем время на выполнение задания
+        if (aPosition instanceof Сontractor) {
+            ((Сontractor) aPosition).setAmountHoursOneInstructions(amountHoursOneInstructions);
+        }
+        aPosition.getToWork(); //выполнить работу
+
         //передает информацию в отчет о проделанной работе
     }
 
