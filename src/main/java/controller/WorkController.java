@@ -24,8 +24,12 @@ public class WorkController {
 
     public void runWorkController() {
         necessaryPositions = createNecessaryPositions();
+        //задаем список обязательных должностей
         PersonController.INSTANCE.setNecessaryPositions(necessaryPositions);
-        PersonController.INSTANCE.runPersonController(); //создаем сотрудников
+        //задаем максимальное кол-во директоров
+        PersonController.INSTANCE.setCountDirectorsPositions(Company.MAX_AMOUNT_DIRECTORS_POSITIONS);
+        //создаем сотрудников
+        PersonController.INSTANCE.runPersonController();
 
         personList = PersonController.INSTANCE.getPersonList(); //получаем список работников
         //получаем главного бухгалтера
