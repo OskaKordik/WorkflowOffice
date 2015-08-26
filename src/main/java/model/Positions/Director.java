@@ -38,7 +38,8 @@ public class Director extends APosition implements Employee {
     public void getToWork() {
         if ((taskList != null) && (personList != null)) {
             //раздает всем задания
-            int amountTasks = random.nextInt(taskList.size()) + 1; //случайное количество распоряжений
+            int amountTasks = random.nextInt(taskList.size()) + 1; //выбираем случайное количество распоряжений
+            boolean isNotFreelancer = false; //переименовать "есть исполнитель"
 
             for (int i = 0; i < amountTasks; i++) {
                 int x = random.nextInt(Position.values().length); //выбор случайной должности
@@ -48,8 +49,15 @@ public class Director extends APosition implements Employee {
                 for (Map.Entry<Person, Set<Position>> person : personList.entrySet()) {
                     Person currentPerson = person.getKey(); //текущий сотрудник
 
-                    if (!currentPerson.isBusy() && currentPerson.isWork() && person.getValue().contains(currentPosition))
+                    if (!currentPerson.isBusy()
+                            && currentPerson.isWork()
+                            && person.getValue().contains(currentPosition)) {
                         currentPerson.performTask(currentPosition, taskList.get(currentPosition)); //даем задание
+                        isNotFreelancer = true; //исполнитель есть
+                    }
+                }
+                if (!isNotFreelancer) { //если никто не взялся за задание
+                    //нанимаем фрилансера
                 }
             }
         }
