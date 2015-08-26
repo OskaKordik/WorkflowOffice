@@ -16,12 +16,12 @@ import java.util.*;
  */
 public final class PersonController {
     public static final PersonController INSTANCE = new PersonController();
-    private static final SecureRandom random = new SecureRandom(); // for random enums
+    private static final SecureRandom random = Company.random; // for random enums
 
     private Map<Person, Set<Position>> personList; //список сотрудников
     private Set<Position> necessaryPositions; //список обязательных должностей
     private Set<Freelancer> freelancers; //список фрилансеров
-    private int countDirectorsPositions;
+    private int countDirectorsPositions; //счетчик директоров
 
     /**
      * Доступ к контроллеру осуществляется через INSTANCE
@@ -210,7 +210,7 @@ public final class PersonController {
      * @return фрилансер
      */
     public Freelancer createNewFreelancer() {
-        String name = String.valueOf(freelancers.size() + 1);
+        String name = String.valueOf("Freelancer №" + (freelancers.size() + 1));
         Freelancer freelancer = new Freelancer(name);
         //устанавливаем кол-во времени на выполнение одного задания
         freelancer.setAmountHoursOneInstructions(new BigDecimal(random.nextFloat() + Company.MIN_WORKING_HOURS)
@@ -231,4 +231,6 @@ public final class PersonController {
     public Set<Freelancer> getFreelancers() {
         return freelancers;
     }
+
+
 }

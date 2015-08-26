@@ -1,5 +1,6 @@
 package model.Positions;
 
+import controller.Company;
 import controller.PersonController;
 import model.Employee;
 import model.Person;
@@ -16,7 +17,7 @@ public class Director extends APosition implements Employee {
     private int fixedRate; //фиксированная ставка
     private Map<Position, String> taskList; //список распоряжений для сотрудников
     private Map<Person, Set<Position>> personList; //список сотрудников под руководством данного директора
-    private static final SecureRandom random = new SecureRandom();
+    private static final SecureRandom random = Company.random;
 
     public Director(String name) {
         super(name);

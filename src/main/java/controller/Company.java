@@ -2,10 +2,14 @@ package controller;
 
 import model.Position;
 
+import java.security.SecureRandom;
+
 /**
  * Класс Компания - контроллирует работу компании
  */
 public class Company {
+    public static final SecureRandom random = new SecureRandom(); // for random enums
+
     public static final int MAX_WORKING_HOURS = 8; //кол-во рабочих часов (от 1 до 8)
     public static final int MIN_WORKING_HOURS = 1;
     public static final int MAX_AMOUNT_POSITIONS = Position.values().length; //кол-во должностей (от 1 до 6)
