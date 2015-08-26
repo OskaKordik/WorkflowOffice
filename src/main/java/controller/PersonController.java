@@ -32,7 +32,6 @@ public final class PersonController {
      * Метод запускающий работу контроллера
      */
     public void runPersonController() {
-        countDirectorsPositions = Company.MAX_AMOUNT_DIRECTORS_POSITIONS; //задаем максимальное кол-во директоров
         personList = createRandomPerson(); //создаем список сотрудников
         freelancers = new HashSet<>(); //создаем список фрилансеров
 
@@ -232,5 +231,19 @@ public final class PersonController {
         return freelancers;
     }
 
+    /**
+     * Метод возвращает заданное кол-во директоров
+     * @return максимальное кол-во директоров
+     */
+    public int getCountDirectorsPositions() {
+        return countDirectorsPositions;
+    }
 
+    /**
+     * Метод устанавливает максимальное количество директоров
+     * @param countDirectorsPositions счетчик директоров
+     */
+    public void setCountDirectorsPositions(int countDirectorsPositions) {
+        this.countDirectorsPositions = countDirectorsPositions;
+    }
 }
