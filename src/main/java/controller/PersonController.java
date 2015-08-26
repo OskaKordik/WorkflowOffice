@@ -5,6 +5,7 @@ import model.Person;
 import model.Position;
 import model.Positions.*;
 import model.Сontractor;
+import main.Company;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

@@ -4,6 +4,7 @@ import model.Person;
 import model.Position;
 import model.Positions.APosition;
 import model.Positions.Freelancer;
+import main.Company;
 import org.junit.Test;
 
 import java.util.HashMap;

@@ -3,6 +3,7 @@ package controller;
 import model.Person;
 import model.Position;
 import model.Positions.Accountant;
+import main.Company;
 
 import java.util.HashSet;
 import java.util.Map;

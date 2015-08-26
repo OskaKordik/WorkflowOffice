@@ -1,6 +1,6 @@
 package model.Positions;
 
-import controller.Company;
+import main.Company;
 import controller.PersonController;
 import model.Employee;
 import model.Person;

@@ -3,6 +3,7 @@ package controller;
 import model.Person;
 import model.Position;
 import model.Positions.Director;
+import main.Company;
 
 import java.util.*;
 
