@@ -49,7 +49,7 @@ public class WorkController {
                 DirectorsController.INSTANCE.runDirectorsController();
                 Thread.sleep(Company.MAX_WORKING_HOURS);
             }
-            generalAccountant.payWeekSalary();
+            generalAccountant.payWeekSalary(personList, PersonController.INSTANCE.getFreelancers());
         }
         //формирование суммарного отчета + сохранение в файл - реализовать
 
