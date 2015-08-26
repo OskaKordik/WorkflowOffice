@@ -17,6 +17,7 @@ public class WorkController {
 
     private Map<Person, Set<Position>> personList; //список сотрудников
     private static Set<Position> necessaryPositions; //список обязательных должностей
+    private static Accountant generalAccountant; //главный бухгалтер
 
     /**
      * Доступ к контроллеру осуществляется через INSTANCE
@@ -35,20 +36,22 @@ public class WorkController {
         personList = PersonController.INSTANCE.getPersonList(); //получаем список работников
         //получаем главного бухгалтера
         Person personGeneralAccountant = PersonController.INSTANCE.selectionRandomAccountant(personList);
-        Accountant generalAccountant = (Accountant) personGeneralAccountant.getListPositions().get(Position.Accountant);
+        generalAccountant = (Accountant) personGeneralAccountant.getListPositions().get(Position.Accountant);
 
         try {
-            workMonth(generalAccountant); //запуск моделирования работы компании в течении месяца
+            workMonth(); //запуск моделирования работы компании в течении месяца
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        ReportController.INSTANCE.runReportController(); //создаем отчет
     }
 
     /**
      * Метод, запускающий работу сотрудников в течении месяца
      * @throws InterruptedException
      */
-    private void workMonth(Accountant generalAccountant) throws InterruptedException {
+    private void workMonth() throws InterruptedException {
         //запуск всех сотрудников
         for (Map.Entry<Person, Set<Position>> person : personList.entrySet()) person.getKey().start();
 
@@ -75,5 +78,9 @@ public class WorkController {
         list.add(Position.Manager);
         list.add(Position.Accountant);
         return list;
+    }
+
+    public Accountant getGeneralAccountant() {
+        return generalAccountant;
     }
 }
