@@ -1,5 +1,6 @@
 package model.Positions;
 
+import controller.PersonController;
 import model.Employee;
 import model.Person;
 import model.Position;
@@ -12,7 +13,7 @@ import java.util.Set;
  * Класс должности Директор
  */
 public class Director extends APosition implements Employee {
-    private float fixedRate; //фиксированная ставка
+    private int fixedRate; //фиксированная ставка
     private Map<Position, String> taskList; //список распоряжений для сотрудников
     private Map<Person, Set<Position>> personList; //список сотрудников под руководством данного директора
     private static final SecureRandom random = new SecureRandom();
@@ -27,7 +28,7 @@ public class Director extends APosition implements Employee {
      * @param fixedRate
      */
     @Override
-    public void setFixedRate(float fixedRate) {
+    public void setFixedRate(int fixedRate) {
         this.fixedRate = fixedRate;
     }
 
@@ -56,8 +57,9 @@ public class Director extends APosition implements Employee {
                         isNotFreelancer = true; //исполнитель есть
                     }
                 }
-                if (!isNotFreelancer) { //если никто не взялся за задание
-                    //нанимаем фрилансера
+                if (!isNotFreelancer) { //если никто не взялся за задание нанимаем фрилансера
+                    System.out.println("Мы наняли фрилансера!");
+                    PersonController.INSTANCE.createNewFreelancer().getToWork();
                 }
             }
         }
@@ -81,7 +83,7 @@ public class Director extends APosition implements Employee {
      * @return fixedRate
      */
     @Override
-    public float getFixedRate() {
+    public int getFixedRate() {
         return fixedRate;
     }
 

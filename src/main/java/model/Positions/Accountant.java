@@ -6,7 +6,7 @@ import model.Employee;
  * Класс должности Бухгалтер
  */
 public class Accountant extends APosition implements Employee {
-    private float fixedRate; //фиксированная ставка
+    private int fixedRate; //фиксированная ставка
 
     public Accountant(String name) {
         super(name);
@@ -17,7 +17,7 @@ public class Accountant extends APosition implements Employee {
      * @param fixedRate
      */
     @Override
-    public void setFixedRate(float fixedRate) {
+    public void setFixedRate(int fixedRate) {
         this.fixedRate = fixedRate;
     }
 
@@ -44,7 +44,7 @@ public class Accountant extends APosition implements Employee {
      * @return fixedRate
      */
     @Override
-    public float getFixedRate() {
+    public int getFixedRate() {
         return fixedRate;
     }
 

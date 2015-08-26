@@ -9,11 +9,11 @@ public interface Employee {
      * Метод, устанавливающий фиксированную ставку
      * @param fixedRate
      */
-    void setFixedRate(float fixedRate);
+    void setFixedRate(int fixedRate);
 
     /**
      * Метод возвращает фиксированную ставку
      * @return fixedRate
      */
-    float getFixedRate();
+    int getFixedRate();
 }

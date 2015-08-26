@@ -9,7 +9,7 @@ public interface Сontractor {
      * Метод, устанавливающий почасовую ставку
      * @param hourlyRate
      */
-    void setHourlyRate(float hourlyRate);
+    void setHourlyRate(int hourlyRate);
 
     /**
      * Метод, устанавливающий время на выполнее задания

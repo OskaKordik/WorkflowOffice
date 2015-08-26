@@ -6,7 +6,7 @@ import model.Сontractor;
  * Класс Фрилансер (удаленный сотрудник)
  */
 public class Freelancer extends APosition implements Сontractor {
-    private float hourlyRate; //почасовая ставка
+    private int hourlyRate; //почасовая ставка
     private double hoursWorked; //отработанные часы - для почасовой оплаты
     private float amountHoursOneInstructions; //кол-во часов на выполнение одного задания
 
@@ -20,7 +20,7 @@ public class Freelancer extends APosition implements Сontractor {
      * @param hourlyRate почасовая ставка
      */
     @Override
-    public void setHourlyRate(float hourlyRate) {
+    public void setHourlyRate(int hourlyRate) {
         this.hourlyRate = hourlyRate;
     }
 

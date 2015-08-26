@@ -1,8 +1,10 @@
 package controller;
 
+import model.Employee;
 import model.Person;
 import model.Position;
 import model.Positions.*;
+import model.Сontractor;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -18,6 +20,7 @@ public final class PersonController {
 
     private Map<Person, Set<Position>> personList; //список сотрудников
     private Set<Position> necessaryPositions; //список обязательных должностей
+    private Set<Freelancer> freelancers; //список фрилансеров
     private int countDirectorsPositions;
 
 
@@ -27,6 +30,7 @@ public final class PersonController {
     public void runPersonController() {
         countDirectorsPositions = Company.MAX_AMOUNT_DIRECTORS_POSITIONS; //задаем максимальное кол-во директоров
         personList = createRandomPerson(); //создаем список сотрудников
+        freelancers = new HashSet<>(); //создаем список фрилансеров
 
         //проверка, что в фирме есть необходимые должности
         if (necessaryPositions != null)
@@ -77,6 +81,15 @@ public final class PersonController {
                 default: break;
             }
         }
+        //устанавливаем размер зарплаты
+        for (Map.Entry<Position, APosition> positionEntry : positionMap.entrySet()) {
+            if (positionEntry.getValue() instanceof Сontractor)
+                ((Сontractor) positionEntry.getValue())
+                        .setHourlyRate(random.nextInt(Company.MAX_HOURLY_RATE) + Company.MIN_HOURLY_RATE);
+            else if (positionEntry.getValue() instanceof Employee)
+                ((Employee) positionEntry.getValue())
+                        .setFixedRate(random.nextInt(Company.MAX_FIXED_RATE) + Company.MIN_FIXED_RATE);
+        }
         return positionMap;
     }
 
@@ -90,11 +103,10 @@ public final class PersonController {
         Person person = new Person(name);
         //кол-во времени на выполнение одного задания
         person.setAmountHoursOneInstructions(new BigDecimal(random.nextFloat() + Company.MIN_WORKING_HOURS)
-                                                .setScale(2, RoundingMode.UP)
-                                                .floatValue());
+                .setScale(2, RoundingMode.UP)
+                .floatValue());
         //кол-во рабочих часов в день
         person.setWorkHoursPerDay(random.nextInt(Company.MAX_WORKING_HOURS) + Company.MIN_WORKING_HOURS);
-        //добавляет сотрудника в список
         return person;
     }
 
@@ -187,5 +199,32 @@ public final class PersonController {
         Person personAccountant = listAccountant.get(random.nextInt(listAccountant.size()));
 
         return personAccountant;
+    }
+
+    /**
+     * Метод нанимает нового фрилансера и добавляет его в список
+     * @return фрилансер
+     */
+    public Freelancer createNewFreelancer() {
+        String name = String.valueOf(freelancers.size() + 1);
+        Freelancer freelancer = new Freelancer(name);
+        //устанавливаем кол-во времени на выполнение одного задания
+        freelancer.setAmountHoursOneInstructions(new BigDecimal(random.nextFloat() + Company.MIN_WORKING_HOURS)
+                .setScale(2, RoundingMode.UP)
+                .floatValue());
+        //устанавливаем почасовую оплату
+        freelancer.setHourlyRate(random.nextInt(Company.MAX_HOURLY_RATE) + Company.MIN_HOURLY_RATE);
+        //добавляем в список фрилансеров
+        freelancers.add(freelancer);
+
+        return freelancer;
+    }
+
+    /**
+     * Метод возвращает список фрилансеров
+     * @return список фрилансеров
+     */
+    public Set<Freelancer> getFreelancers() {
+        return freelancers;
     }
 }
