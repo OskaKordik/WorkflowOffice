@@ -14,12 +14,15 @@ import java.util.Set;
 public class WorkController {
     public static final WorkController INSTANCE = new WorkController();
 
-
     private Map<Person, Set<Position>> personList; //список сотрудников
     private static Set<Position> necessaryPositions; //список обязательных должностей
 
-    public void runWorkController() {
+    /**
+     * Доступ к контроллеру осуществляется через INSTANCE
+     */
+    private WorkController() {}
 
+    public void runWorkController() {
         necessaryPositions = createNecessaryPositions();
         PersonController.INSTANCE.setNecessaryPositions(necessaryPositions);
         PersonController.INSTANCE.runPersonController(); //создаем сотрудников

@@ -23,6 +23,10 @@ public final class PersonController {
     private Set<Freelancer> freelancers; //список фрилансеров
     private int countDirectorsPositions;
 
+    /**
+     * Доступ к контроллеру осуществляется через INSTANCE
+     */
+    private PersonController() {}
 
     /**
      * Метод запускающий работу контроллера

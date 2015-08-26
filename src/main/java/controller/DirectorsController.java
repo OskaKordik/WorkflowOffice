@@ -15,6 +15,11 @@ public class DirectorsController {
     private static List<Person> directorsList; //список директоров
     private static final Map<Position, String> taskList = new HashMap<>();
 
+    /**
+     * Доступ к контроллеру осуществляется через INSTANCE
+     */
+    private DirectorsController() {}
+
     static { //заполнение списка распоряжений для сотрудников
         taskList.put(Position.Programmer, "писать код");
         taskList.put(Position.Designer, "рисовать макет");
