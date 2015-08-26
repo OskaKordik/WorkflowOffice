@@ -12,6 +12,12 @@ public interface Сontractor {
     void setHourlyRate(float hourlyRate);
 
     /**
+     * Метод, устанавливающий время на выполнее задания
+     * @param amountHoursOneInstructions
+     */
+    void setAmountHoursOneInstructions(float amountHoursOneInstructions);
+
+    /**
      * Метод расчитывающий сумму зарплаты исходя из количества отработанных часов
      * и почасовой ставки
      * @return salary
