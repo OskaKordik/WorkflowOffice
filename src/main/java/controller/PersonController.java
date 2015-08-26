@@ -106,11 +106,13 @@ public final class PersonController {
     protected Person createPerson(String name) {
         Person person = new Person(name);
         //кол-во времени на выполнение одного задания
-        person.setAmountHoursOneInstructions(new BigDecimal(random.nextFloat() + Company.MIN_WORKING_HOURS)
+        person.setAmountHoursOneInstructions(new BigDecimal(random.nextFloat()
+                + Company.MIN_WORKING_HOURS)
                 .setScale(2, RoundingMode.UP)
                 .floatValue());
-        //кол-во рабочих часов в день
-        person.setWorkHoursPerDay(random.nextInt(Company.MAX_WORKING_HOURS) + Company.MIN_WORKING_HOURS);
+        //кол-во рабочих часов в месяц
+        person.setWorkHoursPerMonth(random.nextInt(Company.MAX_WORKING_HOURS_PER_MONTH)
+                + Company.MIN_WORKING_HOURS_PER_MONTH);
         return person;
     }
 
@@ -195,12 +197,13 @@ public final class PersonController {
     protected Person selectionRandomAccountant(Map<Person, Set<Position>> personList) {
         List<Person> listAccountant = new ArrayList<>();
         Map<Person, Set<Position>> list = personList;
+        Person personAccountant;
 
         //выбираем всех бухгалтеров
         for (Map.Entry<Person, Set<Position>> person : list.entrySet())
             if (person.getValue().contains(Position.Accountant)) listAccountant.add(person.getKey());
         //выбираем случайного бухгалтера
-        Person personAccountant = listAccountant.get(random.nextInt(listAccountant.size()));
+        personAccountant = listAccountant.get(random.nextInt(listAccountant.size()));
 
         return personAccountant;
     }

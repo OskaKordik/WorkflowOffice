@@ -2,6 +2,8 @@ package model;
 
 import model.Positions.APosition;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,11 +15,11 @@ public class Person extends Thread {
     private volatile boolean isTask;
     private volatile boolean stopWork;
 
-    private float workHoursPerDay; //кол-во рабочих часов в день
+    private float workHoursPerMonth; //кол-во рабочих часов
     private float amountHoursOneInstructions; //кол-во часов на выполнение одного задания
     private Map<Position, APosition> listPositions; //список должностей
 
-    private String task; //распоряжение к выполнению
+    private List<String> taskList; //распоряжение к выполнению
     private float workHours; //счетчик рабочих часов
 
 
@@ -26,6 +28,7 @@ public class Person extends Thread {
         this.isBusy = false;
         this.isTask = false;
         this.stopWork = false;
+        this.taskList = new ArrayList<>();
     }
 
     /**
@@ -33,7 +36,7 @@ public class Person extends Thread {
      * @param task распоряжение
      */
     public void performTask(Position position, String task) {
-        this.task = task;
+        this.taskList.add(task);
         this.isTask = true;
         APosition aPosition = listPositions.get(position);
         //если должность с почасовой оплатой передаем время на выполнение задания
@@ -41,15 +44,13 @@ public class Person extends Thread {
             ((Сontractor) aPosition).setAmountHoursOneInstructions(amountHoursOneInstructions);
         }
         aPosition.getToWork(); //выполнить работу
-
-        //передает информацию в отчет о проделанной работе
     }
 
     @Override
     public void run() {
-        workHours = workHoursPerDay;
+        workHours = workHoursPerMonth;
         while(workHours > 0) {
-            while (!isTask && !stopWork) Thread.yield(); //ждем получения задания или конца рабочего дня
+            while (!isTask && !stopWork) Thread.yield(); //ждем получения задания
             if (isTask) { //если есть задание
                 this.isBusy = true; //сотрудник занят
                 try {
@@ -63,10 +64,9 @@ public class Person extends Thread {
                 workHours -= amountHoursOneInstructions; //высчитываем отработанные часы
                 isBusy = false; //сотрудник освободился
                 isTask = false; //задание выполнено
-            } else if (stopWork) break; //если рабочий день закончился - останавливаем поток
+            } else if (stopWork) break;
         }
     }
-
 
     /**
      * Метод, проверяющий занят ли сотрудник выполнением распоряжения
@@ -88,7 +88,7 @@ public class Person extends Thread {
 
     /**
      * Метод считает заработанную сумму со всех должностей
-     * @return сумму зарплаты
+     * @return salary сумма зарплаты
      */
     public double paySalary() {
         double salary = 0;
@@ -96,10 +96,6 @@ public class Person extends Thread {
             salary += positionEntry.getValue().paySalary();
         //передает информацию в отчет о выплаченной з/п
         return salary;
-    }
-
-    public void passReport(String report) {
-        //передает информацию в отчет о проделанной работе
     }
 
     public void setStopWork(boolean stopWork) {
@@ -110,12 +106,12 @@ public class Person extends Thread {
         return personName;
     }
 
-    public void setWorkHoursPerDay(float workHoursPerDay) {
-        this.workHoursPerDay = workHoursPerDay;
+    public void setWorkHoursPerMonth(float workHoursPerDay) {
+        this.workHoursPerMonth = workHoursPerDay;
     }
 
-    public float getWorkHoursPerDay() {
-        return workHoursPerDay;
+    public float getWorkHoursPerMonth() {
+        return workHoursPerMonth;
     }
 
     public void setAmountHoursOneInstructions(float amountHoursOneInstructions) {
@@ -134,6 +130,10 @@ public class Person extends Thread {
         return listPositions;
     }
 
+    public List<String> getTaskList() {
+        return taskList;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -141,7 +141,7 @@ public class Person extends Thread {
 
         Person person = (Person) o;
 
-        if (Float.compare(person.workHoursPerDay, workHoursPerDay) != 0) return false;
+        if (Float.compare(person.workHoursPerMonth, workHoursPerMonth) != 0) return false;
         return !(personName != null ? !personName.equals(person.personName) : person.personName != null);
 
     }
@@ -149,7 +149,7 @@ public class Person extends Thread {
     @Override
     public int hashCode() {
         int result = personName != null ? personName.hashCode() : 0;
-        result = 31 * result + (workHoursPerDay != +0.0f ? Float.floatToIntBits(workHoursPerDay) : 0);
+        result = 31 * result + (workHoursPerMonth != +0.0f ? Float.floatToIntBits(workHoursPerMonth) : 0);
         return result;
     }
 }
