@@ -3,6 +3,7 @@ package controller;
 import model.Person;
 import model.Position;
 import model.Positions.APosition;
+import model.Positions.Freelancer;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -25,6 +26,7 @@ public class PersonControllerTest {
     public void testRunPersonController() {
         PersonController.INSTANCE.runPersonController();
         assertNotNull(PersonController.INSTANCE.getPersonList());
+        assertNotNull(PersonController.INSTANCE.getFreelancers());
     }
 
     /**
@@ -74,7 +76,6 @@ public class PersonControllerTest {
 
         assertEquals(testListCount + 1, testListCountAfterEditing);
     }
-
 
     /**
      * Тест проверяет корректное создание списка сотрудников
@@ -154,5 +155,29 @@ public class PersonControllerTest {
         Person accountant = PersonController.INSTANCE.selectionRandomAccountant(testList);
 
         assertEquals(Position.Accountant.toString(), accountant.getPersonName());
+    }
+
+    /**
+     * Тест проверяет кооректное осздание и добавления фрилансера
+     */
+    @Test
+    public void testCreateNewFreelancer() {
+        PersonController.INSTANCE.runPersonController();
+        for (int i = 1; i <= 3; i++) {
+            Freelancer freelancer = PersonController.INSTANCE.createNewFreelancer();
+            assertEquals("Freelancer №" + i, freelancer.getNamePositions());
+        }
+        assertEquals(3, PersonController.INSTANCE.getFreelancers().size());
+    }
+
+    /**
+     * Тест проверяет корректность установки счетчика директоров
+     */
+    @Test
+    public void testGetCountDirectorsPositions() {
+        PersonController.INSTANCE.setCountDirectorsPositions(Company.MAX_AMOUNT_DIRECTORS_POSITIONS);
+        int countDirectors = PersonController.INSTANCE.getCountDirectorsPositions();
+
+        assertEquals(Company.MAX_AMOUNT_DIRECTORS_POSITIONS, countDirectors);
     }
 }
