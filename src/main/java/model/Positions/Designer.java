@@ -8,6 +8,7 @@ import model.Сontractor;
 public class Designer extends APosition implements Сontractor {
     private float hourlyRate; //почасовая ставка
     private double hoursWorked; //отработанные часы - для почасовой оплаты
+    private float amountHoursOneInstructions; //кол-во часов на выполнение одного задания
 
     public Designer(String name) {
         super(name);
@@ -21,6 +22,15 @@ public class Designer extends APosition implements Сontractor {
     @Override
     public void setHourlyRate(float hourlyRate) {
         this.hourlyRate = hourlyRate;
+    }
+
+    /**
+     * Метод, устанавливающий время на выполнее задания
+     * @param amountHoursOneInstructions
+     */
+    @Override
+    public void setAmountHoursOneInstructions(float amountHoursOneInstructions) {
+        this.amountHoursOneInstructions = amountHoursOneInstructions;
     }
 
     /**
@@ -38,6 +48,7 @@ public class Designer extends APosition implements Сontractor {
      */
     @Override
     public void getToWork() {
+        hourlyRate += amountHoursOneInstructions; //считаем отработанное время
         //выполняет свою работу
     }
 
