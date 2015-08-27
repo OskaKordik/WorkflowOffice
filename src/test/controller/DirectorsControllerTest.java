@@ -24,16 +24,16 @@ public class DirectorsControllerTest {
         testList.put(PersonController.INSTANCE.createPerson("TestPerson"),
                 new HashSet<>(Arrays.asList(Position.Manager, Position.Tester)));
         testList.put(PersonController.INSTANCE.createPerson("Director"),
-                new HashSet<>(Arrays.asList(Position.Director)));
+                new HashSet<>(Collections.singletonList(Position.Director)));
         testList.put(PersonController.INSTANCE.createPerson("Director"),
-                new HashSet<>(Arrays.asList(Position.Director)));
+                new HashSet<>(Collections.singletonList(Position.Director)));
         List<Person> resultList = DirectorsController.INSTANCE.selectionOfDirectors(testList);
 
         for (Person person : resultList) assertEquals("Director", person.getPersonName());
     }
 
     /**
-     * Тест проверяет корректную установки времени выполнения одного задания для
+     * Тест проверяет корректную установку времени выполнения одного задания для
      * сотрудников с должностью директора
      */
     @Test
@@ -42,7 +42,7 @@ public class DirectorsControllerTest {
         testList.put(PersonController.INSTANCE.createPerson("TestPerson"),
                 new HashSet<>(Arrays.asList(Position.Accountant, Position.Designer)));
         testList.put(PersonController.INSTANCE.createPerson("Director"),
-                new HashSet<>(Arrays.asList(Position.Director)));
+                new HashSet<>(Collections.singletonList(Position.Director)));
         List<Person> resultList = DirectorsController.INSTANCE.selectionOfDirectors(testList);
 
         for (Person person : resultList) assertEquals(1, person.getAmountHoursOneInstructions(), 0.0f);
