@@ -47,6 +47,7 @@ public class Person extends Thread {
             ((Сontractor) aPosition).setAmountHoursOneInstructions(amountHoursOneInstructions);
         } else if (position != Position.Director)
             aPosition.addAllHoursWorked(amountHoursOneInstructions);
+
         aPosition.getToWork(); //выполнить работу
     }
 
@@ -59,11 +60,8 @@ public class Person extends Thread {
                 this.isBusy = true; //сотрудник занят
                 try {
                     Thread.sleep((long) amountHoursOneInstructions); //время выполнения задания
-
-                    //выполняем распоряжение
-
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    System.out.println("Во время выполнения задания произошла ошибка!" + e.getMessage());
                 }
                 workHours -= amountHoursOneInstructions; //высчитываем отработанные часы
                 isBusy = false; //сотрудник освободился
@@ -144,9 +142,14 @@ public class Person extends Thread {
         return stopWork;
     }
 
+    public double getAllHoursWorked() {
+        return allHoursWorked;
+    }
+
     /**
      * Метод equals переопределен для корректной работы списка сотрудников
      * где ключом является экземпляр класса Person
+     *
      * @param o объект для сравнения
      * @return true or false
      */
@@ -154,17 +157,15 @@ public class Person extends Thread {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Person person = (Person) o;
-
         if (Float.compare(person.workHoursPerMonth, workHoursPerMonth) != 0) return false;
         return !(personName != null ? !personName.equals(person.personName) : person.personName != null);
-
     }
 
     /**
      * Метод hashCode переопределен для корректной работы списка сотрудников
      * где ключом является экземпляр класса Person
+     *
      * @return hashCode
      */
     @Override
@@ -174,7 +175,4 @@ public class Person extends Thread {
         return result;
     }
 
-    public double getAllHoursWorked() {
-        return allHoursWorked;
-    }
 }
