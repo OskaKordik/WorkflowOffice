@@ -17,7 +17,7 @@ public class PersonTest {
     private static Person person;
 
     /**
-     * Метод инициализирующий объект класса Field
+     * Метод инициализирующий объект класса Person
      * вызывается перед тестами
      */
     @BeforeClass
@@ -42,17 +42,15 @@ public class PersonTest {
         assertFalse(person.isBusy());
     }
 
-
     /**
-     * Тест проверяет корректно ли задается кол-во рабочих часов в день
+     * Тест проверяет корректно ли задается кол-во рабочих часов
      */
     @Test
     public void testSetWorkHoursPerDay() {
-        float hours = 6.1f;
+        float hours = 20.1f;
         person.setWorkHoursPerMonth(hours);
         assertEquals(hours, person.getWorkHoursPerMonth(), 0.0f);
     }
-
 
     /**
      * Тест проверяет корректно ли задается кол-во времени на выполнение одного задания
@@ -65,7 +63,7 @@ public class PersonTest {
     }
 
     /**
-     * Тест проверяет корркетное сохранение распоряжения в списке заданий
+     * Тест проверяет корректное сохранение распоряжения в списке заданий
      */
     @Test
     public void testGetTaskList(){
@@ -118,15 +116,26 @@ public class PersonTest {
         assertEquals(hourlyRate * 2, person.paySalary(), 0.0f);
     }
 
+    /**
+     * Тест проверяет корректность работы метода isWork
+     * (Данный метод возвращает true если сотрудник готов к работе)
+     * @throws Exception
+     */
     @Test
     public void testIsWork() throws Exception {
         person = PersonController.INSTANCE.createPerson("TestPerson");
         person.setAmountHoursOneInstructions(2);
-        person.setWorkHours(20);
+        person.setWorkHoursPerMonth(50);
+        person.start();
+        Thread.sleep(50);
+        person.setStopWork(true);
 
         assertTrue(person.isWork());
     }
 
+    /**
+     * Тест проверяет работу метода setStopWork
+     */
     @Test
     public void testSetStopWork() throws Exception {
         person = PersonController.INSTANCE.createPerson("TestPerson");
@@ -135,8 +144,11 @@ public class PersonTest {
         assertTrue(person.isStopWork());
     }
 
+    /**
+     * Тест проверяет корркетную работу класса со списокм должностей
+     */
     @Test
-    public void testGetListPositions() throws Exception {
+    public void testGetListPositions() {
         person = PersonController.INSTANCE.createPerson("TestPerson");
         Map<Position, APosition> listPositions = new HashMap<>();
         listPositions.put(Position.Programmer, new Designer("Designer"));
@@ -145,8 +157,11 @@ public class PersonTest {
         assertEquals(1, person.getListPositions().size());
     }
 
+    /**
+     * Тест проверяет корректность работы переопределенного метода hashCode
+     */
     @Test
-    public void testHashCode() throws Exception {
+    public void testHashCode() {
         Person person1 = PersonController.INSTANCE.createPerson("TestPerson1");
         person1.setWorkHoursPerMonth(50);
 
@@ -156,8 +171,11 @@ public class PersonTest {
         assertNotEquals(person1.hashCode(), person2.hashCode());
     }
 
+    /**
+     * Тест проверяет корректность работы переопределенного метода equals
+     */
     @Test
-    public void testEquals() throws Exception {
+    public void testEquals() {
         Person person1 = PersonController.INSTANCE.createPerson("TestPerson1");
         person1.setWorkHoursPerMonth(50);
 
@@ -165,24 +183,5 @@ public class PersonTest {
         person2.setWorkHoursPerMonth(50);
 
         assertFalse(person1.equals(person2));
-    }
-
-    /**
-     * Тест проверяет работу метода run()
-     * (Если не было заданий кол-во отработанных часов равно кол-во заданных)
-     * @throws Exception
-     */
-    @Test
-    public void testRun() throws Exception {
-        person = PersonController.INSTANCE.createPerson("TestPerson");
-        person.setWorkHoursPerMonth(50);
-        person.setStopWork(false);
-        person.setIsTask(false);
-
-        person.start();
-        Thread.sleep(50);
-        person.setStopWork(true);
-
-        assertEquals(person.getWorkHoursPerMonth(), person.getWorkHours(), 0.0f);
     }
 }
