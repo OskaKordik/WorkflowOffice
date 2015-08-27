@@ -19,41 +19,46 @@ public class ReportController {
     private static Accountant generalAccountant; //главный бухгалтер
     private Map<Person, Set<Position>> personList; //список сотрудников
     private Set<Freelancer> freelancersList; //список фрилансеров
-    private String fileName;
-    private List<String> dataFile;
+    private String fileName; //имя файла для сохранения отчета
+    private List<String> dataFile; //данные для записи в файл
 
     /**
      * Доступ к контроллеру осуществляется через INSTANCE
      */
-    private ReportController() {
-    }
+    private ReportController() {}
 
+    /**
+     * Метод запускает работу контроллера
+     */
     public void runReportController() {
         fileName = "report.txt";
         dataFile = new ArrayList<>();
-        personList = PersonController.INSTANCE.getPersonList();
-        freelancersList = PersonController.INSTANCE.getFreelancers();
+        personList = PersonController.INSTANCE.getPersonList(); //получаем список сотрудников
+        freelancersList = PersonController.INSTANCE.getFreelancers(); //получаем список фрилансеров
 
         dataFile.add("---------------- КОЛИЧЕСТВО РАБОТНИКОВ ----------------");
-        amountPersons();
+        amountPersons(); //добавляем данные о работниках
         dataFile.add("-------------------------------------------------------");
         dataFile.add("---------------- ВЫПОЛНЕННАЯ РАБОТА -------------------");
-        amountPersonsWork();
+        amountPersonsWork(); //добавляем информацию о выполненной работе
         dataFile.add("-------------------------------------------------------");
         dataFile.add("---------------- ВСЕГО ВЫПЛАЧЕНО ----------------------");
-        amountPersonsSalary();
+        amountPersonsSalary(); //добавляем отчет о выданной зарплате
         dataFile.add("-------------------------------------------------------");
 
         try (FileWriter fileWriter = new FileWriter(fileName, false)) {
             for (String writeStr : dataFile) {
-                fileWriter.write(writeStr);
+                fileWriter.write(writeStr); //записываем данные в файл
                 fileWriter.write(System.lineSeparator());
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Возникла ошибка при записи в файл! " + e.getMessage());
         }
     }
 
+    /**
+     * Метод подсчитывает количество работников
+     */
     protected void amountPersons() {
         int persons = personList.size();
         int directors = 0;
@@ -102,6 +107,9 @@ public class ReportController {
         dataFile.add("Фрилансеров :             " + freelancers);
     }
 
+    /**
+     * Метод считывает данные о выполненной работе
+     */
     protected void amountPersonsWork() {
         int personsTasks = 0;
         int freelancersTasks = freelancersList.size();
@@ -189,6 +197,9 @@ public class ReportController {
                 .format("Фрилансерами :            %.2f            %d", freelancersHours, freelancersTasks));
     }
 
+    /**
+     * Метод считывает информацию о выплаченной зарплате
+     */
     protected void amountPersonsSalary() {
         generalAccountant = WorkController.INSTANCE.getGeneralAccountant();
         double personsSalary = generalAccountant.getAllSalary();
