@@ -19,15 +19,6 @@ public class Freelancer extends APosition implements Сontractor {
     }
 
     /**
-     * Метод, устанавливающий почасовую ставку
-     * @param hourlyRate почасовая ставка
-     */
-    @Override
-    public void setHourlyRate(int hourlyRate) {
-        this.hourlyRate = hourlyRate;
-    }
-
-    /**
      * Метод в котором выполняется работа должности
      */
     @Override
@@ -35,7 +26,6 @@ public class Freelancer extends APosition implements Сontractor {
         hoursWorked += amountHoursOneInstructions; //считаем отработанное время
         allHoursWorked += amountHoursOneInstructions;
         countTasks++;
-        //выполняет свою работу
     }
 
     /**
@@ -60,10 +50,11 @@ public class Freelancer extends APosition implements Сontractor {
         return taskSalary;
     }
 
-    /**
-     * Метод, устанавливающий кол-во времени на выполнение одного задания
-     * @param amountHoursOneInstructions количество времени на одно задание
-     */
+    @Override
+    public void setHourlyRate(int hourlyRate) {
+        this.hourlyRate = hourlyRate;
+    }
+
     @Override
     public void setAmountHoursOneInstructions(float amountHoursOneInstructions) {
         this.amountHoursOneInstructions = amountHoursOneInstructions;
@@ -86,4 +77,5 @@ public class Freelancer extends APosition implements Сontractor {
     public double getSalary() {
         return salary;
     }
+
 }
