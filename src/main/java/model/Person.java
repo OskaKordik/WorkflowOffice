@@ -16,6 +16,7 @@ public class Person extends Thread {
     private volatile boolean stopWork; //флаг для остановки работы
 
     private float workHoursPerMonth; //кол-во рабочих часов
+    private double allHoursWorked; //отработанные часы - для отчета
     private float amountHoursOneInstructions; //кол-во часов на выполнение одного задания
     private Map<Position, APosition> listPositions; //список должностей
 
@@ -39,6 +40,7 @@ public class Person extends Thread {
     public void performTask(Position position, String task) {
         this.taskList.add(task);
         this.isTask = true;
+        allHoursWorked += amountHoursOneInstructions;
         APosition aPosition = listPositions.get(position);
         //если должность с почасовой оплатой передаем время на выполнение задания
         if (aPosition instanceof Сontractor) {
@@ -171,4 +173,7 @@ public class Person extends Thread {
         return result;
     }
 
+    public double getAllHoursWorked() {
+        return allHoursWorked;
+    }
 }
