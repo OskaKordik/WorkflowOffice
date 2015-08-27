@@ -4,7 +4,7 @@ package model.Positions;
  * Абстрактный класс должностей
  */
 public abstract class APosition {
-    String namePositions;
+    String namePositions; //имя должности
 
     public APosition(String name) {
         this.namePositions = name;
@@ -17,6 +17,7 @@ public abstract class APosition {
 
     /**
      * Метод для получения зарплаты
+     *
      * @return сумму зарплаты
      */
     public abstract double paySalary();
@@ -25,7 +26,17 @@ public abstract class APosition {
         return namePositions;
     }
 
+    /**
+     * Метод возвращает количество отработанных часов за все время
+     *
+     * @return кол-во часов
+     */
     public abstract double getAllHoursWorked();
 
+    /**
+     * Метод добавляет отработанные часы
+     *
+     * @param allHoursWorked кол-во часов
+     */
     public abstract void addAllHoursWorked(double allHoursWorked);
 }
