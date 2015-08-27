@@ -1,4 +1,4 @@
-package model;
+package workflowOffice.model;
 
 /**
  * Интерфейс сотрудников с фиксированной ставкой

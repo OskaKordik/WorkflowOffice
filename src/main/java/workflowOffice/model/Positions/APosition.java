@@ -1,4 +1,4 @@
-package model.Positions;
+package workflowOffice.model.Positions;
 
 /**
  * Абстрактный класс должностей

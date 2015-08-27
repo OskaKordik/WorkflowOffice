@@ -1,9 +1,9 @@
-package controller;
+package workflowOffice.controller;
 
-import model.Person;
-import model.Position;
-import model.Positions.Director;
-import main.Company;
+import workflowOffice.model.Person;
+import workflowOffice.model.Position;
+import workflowOffice.model.Positions.Director;
+import workflowOffice.main.Company;
 
 import java.util.*;
 

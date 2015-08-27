@@ -1,8 +1,8 @@
-package model.Positions;
+package workflowOffice.model.Positions;
 
-import model.Employee;
-import model.Person;
-import model.Position;
+import workflowOffice.model.Employee;
+import workflowOffice.model.Person;
+import workflowOffice.model.Position;
 
 import java.util.Map;
 import java.util.Set;

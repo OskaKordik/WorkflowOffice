@@ -1,7 +1,7 @@
-package controller;
+package workflowOffice.controller;
 
-import model.Person;
-import model.Position;
+import workflowOffice.model.Person;
+import workflowOffice.model.Position;
 import org.junit.Test;
 
 import java.util.*;

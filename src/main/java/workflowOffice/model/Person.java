@@ -1,6 +1,6 @@
-package model;
+package workflowOffice.model;
 
-import model.Positions.APosition;
+import workflowOffice.model.Positions.APosition;
 
 import java.util.ArrayList;
 import java.util.List;

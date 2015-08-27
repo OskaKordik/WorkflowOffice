@@ -1,10 +1,10 @@
-package controller;
+package workflowOffice.controller;
 
-import model.Person;
-import model.Position;
-import model.Positions.APosition;
-import model.Positions.Freelancer;
-import main.Company;
+import workflowOffice.model.Person;
+import workflowOffice.model.Position;
+import workflowOffice.model.Positions.APosition;
+import workflowOffice.model.Positions.Freelancer;
+import workflowOffice.main.Company;
 import org.junit.Test;
 
 import java.util.HashMap;

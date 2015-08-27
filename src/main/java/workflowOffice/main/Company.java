@@ -1,7 +1,7 @@
-package main;
+package workflowOffice.main;
 
-import controller.WorkController;
-import model.Position;
+import workflowOffice.controller.WorkController;
+import workflowOffice.model.Position;
 import java.security.SecureRandom;
 
 /**

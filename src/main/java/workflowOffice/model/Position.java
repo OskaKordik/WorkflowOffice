@@ -1,4 +1,4 @@
-package model;
+package workflowOffice.model;
 
 /**
  * Класс должностей

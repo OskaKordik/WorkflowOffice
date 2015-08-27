@@ -1,6 +1,6 @@
-package model.Positions;
+package workflowOffice.model.Positions;
 
-import model.Employee;
+import workflowOffice.model.Employee;
 
 /**
  * Класс должности Менеджер

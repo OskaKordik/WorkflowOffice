@@ -1,7 +1,7 @@
-package model;
+package workflowOffice.model;
 
-import controller.PersonController;
-import model.Positions.*;
+import workflowOffice.controller.PersonController;
+import workflowOffice.model.Positions.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -168,7 +168,7 @@ public class PersonTest {
         Person person2 = PersonController.INSTANCE.createPerson("TestPerson2");
         person2.setWorkHoursPerMonth(50);
 
-        assertNotEquals(person1.hashCode(), person2.hashCode());
+        assertNotSame(person1.hashCode(), person2.hashCode());
     }
 
     /**

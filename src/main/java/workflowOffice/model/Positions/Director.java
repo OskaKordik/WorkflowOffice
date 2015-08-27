@@ -1,10 +1,10 @@
-package model.Positions;
+package workflowOffice.model.Positions;
 
-import main.Company;
-import controller.PersonController;
-import model.Employee;
-import model.Person;
-import model.Position;
+import workflowOffice.main.Company;
+import workflowOffice.controller.PersonController;
+import workflowOffice.model.Employee;
+import workflowOffice.model.Person;
+import workflowOffice.model.Position;
 
 import java.security.SecureRandom;
 import java.util.Map;

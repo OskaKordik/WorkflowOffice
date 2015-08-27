@@ -1,8 +1,8 @@
-package controller;
+package workflowOffice.controller;
 
-import model.Person;
-import model.Position;
-import model.Positions.*;
+import workflowOffice.model.Person;
+import workflowOffice.model.Position;
+import workflowOffice.model.Positions.*;
 
 import java.io.FileWriter;
 import java.io.IOException;

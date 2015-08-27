@@ -1,11 +1,11 @@
-package model.Positions;
+package workflowOffice.model.Positions;
 
-import model.Сontractor;
+import workflowOffice.model.Сontractor;
 
 /**
- * Класс должности Тестировщик
+ * Класс Фрилансер (удаленный сотрудник)
  */
-public class Tester extends APosition implements Сontractor {
+public class Freelancer extends APosition implements Сontractor {
     private int hourlyRate; //почасовая ставка
     private double hoursWorked; //отработанные часы - для почасовой оплаты
     private double allHoursWorked; //отработанные часы - для отчета
@@ -13,7 +13,7 @@ public class Tester extends APosition implements Сontractor {
     private float amountHoursOneInstructions; //кол-во часов на выполнение одного задания
     private int countTasks = 0; //счетчик выполненных заданий
 
-    public Tester(String name) {
+    public Freelancer(String name) {
         super(name);
         hoursWorked = 0;
     }
@@ -47,9 +47,9 @@ public class Tester extends APosition implements Сontractor {
     @Override
     public double paySalary() {
         salary += calcSalary();
-        double weekSalary = calcSalary();
+        double taskSalary = calcSalary();
         hoursWorked = 0;
-        return weekSalary;
+        return taskSalary;
     }
 
     @Override
@@ -62,6 +62,10 @@ public class Tester extends APosition implements Сontractor {
         this.amountHoursOneInstructions = amountHoursOneInstructions;
     }
 
+    public int getCountTasks() {
+        return countTasks;
+    }
+
     @Override
     public double getAllHoursWorked() {
         return allHoursWorked;
@@ -69,14 +73,11 @@ public class Tester extends APosition implements Сontractor {
 
     @Override
     public void addAllHoursWorked(double allHoursWorked) {
-        this.allHoursWorked = allHoursWorked;
-    }
-
-    public int getCountTasks() {
-        return countTasks;
+        this.allHoursWorked += allHoursWorked;
     }
 
     public double getSalary() {
         return salary;
     }
+
 }

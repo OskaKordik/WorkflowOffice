@@ -1,11 +1,11 @@
-package controller;
+package workflowOffice.controller;
 
-import model.Employee;
-import model.Person;
-import model.Position;
-import model.Positions.*;
-import model.Сontractor;
-import main.Company;
+import workflowOffice.model.Employee;
+import workflowOffice.model.Person;
+import workflowOffice.model.Position;
+import workflowOffice.model.Positions.*;
+import workflowOffice.model.Сontractor;
+import workflowOffice.main.Company;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

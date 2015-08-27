@@ -1,6 +1,6 @@
-package model.Positions;
+package workflowOffice.model.Positions;
 
-import model.Сontractor;
+import workflowOffice.model.Сontractor;
 
 /**
  * Класс должности Программист
