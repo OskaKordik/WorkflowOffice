@@ -17,6 +17,7 @@ public class Director extends APosition implements Employee {
     private int fixedRate; //фиксированная ставка
     private Map<Position, String> taskList; //список распоряжений для сотрудников
     private int countTasks = 0; //счетчик выполненных заданий
+    private double salary; //зарплата
     private double allHoursWorked = 0; //отработанные часы - для отчета
     private Map<Person, Set<Position>> personList; //список сотрудников под руководством данного директора
     private static final SecureRandom random = Company.random;
@@ -76,7 +77,7 @@ public class Director extends APosition implements Employee {
      */
     @Override
     public double paySalary() {
-        //отчитывается о получении зарплаты
+        salary += getFixedRate();
         return getFixedRate();
     }
 
@@ -114,5 +115,9 @@ public class Director extends APosition implements Employee {
 
     public int getCountTasks() {
         return countTasks;
+    }
+
+    public double getSalary() {
+        return salary;
     }
 }

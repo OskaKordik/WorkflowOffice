@@ -12,9 +12,10 @@ import java.util.Set;
  */
 public class Accountant extends APosition implements Employee {
     private int fixedRate; //фиксированная ставка
-    private long allSalary = 0; //всего выплачено сотрудникам
+    private double allSalary = 0; //всего выплачено сотрудникам
     private double allHoursWorked; //отработанные часы - для отчета
-    private long allSalaryFreelancers = 0; //всего выплачено фрилансерам
+    private double salary; //зарплата
+    private double allSalaryFreelancers = 0; //всего выплачено фрилансерам
     private int countTasks = 0; //счетчик выполненных заданий
 
     public Accountant(String name) {
@@ -45,7 +46,7 @@ public class Accountant extends APosition implements Employee {
      */
     @Override
     public double paySalary() {
-        //отчитывается о получении зарплаты
+        salary += getFixedRate();
         return getFixedRate();
     }
 
@@ -72,11 +73,11 @@ public class Accountant extends APosition implements Employee {
         //записать в отчет
     }
 
-    public long getAllSalary() {
+    public double getAllSalary() {
         return allSalary;
     }
 
-    public long getAllSalaryFreelancers() {
+    public double getAllSalaryFreelancers() {
         return allSalaryFreelancers;
     }
 
@@ -92,5 +93,9 @@ public class Accountant extends APosition implements Employee {
     @Override
     public void addAllHoursWorked(double allHoursWorked) {
         this.allHoursWorked += allHoursWorked;
+    }
+
+    public double getSalary() {
+        return salary;
     }
 }

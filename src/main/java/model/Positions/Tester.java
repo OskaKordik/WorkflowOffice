@@ -9,6 +9,7 @@ public class Tester extends APosition implements Сontractor {
     private int hourlyRate; //почасовая ставка
     private double hoursWorked; //отработанные часы - для почасовой оплаты
     private double allHoursWorked; //отработанные часы - для отчета
+    private double salary; //зарплата
     private float amountHoursOneInstructions; //кол-во часов на выполнение одного задания
     private int countTasks = 0; //счетчик выполненных заданий
 
@@ -62,10 +63,10 @@ public class Tester extends APosition implements Сontractor {
      */
     @Override
     public double paySalary() {
-        double salary = calcSalary();
-        //отчитывается о получении зарплаты
+        salary += calcSalary();
+        double weekSalary = calcSalary();
         hoursWorked = 0;
-        return salary;
+        return weekSalary;
     }
 
     @Override
@@ -80,5 +81,9 @@ public class Tester extends APosition implements Сontractor {
 
     public int getCountTasks() {
         return countTasks;
+    }
+
+    public double getSalary() {
+        return salary;
     }
 }

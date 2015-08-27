@@ -191,15 +191,59 @@ public class ReportController {
 
     protected void amountPersonsSalary() {
         generalAccountant = WorkController.INSTANCE.getGeneralAccountant();
-        dataFile.add("Сотрудникам :             " + generalAccountant.getAllSalary());
+        double personsSalary = generalAccountant.getAllSalary();
+        double freelancersSalary = generalAccountant.getAllSalaryFreelancers();
+
+        double directorsSalary = 0;
+        double programmersSalary = 0;
+        double designersSalary = 0;
+        double testersSalary = 0;
+        double managersSalary = 0;
+        double accountantsSalary = 0;
+
+        for (Map.Entry<Person, Set<Position>> person : personList.entrySet()) {
+            Map<Position, APosition> listPositions = person.getKey().getListPositions();
+            for (Map.Entry<Position, APosition> personAPositionEntry : listPositions.entrySet()) {
+                switch (personAPositionEntry.getKey().toString()) {
+                    case "Director":
+                        Director director = (Director) personAPositionEntry.getValue();
+                        directorsSalary += director.getSalary();
+                        break;
+                    case "Programmer":
+                        Programmer programmer = (Programmer) personAPositionEntry.getValue();
+                        programmersSalary += programmer.getSalary();
+                        break;
+                    case "Designer":
+                        Designer designer = (Designer) personAPositionEntry.getValue();
+                        designersSalary += designer.getSalary();
+                        break;
+                    case "Tester":
+                        Tester tester = (Tester) personAPositionEntry.getValue();
+                        testersSalary += tester.getSalary();
+                        break;
+                    case "Manager":
+                        Manager manager = (Manager) personAPositionEntry.getValue();
+                        managersSalary += manager.getSalary();
+                        break;
+                    case "Accountant":
+                        Accountant accountant = (Accountant) personAPositionEntry.getValue();
+                        accountantsSalary += accountant.getSalary();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        dataFile.add(String.format("Сотрудникам :             %.2f", personsSalary));
         dataFile.add("   Из них :");
-        dataFile.add("      Директорам :        ");
-        dataFile.add("      Программистам :     ");
-        dataFile.add("      Дизайнерам :        ");
-        dataFile.add("      Тестировщикам :     ");
-        dataFile.add("      Менеджерам :        ");
-        dataFile.add("      Бухгалтерам :       ");
-        dataFile.add("Фрилансерам :             " + generalAccountant.getAllSalaryFreelancers());
+        dataFile.add(String.format("      Директорам :        %.2f", directorsSalary));
+        dataFile.add(String.format("      Программистам :     %.2f", programmersSalary));
+        dataFile.add(String.format("      Дизайнерам :        %.2f", designersSalary));
+        dataFile.add(String.format("      Тестировщикам :     %.2f", testersSalary));
+        dataFile.add(String.format("      Менеджерам :        %.2f", managersSalary));
+        dataFile.add(String.format("      Бухгалтерам :       %.2f", accountantsSalary));
+        dataFile.add(String.format("Фрилансерам :             %.2f", freelancersSalary));
     }
 
 }

@@ -8,6 +8,7 @@ import model.Employee;
 public class Manager extends APosition implements Employee {
     private int fixedRate; //фиксированная ставка
     private int countTasks = 0; //счетчик выполненных заданий
+    private double salary; //зарплата
     private double allHoursWorked; //отработанные часы - для отчета
 
     public Manager(String name) {
@@ -38,7 +39,7 @@ public class Manager extends APosition implements Employee {
      */
     @Override
     public double paySalary() {
-        //отчитывается о получении зарплаты
+        salary += getFixedRate();
         return getFixedRate();
     }
 
@@ -63,5 +64,9 @@ public class Manager extends APosition implements Employee {
 
     public int getCountTasks() {
         return countTasks;
+    }
+
+    public double getSalary() {
+        return salary;
     }
 }
