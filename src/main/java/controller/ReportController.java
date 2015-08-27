@@ -25,7 +25,8 @@ public class ReportController {
     /**
      * Доступ к контроллеру осуществляется через INSTANCE
      */
-    private ReportController() {}
+    private ReportController() {
+    }
 
     public void runReportController() {
         fileName = "report.txt";
@@ -67,57 +68,138 @@ public class ReportController {
             Set<Position> positionSet = person.getValue();
             for (Position position : positionSet) {
                 switch (position.toString()) {
-                    case "Director" : directors++;
+                    case "Director":
+                        directors++;
                         break;
-                    case "Programmer" : programmers++;
+                    case "Programmer":
+                        programmers++;
                         break;
-                    case "Designer" : designers++;
+                    case "Designer":
+                        designers++;
                         break;
-                    case "Tester" : testers++;
+                    case "Tester":
+                        testers++;
                         break;
-                    case "Manager" : managers++;
+                    case "Manager":
+                        managers++;
                         break;
-                    case "Accountant" : accountants++;
+                    case "Accountant":
+                        accountants++;
                         break;
-                    default: break;
+                    default:
+                        break;
                 }
             }
         }
-        dataFile.add("Сотрудников :            " + persons);
+        dataFile.add("Сотрудников :             " + persons);
         dataFile.add("   Из них с должностью :");
-        dataFile.add("      Директора :        " + directors);
-        dataFile.add("      Программиста :     " + programmers);
-        dataFile.add("      Дизайнера :        " + designers);
-        dataFile.add("      Тестировщика :     " + testers);
-        dataFile.add("      Менеджера :        " + managers);
-        dataFile.add("      Бухгалтера :       " + accountants);
-        dataFile.add("Фрилансеров :            " + freelancers);
+        dataFile.add("      Директора :         " + directors);
+        dataFile.add("      Программиста :      " + programmers);
+        dataFile.add("      Дизайнера :         " + designers);
+        dataFile.add("      Тестировщика :      " + testers);
+        dataFile.add("      Менеджера :         " + managers);
+        dataFile.add("      Бухгалтера :        " + accountants);
+        dataFile.add("Фрилансеров :             " + freelancers);
     }
 
     protected void amountPersonsWork() {
+        int personsTasks = 0;
+        int freelancersTasks = freelancersList.size();
+
+        int directorsTasks = 0;
+        int programmersTasks = 0;
+        int designersTasks = 0;
+        int testersTasks = 0;
+        int managersTasks = 0;
+        int accountantsTasks = 0;
+
+        double personsHours = 0;
+        double freelancersHours = 0;
+
+        double directorsHours = 0;
+        double programmersHours = 0;
+        double designersHours = 0;
+        double testersHours = 0;
+        double managersHours = 0;
+        double accountantsHours = 0;
+
+        for (Freelancer freelancer : freelancersList) {
+            freelancersHours += freelancer.getAllHoursWorked();
+        }
+
+        for (Map.Entry<Person, Set<Position>> person : personList.entrySet()) {
+            personsTasks += person.getKey().getTaskList().size();
+            personsHours += person.getKey().getAllHoursWorked();
+            Map<Position, APosition> listPositions = person.getKey().getListPositions();
+            for (Map.Entry<Position, APosition> personAPositionEntry : listPositions.entrySet()) {
+                switch (personAPositionEntry.getKey().toString()) {
+                    case "Director":
+                        Director director = (Director) personAPositionEntry.getValue();
+                        directorsTasks += director.getCountTasks();
+                        directorsHours += director.getAllHoursWorked();
+                        break;
+                    case "Programmer":
+                        Programmer programmer = (Programmer) personAPositionEntry.getValue();
+                        programmersTasks += programmer.getCountTasks();
+                        programmersHours += programmer.getAllHoursWorked();
+                        break;
+                    case "Designer":
+                        Designer designer = (Designer) personAPositionEntry.getValue();
+                        designersTasks += designer.getCountTasks();
+                        designersHours += designer.getAllHoursWorked();
+                        break;
+                    case "Tester":
+                        Tester tester = (Tester) personAPositionEntry.getValue();
+                        testersTasks += tester.getCountTasks();
+                        testersHours += tester.getAllHoursWorked();
+                        break;
+                    case "Manager":
+                        Manager manager = (Manager) personAPositionEntry.getValue();
+                        managersTasks += manager.getCountTasks();
+                        managersHours += manager.getAllHoursWorked();
+                        break;
+                    case "Accountant":
+                        Accountant accountant = (Accountant) personAPositionEntry.getValue();
+                        accountantsTasks += accountant.getCountTasks();
+                        accountantsHours += accountant.getAllHoursWorked();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
         dataFile.add("                   Отработано часов   Выполнено заданий");
-        dataFile.add("Сотрудниками :           ");
+        dataFile.add(String
+                .format("Сотрудниками :            %.2f            %d", personsHours, personsTasks));
         dataFile.add("   Из них :");
-        dataFile.add("      Директорами :      ");
-        dataFile.add("      Программистами :   ");
-        dataFile.add("      Дизайнерами :      ");
-        dataFile.add("      Тестировщиками :   ");
-        dataFile.add("      Менеджерами :      ");
-        dataFile.add("      Бухгалтерами :     ");
-        dataFile.add("Фрилансерами :           ");
+        dataFile.add(String
+                .format("      Директорами :       %.2f            %d", directorsHours, directorsTasks));
+        dataFile.add(String
+                .format("      Программистами :    %.2f            %d", programmersHours, programmersTasks));
+        dataFile.add(String
+                .format("      Дизайнерами :       %.2f            %d", designersHours, designersTasks));
+        dataFile.add(String
+                .format("      Тестировщиками :    %.2f            %d", testersHours, testersTasks));
+        dataFile.add(String
+                .format("      Менеджерами :       %.2f            %d", managersHours, managersTasks));
+        dataFile.add(String
+                .format("      Бухгалтерами :      %.2f            %d", accountantsHours, accountantsTasks));
+        dataFile.add(String
+                .format("Фрилансерами :            %.2f            %d", freelancersHours, freelancersTasks));
     }
 
     protected void amountPersonsSalary() {
         generalAccountant = WorkController.INSTANCE.getGeneralAccountant();
-        dataFile.add("Сотрудникам :            " + generalAccountant.getAllSalary());
+        dataFile.add("Сотрудникам :             " + generalAccountant.getAllSalary());
         dataFile.add("   Из них :");
-        dataFile.add("      Директорам :       ");
-        dataFile.add("      Программистам :    ");
-        dataFile.add("      Дизайнерам :       ");
-        dataFile.add("      Тестировщикам :    ");
-        dataFile.add("      Менеджерам :       ");
-        dataFile.add("      Бухгалтерам :      ");
-        dataFile.add("Фрилансерам :            " + generalAccountant.getAllSalaryFreelancers());
+        dataFile.add("      Директорам :        ");
+        dataFile.add("      Программистам :     ");
+        dataFile.add("      Дизайнерам :        ");
+        dataFile.add("      Тестировщикам :     ");
+        dataFile.add("      Менеджерам :        ");
+        dataFile.add("      Бухгалтерам :       ");
+        dataFile.add("Фрилансерам :             " + generalAccountant.getAllSalaryFreelancers());
     }
 
 }

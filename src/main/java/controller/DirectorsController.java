@@ -37,7 +37,6 @@ public class DirectorsController {
         //задание всем сотрудникам списка распоряжений
         setDirectorsTaskList(directorsList, taskList);
 
-        //workDirectors(directorsList); //запуск один раз - для проверки
         for (int i = 0; i < Company.MAX_WORKING_HOURS; i++) {
             workDirectors(directorsList);
             try {

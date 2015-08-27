@@ -45,7 +45,8 @@ public class Person extends Thread {
         //если должность с почасовой оплатой передаем время на выполнение задания
         if (aPosition instanceof Сontractor) {
             ((Сontractor) aPosition).setAmountHoursOneInstructions(amountHoursOneInstructions);
-        } else aPosition.addAllHoursWorked(amountHoursOneInstructions);
+        } else if (position != Position.Director)
+            aPosition.addAllHoursWorked(amountHoursOneInstructions);
         aPosition.getToWork(); //выполнить работу
     }
 
