@@ -1,11 +1,15 @@
 package controller;
 
-import model.Positions.Accountant;
+import model.Person;
+import model.Position;
+import model.Positions.*;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Класс отвечающий за формирование отчета
@@ -13,6 +17,8 @@ import java.util.List;
 public class ReportController {
     public static final ReportController INSTANCE = new ReportController();
     private static Accountant generalAccountant; //главный бухгалтер
+    private Map<Person, Set<Position>> personList; //список сотрудников
+    private Set<Freelancer> freelancersList; //список фрилансеров
     private String fileName;
     private List<String> dataFile;
 
@@ -24,6 +30,8 @@ public class ReportController {
     public void runReportController() {
         fileName = "report.txt";
         dataFile = new ArrayList<>();
+        personList = PersonController.INSTANCE.getPersonList();
+        freelancersList = PersonController.INSTANCE.getFreelancers();
 
         dataFile.add("---------------- КОЛИЧЕСТВО РАБОТНИКОВ ----------------");
         amountPersons();
@@ -34,7 +42,6 @@ public class ReportController {
         dataFile.add("---------------- ВСЕГО ВЫПЛАЧЕНО ----------------------");
         amountPersonsSalary();
         dataFile.add("-------------------------------------------------------");
-
 
         try (FileWriter fileWriter = new FileWriter(fileName, false)) {
             for (String writeStr : dataFile) {
@@ -47,15 +54,44 @@ public class ReportController {
     }
 
     protected void amountPersons() {
-        dataFile.add("Сотрудников :            " + PersonController.INSTANCE.getPersonList().size());
-        dataFile.add("   Из них :");
-        dataFile.add("      Директоров :       ");
-        dataFile.add("      Программистов :    ");
-        dataFile.add("      Дизайнеров :       ");
-        dataFile.add("      Тестировщиков :    ");
-        dataFile.add("      Менеджеров :       ");
-        dataFile.add("      Бухгалтеров :      ");
-        dataFile.add("Фрилансеров :            " + PersonController.INSTANCE.getFreelancers().size());
+        int persons = personList.size();
+        int directors = 0;
+        int programmers = 0;
+        int designers = 0;
+        int testers = 0;
+        int managers = 0;
+        int accountants = 0;
+        int freelancers = freelancersList.size();
+
+        for (Map.Entry<Person, Set<Position>> person : personList.entrySet()) {
+            Set<Position> positionSet = person.getValue();
+            for (Position position : positionSet) {
+                switch (position.toString()) {
+                    case "Director" : directors++;
+                        break;
+                    case "Programmer" : programmers++;
+                        break;
+                    case "Designer" : designers++;
+                        break;
+                    case "Tester" : testers++;
+                        break;
+                    case "Manager" : managers++;
+                        break;
+                    case "Accountant" : accountants++;
+                        break;
+                    default: break;
+                }
+            }
+        }
+        dataFile.add("Сотрудников :            " + persons);
+        dataFile.add("   Из них с должностью :");
+        dataFile.add("      Директора :        " + directors);
+        dataFile.add("      Программиста :     " + programmers);
+        dataFile.add("      Дизайнера :        " + designers);
+        dataFile.add("      Тестировщика :     " + testers);
+        dataFile.add("      Менеджера :        " + managers);
+        dataFile.add("      Бухгалтера :       " + accountants);
+        dataFile.add("Фрилансеров :            " + freelancers);
     }
 
     protected void amountPersonsWork() {
