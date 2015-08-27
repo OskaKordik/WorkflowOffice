@@ -19,21 +19,13 @@ public class Designer extends APosition implements Сontractor {
     }
 
     /**
-     * Метод, устанавливающий почасовую ставку
-     * @param hourlyRate
+     * Метод в котором выполняется работа должности
      */
     @Override
-    public void setHourlyRate(int hourlyRate) {
-        this.hourlyRate = hourlyRate;
-    }
-
-    /**
-     * Метод, устанавливающий время на выполнее задания
-     * @param amountHoursOneInstructions
-     */
-    @Override
-    public void setAmountHoursOneInstructions(float amountHoursOneInstructions) {
-        this.amountHoursOneInstructions = amountHoursOneInstructions;
+    public void getToWork() {
+        hoursWorked += amountHoursOneInstructions; //считаем отработанное время
+        allHoursWorked += amountHoursOneInstructions;
+        countTasks++;
     }
 
     /**
@@ -44,16 +36,6 @@ public class Designer extends APosition implements Сontractor {
     @Override
     public double calcSalary() {
         return hourlyRate * hoursWorked;
-    }
-
-    /**
-     * Метод в котором выполняется работа должности
-     */
-    @Override
-    public void getToWork() {
-        hoursWorked += amountHoursOneInstructions; //считаем отработанное время
-        allHoursWorked += amountHoursOneInstructions;
-        countTasks++;
     }
 
     /**
@@ -80,6 +62,16 @@ public class Designer extends APosition implements Сontractor {
 
     public int getCountTasks() {
         return countTasks;
+    }
+
+    @Override
+    public void setAmountHoursOneInstructions(float amountHoursOneInstructions) {
+        this.amountHoursOneInstructions = amountHoursOneInstructions;
+    }
+
+    @Override
+    public void setHourlyRate(int hourlyRate) {
+        this.hourlyRate = hourlyRate;
     }
 
     public double getSalary() {
