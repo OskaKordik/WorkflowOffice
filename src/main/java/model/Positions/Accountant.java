@@ -23,15 +23,6 @@ public class Accountant extends APosition implements Employee {
     }
 
     /**
-     * Метод, устанавливающий фиксированную ставку
-     * @param fixedRate фиксированная ставка
-     */
-    @Override
-    public void setFixedRate(int fixedRate) {
-        this.fixedRate = fixedRate;
-    }
-
-    /**
      * Метод в котором выполняется работа должности
      */
     @Override
@@ -42,6 +33,7 @@ public class Accountant extends APosition implements Employee {
 
     /**
      * Метод для получения зарплаты
+     *
      * @return сумму зарплаты
      */
     @Override
@@ -51,27 +43,15 @@ public class Accountant extends APosition implements Employee {
     }
 
     /**
-     * Метод возвращает фиксированную ставку
-     * @return fixedRate
-     */
-    @Override
-    public int getFixedRate() {
-        return fixedRate;
-    }
-
-    /**
      * Начисление зарплаты всем сотрудникам компании
      */
     public void payWeekSalary(Map<Person, Set<Position>> personsList, Set<Freelancer> freelancersList) {
-
         for (Map.Entry<Person, Set<Position>> person : personsList.entrySet())
             allSalary += person.getKey().paySalary();
-        //записать в отчет
-
         for (Freelancer freelancer : freelancersList)
             allSalaryFreelancers += freelancer.paySalary();
-        //записать в отчет
     }
+
 
     public double getAllSalary() {
         return allSalary;
@@ -79,6 +59,10 @@ public class Accountant extends APosition implements Employee {
 
     public double getAllSalaryFreelancers() {
         return allSalaryFreelancers;
+    }
+
+    public double getSalary() {
+        return salary;
     }
 
     public int getCountTasks() {
@@ -95,7 +79,13 @@ public class Accountant extends APosition implements Employee {
         this.allHoursWorked += allHoursWorked;
     }
 
-    public double getSalary() {
-        return salary;
+    @Override
+    public void setFixedRate(int fixedRate) {
+        this.fixedRate = fixedRate;
+    }
+
+    @Override
+    public int getFixedRate() {
+        return fixedRate;
     }
 }
