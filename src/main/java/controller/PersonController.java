@@ -56,12 +56,12 @@ public final class PersonController {
 
             list.put(person, positionList); //добавляем сотрудника в список
         }
-
         return list;
     }
 
     /**
      * Метод создает эекземпляры классов соответстующих должностей для сотрудника
+     *
      * @param posList список должностей определенного сотрудника
      * @return список экземпляров с должностями
      */
@@ -70,19 +70,26 @@ public final class PersonController {
         for (Position pos : posList) {
             int countPos = pos.ordinal();
             switch (countPos) {
-                case 0 : positionMap.put(pos, new Programmer("Programmer"));
+                case 0:
+                    positionMap.put(pos, new Programmer("Programmer"));
                     break;
-                case 1 : positionMap.put(pos, new Designer("Designer"));
+                case 1:
+                    positionMap.put(pos, new Designer("Designer"));
                     break;
-                case 2 : positionMap.put(pos, new Tester("Tester"));
+                case 2:
+                    positionMap.put(pos, new Tester("Tester"));
                     break;
-                case 3 : positionMap.put(pos, new Manager("Manager"));
+                case 3:
+                    positionMap.put(pos, new Manager("Manager"));
                     break;
-                case 4 : positionMap.put(pos, new Director("Director"));
+                case 4:
+                    positionMap.put(pos, new Director("Director"));
                     break;
-                case 5 : positionMap.put(pos, new Accountant("Accountant"));
+                case 5:
+                    positionMap.put(pos, new Accountant("Accountant"));
                     break;
-                default: break;
+                default:
+                    break;
             }
         }
         //устанавливаем размер зарплаты
@@ -100,8 +107,9 @@ public final class PersonController {
     /**
      * Метод создает сотрудника и задает ему необходимые параметры
      * (время выполнения одного задания и ко-во рабочих часов в день)
+     *
      * @param name имя сотрудника
-     * @return сотрудника
+     * @return экземпляр класса Person
      */
     public Person createPerson(String name) {
         Person person = new Person(name);
@@ -129,18 +137,18 @@ public final class PersonController {
                 //проверяем, что директора еще требуются
                 if (countDirectorsPositions > 0) {
                     list.clear(); //удаляем все предыдущие должности
-                    list.add(Position.values()[x]);
+                    list.add(Position.values()[x]); //добавляем должность директора
                     countDirectorsPositions--;
                 }
-            } else list.add(Position.values()[x]); //добавление в список должности
+            } else list.add(Position.values()[x]); //добавление в список должность
         }
-
         return list;
     }
 
     /**
      * Метод добавляет сотрудника с необходимой должностью
      * в случае если такого нет в штате
+     *
      * @param list     список сотрудников
      * @param position должность
      */
@@ -174,6 +182,7 @@ public final class PersonController {
 
     /**
      * Метод задающий список обязательных должностей
+     *
      * @param necessaryPositions список должностей
      */
     protected void setNecessaryPositions(Set<Position> necessaryPositions) {
@@ -182,6 +191,7 @@ public final class PersonController {
 
     /**
      * Метод возвращает список обязательных должностей
+     *
      * @return список должностей
      */
     protected Set<Position> getNecessaryPositions() {
@@ -196,11 +206,10 @@ public final class PersonController {
      */
     protected Person selectionRandomAccountant(Map<Person, Set<Position>> personList) {
         List<Person> listAccountant = new ArrayList<>();
-        Map<Person, Set<Position>> list = personList;
         Person personAccountant;
 
         //выбираем всех бухгалтеров
-        for (Map.Entry<Person, Set<Position>> person : list.entrySet())
+        for (Map.Entry<Person, Set<Position>> person : personList.entrySet())
             if (person.getValue().contains(Position.Accountant)) listAccountant.add(person.getKey());
         //выбираем случайного бухгалтера
         personAccountant = listAccountant.get(random.nextInt(listAccountant.size()));
@@ -210,6 +219,7 @@ public final class PersonController {
 
     /**
      * Метод нанимает нового фрилансера и добавляет его в список
+     *
      * @return фрилансер
      */
     public Freelancer createNewFreelancer() {
@@ -229,6 +239,7 @@ public final class PersonController {
 
     /**
      * Метод возвращает список фрилансеров
+     *
      * @return список фрилансеров
      */
     public Set<Freelancer> getFreelancers() {
@@ -237,6 +248,7 @@ public final class PersonController {
 
     /**
      * Метод возвращает заданное кол-во директоров
+     *
      * @return максимальное кол-во директоров
      */
     public int getCountDirectorsPositions() {
@@ -245,6 +257,7 @@ public final class PersonController {
 
     /**
      * Метод устанавливает максимальное количество директоров
+     *
      * @param countDirectorsPositions счетчик директоров
      */
     public void setCountDirectorsPositions(int countDirectorsPositions) {
