@@ -24,12 +24,17 @@ public class ReportController {
     public void runReportController() {
         fileName = "report.txt";
         dataFile = new ArrayList<>();
-        generalAccountant = WorkController.INSTANCE.getGeneralAccountant();
-        dataFile.add("Всего сотрудников : " + PersonController.INSTANCE.getPersonList().size());
-        dataFile.add("Всего фрилансеров : " + PersonController.INSTANCE.getFreelancers().size());
-        dataFile.add("-------------------------------------");
-        dataFile.add("Всего выплачено сотрудникам : " + generalAccountant.getAllSalary());
-        dataFile.add("Всего выплачено фрилансерам : " + generalAccountant.getAllSalaryFreelancers());
+
+        dataFile.add("---------------- КОЛИЧЕСТВО РАБОТНИКОВ ----------------");
+        amountPersons();
+        dataFile.add("-------------------------------------------------------");
+        dataFile.add("---------------- ВЫПОЛНЕННАЯ РАБОТА -------------------");
+        amountPersonsWork();
+        dataFile.add("-------------------------------------------------------");
+        dataFile.add("---------------- ВСЕГО ВЫПЛАЧЕНО ----------------------");
+        amountPersonsSalary();
+        dataFile.add("-------------------------------------------------------");
+
 
         try (FileWriter fileWriter = new FileWriter(fileName, false)) {
             for (String writeStr : dataFile) {
@@ -40,4 +45,43 @@ public class ReportController {
             e.printStackTrace();
         }
     }
+
+    protected void amountPersons() {
+        dataFile.add("Сотрудников :            " + PersonController.INSTANCE.getPersonList().size());
+        dataFile.add("   Из них :");
+        dataFile.add("      Директоров :       ");
+        dataFile.add("      Программистов :    ");
+        dataFile.add("      Дизайнеров :       ");
+        dataFile.add("      Тестировщиков :    ");
+        dataFile.add("      Менеджеров :       ");
+        dataFile.add("      Бухгалтеров :      ");
+        dataFile.add("Фрилансеров :            " + PersonController.INSTANCE.getFreelancers().size());
+    }
+
+    protected void amountPersonsWork() {
+        dataFile.add("                   Отработано часов   Выполнено заданий");
+        dataFile.add("Сотрудниками :           ");
+        dataFile.add("   Из них :");
+        dataFile.add("      Директорами :      ");
+        dataFile.add("      Программистами :   ");
+        dataFile.add("      Дизайнерами :      ");
+        dataFile.add("      Тестировщиками :   ");
+        dataFile.add("      Менеджерами :      ");
+        dataFile.add("      Бухгалтерами :     ");
+        dataFile.add("Фрилансерами :           ");
+    }
+
+    protected void amountPersonsSalary() {
+        generalAccountant = WorkController.INSTANCE.getGeneralAccountant();
+        dataFile.add("Сотрудникам :            " + generalAccountant.getAllSalary());
+        dataFile.add("   Из них :");
+        dataFile.add("      Директорам :       ");
+        dataFile.add("      Программистам :    ");
+        dataFile.add("      Дизайнерам :       ");
+        dataFile.add("      Тестировщикам :    ");
+        dataFile.add("      Менеджерам :       ");
+        dataFile.add("      Бухгалтерам :      ");
+        dataFile.add("Фрилансерам :            " + generalAccountant.getAllSalaryFreelancers());
+    }
+
 }
