@@ -27,16 +27,6 @@ public class Director extends APosition implements Employee {
     }
 
     /**
-     * Метод, устанавливающий фиксированную ставку
-     *
-     * @param fixedRate фиксированная ставка
-     */
-    @Override
-    public void setFixedRate(int fixedRate) {
-        this.fixedRate = fixedRate;
-    }
-
-    /**
      * Метод в котором выполняется работа должности
      */
     @Override
@@ -91,11 +81,11 @@ public class Director extends APosition implements Employee {
         this.allHoursWorked = allHoursWorked;
     }
 
-    /**
-     * Метод возвращает фиксированную ставку
-     *
-     * @return fixedRate
-     */
+    @Override
+    public void setFixedRate(int fixedRate) {
+        this.fixedRate = fixedRate;
+    }
+
     @Override
     public int getFixedRate() {
         return fixedRate;
