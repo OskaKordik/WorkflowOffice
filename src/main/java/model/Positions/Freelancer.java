@@ -9,6 +9,7 @@ public class Freelancer extends APosition implements Сontractor {
     private int hourlyRate; //почасовая ставка
     private double hoursWorked; //отработанные часы - для почасовой оплаты
     private float amountHoursOneInstructions; //кол-во часов на выполнение одного задания
+    private int countTasks = 0; //счетчик выполненных заданий
 
     public Freelancer(String name) {
         super(name);
@@ -30,6 +31,7 @@ public class Freelancer extends APosition implements Сontractor {
     @Override
     public void getToWork() {
         hoursWorked += amountHoursOneInstructions; //считаем отработанное время
+        countTasks++;
         //выполняет свою работу
     }
 
@@ -62,5 +64,9 @@ public class Freelancer extends APosition implements Сontractor {
     @Override
     public void setAmountHoursOneInstructions(float amountHoursOneInstructions) {
         this.amountHoursOneInstructions = amountHoursOneInstructions;
+    }
+
+    public int getCountTasks() {
+        return countTasks;
     }
 }

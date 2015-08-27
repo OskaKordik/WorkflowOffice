@@ -13,7 +13,8 @@ import java.util.Set;
 public class Accountant extends APosition implements Employee {
     private int fixedRate; //фиксированная ставка
     private long allSalary = 0; //всего выплачено сотрудникам
-    long allSalaryFreelancers = 0; //всего выплачено фрилансерам
+    private long allSalaryFreelancers = 0; //всего выплачено фрилансерам
+    private int countTasks = 0; //счетчик выполненных заданий
 
     public Accountant(String name) {
         super(name);
@@ -34,6 +35,7 @@ public class Accountant extends APosition implements Employee {
     @Override
     public void getToWork() {
         //выполняет свою работу
+        countTasks++;
     }
 
     /**
@@ -75,5 +77,9 @@ public class Accountant extends APosition implements Employee {
 
     public long getAllSalaryFreelancers() {
         return allSalaryFreelancers;
+    }
+
+    public int getCountTasks() {
+        return countTasks;
     }
 }
