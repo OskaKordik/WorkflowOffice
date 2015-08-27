@@ -24,4 +24,8 @@ public abstract class APosition {
     public String getNamePositions() {
         return namePositions;
     }
+
+    public abstract double getAllHoursWorked();
+
+    public abstract void addAllHoursWorked(double allHoursWorked);
 }

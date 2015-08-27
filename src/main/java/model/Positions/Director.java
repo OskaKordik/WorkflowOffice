@@ -17,6 +17,7 @@ public class Director extends APosition implements Employee {
     private int fixedRate; //фиксированная ставка
     private Map<Position, String> taskList; //список распоряжений для сотрудников
     private int countTasks = 0; //счетчик выполненных заданий
+    private double allHoursWorked; //отработанные часы - для отчета
     private Map<Person, Set<Position>> personList; //список сотрудников под руководством данного директора
     private static final SecureRandom random = Company.random;
 
@@ -40,6 +41,7 @@ public class Director extends APosition implements Employee {
     @Override
     public void getToWork() {
         countTasks++;
+        addAllHoursWorked(Company.ONE_HOUR);
         if ((taskList != null) && (personList != null)) {
             //раздает всем задания
             int amountTasks = random.nextInt(taskList.size()) + 1; //выбираем случайное количество распоряжений
@@ -76,6 +78,16 @@ public class Director extends APosition implements Employee {
     public double paySalary() {
         //отчитывается о получении зарплаты
         return getFixedRate();
+    }
+
+    @Override
+    public double getAllHoursWorked() {
+        return allHoursWorked;
+    }
+
+    @Override
+    public void addAllHoursWorked(double allHoursWorked) {
+        this.allHoursWorked = allHoursWorked;
     }
 
     /**

@@ -8,6 +8,7 @@ import model.Сontractor;
 public class Freelancer extends APosition implements Сontractor {
     private int hourlyRate; //почасовая ставка
     private double hoursWorked; //отработанные часы - для почасовой оплаты
+    private double allHoursWorked; //отработанные часы - для отчета
     private float amountHoursOneInstructions; //кол-во часов на выполнение одного задания
     private int countTasks = 0; //счетчик выполненных заданий
 
@@ -31,6 +32,7 @@ public class Freelancer extends APosition implements Сontractor {
     @Override
     public void getToWork() {
         hoursWorked += amountHoursOneInstructions; //считаем отработанное время
+        allHoursWorked += amountHoursOneInstructions;
         countTasks++;
         //выполняет свою работу
     }
@@ -68,5 +70,15 @@ public class Freelancer extends APosition implements Сontractor {
 
     public int getCountTasks() {
         return countTasks;
+    }
+
+    @Override
+    public double getAllHoursWorked() {
+        return allHoursWorked;
+    }
+
+    @Override
+    public void addAllHoursWorked(double allHoursWorked) {
+        this.allHoursWorked += allHoursWorked;
     }
 }
