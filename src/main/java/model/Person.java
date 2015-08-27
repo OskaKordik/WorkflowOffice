@@ -12,15 +12,15 @@ import java.util.Map;
 public class Person extends Thread {
     private final String personName; //имя сотрудника
     private volatile boolean isBusy; //проверка занят ли сотрудник
-    private volatile boolean isTask;
-    private volatile boolean stopWork;
+    private volatile boolean isTask; //проверка есть ли задание
+    private volatile boolean stopWork; //флаг для остановки работы
 
     private float workHoursPerMonth; //кол-во рабочих часов
     private float amountHoursOneInstructions; //кол-во часов на выполнение одного задания
     private Map<Position, APosition> listPositions; //список должностей
 
-    private List<String> taskList; //распоряжение к выполнению
-    private float workHours; //счетчик рабочих часов
+    private List<String> taskList; //список распоряжений к выполнению
+    private float workHours; //внутренний счетчик рабочих часов
 
 
     public Person(String name) {
@@ -32,7 +32,8 @@ public class Person extends Thread {
     }
 
     /**
-     * Метод запускает выполнение распоряжения (только если сотрудник не директор)
+     * Метод запускает выполнение распоряжения
+     *
      * @param task распоряжение
      */
     public void performTask(Position position, String task) {
@@ -48,8 +49,8 @@ public class Person extends Thread {
 
     @Override
     public void run() {
-        workHours = workHoursPerMonth;
-        while(workHours > 0) {
+        workHours = workHoursPerMonth; //инициализируем счетчик рабочих часов
+        while (workHours > 0) {
             while (!isTask && !stopWork) Thread.yield(); //ждем получения задания
             if (isTask) { //если есть задание
                 this.isBusy = true; //сотрудник занят
@@ -70,6 +71,7 @@ public class Person extends Thread {
 
     /**
      * Метод, проверяющий занят ли сотрудник выполнением распоряжения
+     *
      * @return возвращает true если сотрудник занят
      */
     public boolean isBusy() {
@@ -88,6 +90,7 @@ public class Person extends Thread {
 
     /**
      * Метод считает заработанную сумму со всех должностей
+     *
      * @return salary сумма зарплаты
      */
     public double paySalary() {
@@ -96,6 +99,7 @@ public class Person extends Thread {
             salary += positionEntry.getValue().paySalary();
         return salary;
     }
+
 
     public void setStopWork(boolean stopWork) {
         this.stopWork = stopWork;
@@ -133,22 +137,16 @@ public class Person extends Thread {
         return taskList;
     }
 
-    public void setWorkHours(float workHours) {
-        this.workHours = workHours;
-    }
-
-    public float getWorkHours() {
-        return workHours;
-    }
-
     public boolean isStopWork() {
         return stopWork;
     }
 
-    public void setIsTask(boolean isTask) {
-        this.isTask = isTask;
-    }
-
+    /**
+     * Метод equals переопределен для корректной работы списка сотрудников
+     * где ключом является экземпляр класса Person
+     * @param o объект для сравнения
+     * @return true or false
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -161,6 +159,11 @@ public class Person extends Thread {
 
     }
 
+    /**
+     * Метод hashCode переопределен для корректной работы списка сотрудников
+     * где ключом является экземпляр класса Person
+     * @return hashCode
+     */
     @Override
     public int hashCode() {
         int result = personName != null ? personName.hashCode() : 0;
