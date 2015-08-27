@@ -17,23 +17,15 @@ public class Tester extends APosition implements Сontractor {
         super(name);
         hoursWorked = 0;
     }
-
+    
     /**
-     * Метод, устанавливающий почасовую ставку
-     * @param hourlyRate
+     * Метод в котором выполняется работа должности
      */
     @Override
-    public void setHourlyRate(int hourlyRate) {
-        this.hourlyRate = hourlyRate;
-    }
-
-    /**
-     * Метод, устанавливающий время на выполнее задания
-     * @param amountHoursOneInstructions
-     */
-    @Override
-    public void setAmountHoursOneInstructions(float amountHoursOneInstructions) {
-        this.amountHoursOneInstructions = amountHoursOneInstructions;
+    public void getToWork() {
+        hoursWorked += amountHoursOneInstructions; //считаем отработанное время
+        allHoursWorked += amountHoursOneInstructions;
+        countTasks++;
     }
 
     /**
@@ -47,17 +39,6 @@ public class Tester extends APosition implements Сontractor {
     }
 
     /**
-     * Метод в котором выполняется работа должности
-     */
-    @Override
-    public void getToWork() {
-        hoursWorked += amountHoursOneInstructions; //считаем отработанное время
-        allHoursWorked += amountHoursOneInstructions;
-        countTasks++;
-        //выполняет свою работу
-    }
-
-    /**
      * Метод для получения зарплаты
      * @return сумму зарплаты
      */
@@ -67,6 +48,16 @@ public class Tester extends APosition implements Сontractor {
         double weekSalary = calcSalary();
         hoursWorked = 0;
         return weekSalary;
+    }
+
+    @Override
+    public void setHourlyRate(int hourlyRate) {
+        this.hourlyRate = hourlyRate;
+    }
+
+    @Override
+    public void setAmountHoursOneInstructions(float amountHoursOneInstructions) {
+        this.amountHoursOneInstructions = amountHoursOneInstructions;
     }
 
     @Override
