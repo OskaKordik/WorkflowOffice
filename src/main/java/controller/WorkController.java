@@ -24,6 +24,9 @@ public class WorkController {
      */
     private WorkController() {}
 
+    /**
+     * Метод запускает работу контроллера
+     */
     public void runWorkController() {
         necessaryPositions = createNecessaryPositions();
         //задаем список обязательных должностей
@@ -41,14 +44,13 @@ public class WorkController {
         try {
             workMonth(); //запуск моделирования работы компании в течении месяца
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.println("Возникла ошибка во время моделирования! " + e.getMessage());
         }
-
-        ReportController.INSTANCE.runReportController(); //создаем отчет
     }
 
     /**
      * Метод, запускающий работу сотрудников в течении месяца
+     *
      * @throws InterruptedException
      */
     private void workMonth() throws InterruptedException {
@@ -60,9 +62,11 @@ public class WorkController {
                 DirectorsController.INSTANCE.runDirectorsController();
                 Thread.sleep(Company.MAX_WORKING_HOURS);
             }
+            //в конце недели выплачиается зарплата
             generalAccountant.payWeekSalary(personList, PersonController.INSTANCE.getFreelancers());
         }
-        //формирование суммарного отчета + сохранение в файл - реализовать
+
+        ReportController.INSTANCE.runReportController(); //создаем отчет
 
         //остановка всех сотрудников в конце месяца
         for (Map.Entry<Person, Set<Position>> person : personList.entrySet()) person.getKey().setStopWork(true);
@@ -70,16 +74,22 @@ public class WorkController {
 
     /**
      * Метод создает список обязательных должностей
+     *
      * @return список должностей
      */
     public Set<Position> createNecessaryPositions() {
-        Set<Position> list = new HashSet<>(); //создаем список обязательных должностей
+        Set<Position> list = new HashSet<>();
         list.add(Position.Director);
         list.add(Position.Manager);
         list.add(Position.Accountant);
         return list;
     }
 
+    /**
+     * Метод возвращает главного бухгалтера
+     *
+     * @return экземпляр класса Accountant
+     */
     public Accountant getGeneralAccountant() {
         return generalAccountant;
     }
