@@ -26,6 +26,7 @@ public class Manager extends APosition implements Employee {
 
     /**
      * Метод для получения зарплаты
+     *
      * @return сумму зарплаты
      */
     @Override

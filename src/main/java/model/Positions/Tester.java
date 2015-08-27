@@ -17,7 +17,7 @@ public class Tester extends APosition implements Сontractor {
         super(name);
         hoursWorked = 0;
     }
-    
+
     /**
      * Метод в котором выполняется работа должности
      */
@@ -31,6 +31,7 @@ public class Tester extends APosition implements Сontractor {
     /**
      * Метод расчитывающий сумму зарплаты исходя из количества отработанных часов
      * и почасовой ставки
+     *
      * @return salary
      */
     @Override
@@ -40,6 +41,7 @@ public class Tester extends APosition implements Сontractor {
 
     /**
      * Метод для получения зарплаты
+     *
      * @return сумму зарплаты
      */
     @Override
