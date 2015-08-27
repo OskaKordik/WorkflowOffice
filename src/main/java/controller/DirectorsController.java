@@ -14,7 +14,7 @@ public class DirectorsController {
     public static final DirectorsController INSTANCE = new DirectorsController();
     private static Map<Person, Set<Position>> personList; //список всех сотрудников
     private static List<Person> directorsList; //список директоров
-    private static final Map<Position, String> taskList = new HashMap<>();
+    private static final Map<Position, String> taskList = new HashMap<>(); //список распоряжений
 
     /**
      * Доступ к контроллеру осуществляется через INSTANCE
@@ -29,6 +29,9 @@ public class DirectorsController {
         taskList.put(Position.Accountant, "составить отчетность");
     }
 
+    /**
+     * Метод, запускающий работу DirectorsController
+     */
     public void runDirectorsController() {
         personList = PersonController.INSTANCE.getPersonList(); //получаем список работников
         directorsList = selectionOfDirectors(personList); //получаем список директоров
@@ -37,10 +40,11 @@ public class DirectorsController {
         //задание всем сотрудникам списка распоряжений
         setDirectorsTaskList(directorsList, taskList);
 
+        //запуск работы директоров
         for (int i = 0; i < Company.MAX_WORKING_HOURS; i++) {
             workDirectors(directorsList);
             try {
-                Thread.sleep(Company.ONE_HOUR);
+                Thread.sleep(Company.ONE_HOUR); //задания раздаются директорами через каждый час
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -49,7 +53,9 @@ public class DirectorsController {
 
     /**
      * Метод передает всем директорами список распоряжений
+     *
      * @param directorsList список директоров
+     * @param taskList      список заданий
      */
     protected void setDirectorsTaskList(List<Person> directorsList, Map<Position, String> taskList) {
         for (Person director : directorsList) {
@@ -61,7 +67,8 @@ public class DirectorsController {
 
     /**
      * Метод распределяет всех сотрудников между директорами
-     * @param directorsList список директоров
+     *
+     * @param directorsList            список директоров
      * @param personListOtherDirectors список сотрудников кроме директоров
      */
     protected void distributionOfPersons(List<Person> directorsList, Map<Person, Set<Position>> personListOtherDirectors) {
@@ -89,7 +96,7 @@ public class DirectorsController {
                     //добавляем к существующему списку оставшихся сотрудников
                     for (Map.Entry<Person, Set<Position>> person : list.entrySet()) {
                         tmpList.put(person.getKey(), person.getValue());
-                        countOtherPersonsInList--; //нужно для подсчета - УБРАТЬ!
+                        countOtherPersonsInList--;
                     }
                     personDirector.setPersonList(tmpList);
                 }
@@ -99,15 +106,17 @@ public class DirectorsController {
 
     /**
      * Метод формирует подсписок сотрудников для директора
-     * @param iterator итератор списка всех сотрудников (кроме директоров)
+     *
+     * @param iterator           итератор списка всех сотрудников (кроме директоров)
      * @param countPersonsInList кол-во сотрудников в списке
      * @return подсписок сотрудников для директора
      */
-    protected Map<Person, Set<Position>> getSubListPersons(Iterator<Map.Entry<Person, Set<Position>>> iterator, int countPersonsInList) {
+    protected Map<Person, Set<Position>> getSubListPersons(Iterator<Map.Entry<Person, Set<Position>>> iterator,
+                                                           int countPersonsInList) {
         Map<Person, Set<Position>> list = new HashMap<>();
         for (int i = 0; i < countPersonsInList; i++) {
             if (iterator.hasNext()) {
-                Map.Entry<Person, Set<Position>> thisEntry = iterator.next(); //переходим к следующему элементу списка
+                Map.Entry<Person, Set<Position>> thisEntry = iterator.next();
                 list.put(thisEntry.getKey(), thisEntry.getValue());
             }
         }
@@ -116,13 +125,13 @@ public class DirectorsController {
 
     /**
      * Метод раздает всем директорам задание
+     *
      * @param list список директоров
      */
     protected void workDirectors(List<Person> list) {
-        for (Person director : list) {
+        for (Person director : list)
             if (!director.isBusy() && director.isWork())
                 director.performTask(Position.Director, "раздать распоряжения сотрудникам");
-        }
     }
 
     /**
@@ -136,7 +145,6 @@ public class DirectorsController {
         for (Map.Entry<Person, Set<Position>> person : personList.entrySet())
             if (person.getValue().contains(Position.Director)) {
                 person.getKey().setAmountHoursOneInstructions(Company.ONE_HOUR); //задаем время выполнение задания 1 час
-
                 list.add(person.getKey());
             }
         return list;
