@@ -18,6 +18,7 @@ public class Director extends APosition implements Employee {
     private int fixedRate; //фиксированная ставка
     private Map<Position, String> taskList; //список распоряжений для сотрудников
     private Map<Position, String> currentTaskList = new HashMap<>(); //список текущих распоряжений для сотрудников
+    private Map<Position, Integer> taskListPriority = new HashMap<>(); //список приоритетов распоряжений для сотрудников
     private int countTasks = 0; //счетчик выполненных заданий
     private double salary; //зарплата
     private double allHoursWorked = 0; //отработанные часы - для отчета
@@ -48,23 +49,45 @@ public class Director extends APosition implements Employee {
                 currentTaskList.put(Position.values()[x], taskList.get(Position.values()[x]));
             }
 
+            //задаем приоритеры заданий
+            taskListPriority.put(Position.Accountant, 3);
+            taskListPriority.put(Position.Manager, 3);
+            taskListPriority.put(Position.Programmer, 2);
+            taskListPriority.put(Position.Designer, 1);
+            taskListPriority.put(Position.Tester, 1);
+
+            int currentPriority = 0;
+
             for (Map.Entry<Person, Set<Position>> person : personList.entrySet()) {
                     Person currentPerson = person.getKey(); //текущий сотрудник
+                    Position position = null; //текущее задание
 
-                //проходим по списку заданий
-                for (Map.Entry<Position, String> task : currentTaskList.entrySet()) {
+                if (!currentPerson.isBusy() && currentPerson.isWork()) {
 
-                    if (!currentPerson.isBusy()
-                            && currentPerson.isWork()
-                            && person.getValue().contains(task.getKey())) {
-                        currentPerson.performTask(task.getKey(), taskList.get(task.getKey())); //даем задание
+                    //проходим по списку заданий
+                    for (Map.Entry<Position, String> task : currentTaskList.entrySet()) {
+                        if (person.getValue().contains(task.getKey())) {
+
+                            if (taskListPriority.get(task.getKey()) > currentPriority) {
+                                position = task.getKey();
+                                currentPriority = taskListPriority.get(task.getKey());
+                            } else if (taskListPriority.get(task.getKey()) == currentPriority) {
+                                //проверяем стоимость заданий
+
+                            } else continue;
+                        }
+                    }
+
+
+                    if (position != null) {
+                        currentPerson.performTask(position, taskList.get(position)); //даем задание
                         isTherePerformer = true; //исполнитель есть
                     }
                 }
+
                 if (!isTherePerformer) { //если никто не взялся за задание нанимаем фрилансера
                     PersonController.INSTANCE.createNewFreelancer().getToWork();
                 }
-
             }
         }
     }
