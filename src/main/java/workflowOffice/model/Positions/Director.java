@@ -1,12 +1,13 @@
 package workflowOffice.model.Positions;
 
-import workflowOffice.main.Company;
 import workflowOffice.controller.PersonController;
+import workflowOffice.main.Company;
 import workflowOffice.model.Employee;
 import workflowOffice.model.Person;
 import workflowOffice.model.Position;
 
 import java.security.SecureRandom;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,6 +17,7 @@ import java.util.Set;
 public class Director extends APosition implements Employee {
     private int fixedRate; //фиксированная ставка
     private Map<Position, String> taskList; //список распоряжений для сотрудников
+    private Map<Position, String> currentTaskList = new HashMap<>(); //список текущих распоряжений для сотрудников
     private int countTasks = 0; //счетчик выполненных заданий
     private double salary; //зарплата
     private double allHoursWorked = 0; //отработанные часы - для отчета
@@ -38,24 +40,31 @@ public class Director extends APosition implements Employee {
             int amountTasks = random.nextInt(taskList.size()) + 1; //выбираем случайное количество распоряжений
             boolean isTherePerformer = false; //флаг наличия исполнителя
 
+            //создаем список текущих распоряжений для сотрудников
             for (int i = 0; i < amountTasks; i++) {
                 int x = random.nextInt(Position.values().length); //выбор случайной должности
                 if (Position.values()[x] == Position.Director) continue; //если должность директора идем дальше
-                Position currentPosition = Position.values()[x];
+                //иначе добавляем в список
+                currentTaskList.put(Position.values()[x], taskList.get(Position.values()[x]));
+            }
 
-                for (Map.Entry<Person, Set<Position>> person : personList.entrySet()) {
+            for (Map.Entry<Person, Set<Position>> person : personList.entrySet()) {
                     Person currentPerson = person.getKey(); //текущий сотрудник
+
+                //проходим по списку заданий
+                for (Map.Entry<Position, String> task : currentTaskList.entrySet()) {
 
                     if (!currentPerson.isBusy()
                             && currentPerson.isWork()
-                            && person.getValue().contains(currentPosition)) {
-                        currentPerson.performTask(currentPosition, taskList.get(currentPosition)); //даем задание
+                            && person.getValue().contains(task.getKey())) {
+                        currentPerson.performTask(task.getKey(), taskList.get(task.getKey())); //даем задание
                         isTherePerformer = true; //исполнитель есть
                     }
                 }
                 if (!isTherePerformer) { //если никто не взялся за задание нанимаем фрилансера
                     PersonController.INSTANCE.createNewFreelancer().getToWork();
                 }
+
             }
         }
     }
