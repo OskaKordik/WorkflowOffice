@@ -56,7 +56,7 @@ public class Director extends APosition implements Employee {
             taskListPriority.put(Position.Designer, 1);
             taskListPriority.put(Position.Tester, 1);
 
-            int currentPriority = 0;
+            int currentPriority = 0; //приоритет текущего задания
 
             for (Map.Entry<Person, Set<Position>> person : personList.entrySet()) {
                     Person currentPerson = person.getKey(); //текущий сотрудник
@@ -69,10 +69,17 @@ public class Director extends APosition implements Employee {
                         if (person.getValue().contains(task.getKey())) {
 
                             if (taskListPriority.get(task.getKey()) > currentPriority) {
-                                position = task.getKey();
+                                position = task.getKey(); //запоминаем задание с большим приоритетом
                                 currentPriority = taskListPriority.get(task.getKey());
                             } else if (taskListPriority.get(task.getKey()) == currentPriority) {
+
                                 //проверяем стоимость заданий
+
+                                /*
+                                Если стоимость текущего задания
+                                position.получить_стоимость > task.getKey().получить_стоимость  continue;
+                                иначе, запоминаем более оплачиваемое задание: position = task.getKey();
+                                 */
 
                             } else continue;
                         }
